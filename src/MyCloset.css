@@ -1,0 +1,49 @@
+.MyCloset {
+    left:0;
+    right:0;
+
+    background-color: white;
+}
+
+.category {
+    display: flex;
+    align-items: center; /* 네모 상하 중앙정렬 */
+    justify-content: space-between;
+
+    height: 120px;
+    border-bottom: 1px solid gray;
+}
+
+.category > div {
+    display: flex;
+    align-items: center; /* 글씨 상하 중앙정렬 */
+    justify-content: center; /* 글씨 좌우 중앙정렬 */
+
+    width: 75px;
+    height: 75px;
+    border: 1px solid gray;  
+    border-radius: 20px;
+
+    margin : 0 10px;
+}
+
+.subCategory {
+    display: flex;
+    text-align: center; /* 좌우 중앙정렬 */
+    align-items: center; /* 상하 중앙정렬 */
+
+    width: 100%;
+    height: 50px;
+    border-bottom: 1px solid gray;
+}
+
+.registerClosetBtn {
+    width: 100px;
+    height: 100px;
+
+    background-color: white;
+    border: solid 1px gray;
+    border-radius: 20px;
+    
+    font-size: 50px;
+}
