@@ -1,0 +1,23 @@
+.Main * {  /* Main 태그 안 태그들에 전부 적용 */
+    margin: 7px auto; /* 가운데 정렬*/
+}
+
+.areaSwitchBtn {
+    display: flex;
+    align-items: center; /* 상하 중앙정렬 */
+    
+    margin-left: 15px;
+}
+
+.registerOutfitBtn {
+    width: 360px;
+    height: 65px;
+
+    background-color: white;
+    border: solid 3px #CFCFCF;
+    border-radius: 20px;
+    box-shadow: 0 4px 4px 0 rgb(0, 0, 0, 0.1);
+    
+    font-size: 20px;
+}
+

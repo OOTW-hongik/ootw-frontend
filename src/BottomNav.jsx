@@ -1,51 +1,46 @@
-import React, { useState } from "react";
+import React from "react";
 import './BottomNav.css';
-import { IoHomeOutline, IoSettingsOutline, IoShirtOutline, IoListOutline, IoHome, IoList, IoShirt, IoSettings } from "react-icons/io5";
-import { Link } from "react-router-dom";
+import {
+  IoHomeOutline, IoHome,
+  IoShirtOutline, IoShirt,
+  IoListOutline, IoList,
+  IoSettingsOutline, IoSettings
+} from "react-icons/io5";
 
-const BottomNav = () => {
-  const [activeNav, setActiveNav] = useState(1);
+
+const BottomNav = (props) => {
+  const sendSelectedNav = (navName) => {
+    props.getSelectedNav(navName);
+  }
   return (
     <nav className="wrapper">
-      <div>
-        <Link to="/" onClick={() => setActiveNav(1)}>
-          {activeNav === 1 ? (
-          <IoHome className="navIcon"/> 
-          ) : (
-          <IoHomeOutline className="navIcon"/>
-          )}          
-        </Link>
+      <div onClick={() => sendSelectedNav("main")}>
+        {props.selectedNav === "main" ? (
+          <IoHome className="navIcon" />
+        ) : (
+          <IoHomeOutline className="navIcon" />
+        )}
       </div>
-      <div>
-        <Link to="/mycloset" onClick={() => setActiveNav(2)}>
-        {activeNav === 2 ? (
-          <IoShirt className="navIcon"/> 
-          ) : (
-            <IoShirtOutline className="navIcon"/>
-          )} 
-          
-        </Link>
+      <div onClick={() => sendSelectedNav("mycloset")}>
+        {props.selectedNav === "mycloset" ? (
+          <IoShirt className="navIcon" />
+        ) : (
+          <IoShirtOutline className="navIcon" />
+        )}
       </div>
-      <div>
-        <Link to="/outfitlist" onClick={() => setActiveNav(3)}>
-        {activeNav === 3 ? (
-          <IoList className="navIcon"/> 
-          ) : (
-            <IoListOutline className="navIcon"/>
-          )} 
-          
-          </Link>
+      <div onClick={() => sendSelectedNav("outfitlist")}>
+        {props.selectedNav === "outfitlist" ? (
+          <IoList className="navIcon" />
+        ) : (
+          <IoListOutline className="navIcon" />
+        )}
       </div>
-      <div>
-      <Link to="/setting" onClick={() => setActiveNav(4)}>
-        {activeNav === 4 ? (
-          <IoSettings className="navIcon"/> 
-          ) : (
-            <IoSettingsOutline className="navIcon"/>
-          )} 
-          
-          </Link>
-        
+      <div onClick={() => sendSelectedNav("setting")}>
+        {props.selectedNav === "setting" ? (
+          <IoSettings className="navIcon" />
+        ) : (
+          <IoSettingsOutline className="navIcon" />
+        )}
       </div>
     </nav>
   );
