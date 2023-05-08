@@ -1,6 +1,7 @@
 import React from "react";
 import './OutfitList.css';
 import { BiFilterAlt, BiSort } from "react-icons/bi"
+import BottomNav from "./BottomNav";
 
 const OutfitList = () => {
   // const [isSortClicked, setIsSortClicked] = useState(false);
@@ -12,6 +13,7 @@ const OutfitList = () => {
         <button><BiFilterAlt className="icon" />필터</button>
         <button><BiSort className="icon" />정렬</button>
       </div>
+      <BottomNav selectedNav="outfitlist"/>
     </div>
   );
 };

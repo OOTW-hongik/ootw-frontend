@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import './MyCloset.css';
+import BottomNav from "./BottomNav";
 
 const MyCloset = () => {
   const [selectedCate, setSelectedCate] = useState("outer");
@@ -34,6 +35,7 @@ const MyCloset = () => {
         <button className="registerClosetBtn">+</button>
       </div>
 
+      <BottomNav selectedNav="mycloset"/>
     </div>
   );
 };

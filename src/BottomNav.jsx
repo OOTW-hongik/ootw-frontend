@@ -1,46 +1,55 @@
 import React from "react";
-import './BottomNav.css';
+import { Link } from "react-router-dom";
+import "./BottomNav.css";
 import {
-  IoHomeOutline, IoHome,
-  IoShirtOutline, IoShirt,
-  IoListOutline, IoList,
-  IoSettingsOutline, IoSettings
+  IoHomeOutline,
+  IoHome,
+  IoShirtOutline,
+  IoShirt,
+  IoListOutline,
+  IoList,
+  IoSettingsOutline,
+  IoSettings,
 } from "react-icons/io5";
 
-
-const BottomNav = (props) => {
-  const sendSelectedNav = (navName) => {
-    props.getSelectedNav(navName);
-  }
+function BottomNav(props) {
   return (
     <nav className="wrapper">
-      <div onClick={() => sendSelectedNav("main")}>
-        {props.selectedNav === "main" ? (
-          <IoHome className="navIcon" />
-        ) : (
-          <IoHomeOutline className="navIcon" />
-        )}
+      <div>
+        <Link to="/main">
+          {props.selectedNav === "main" ? (
+            <IoHome className="navIcon" />
+          ) : (
+            <IoHomeOutline className="navIcon" />
+          )}
+        </Link>
       </div>
-      <div onClick={() => sendSelectedNav("mycloset")}>
-        {props.selectedNav === "mycloset" ? (
-          <IoShirt className="navIcon" />
-        ) : (
-          <IoShirtOutline className="navIcon" />
-        )}
+      <div>
+        <Link to="/mycloset">
+          {props.selectedNav === "mycloset" ? (
+            <IoShirt className="navIcon" />
+          ) : (
+            <IoShirtOutline className="navIcon" />
+          )}
+        </Link>
       </div>
-      <div onClick={() => sendSelectedNav("outfitlist")}>
-        {props.selectedNav === "outfitlist" ? (
-          <IoList className="navIcon" />
-        ) : (
-          <IoListOutline className="navIcon" />
-        )}
+      <div>
+        <Link to="/outfitlist">
+          {props.selectedNav === "outfitlist" ? (
+            <IoList className="navIcon" />
+          ) : (
+            <IoListOutline className="navIcon" />
+          )}
+        </Link>
       </div>
-      <div onClick={() => sendSelectedNav("setting")}>
-        {props.selectedNav === "setting" ? (
-          <IoSettings className="navIcon" />
-        ) : (
-          <IoSettingsOutline className="navIcon" />
-        )}
+      <div>
+        <Link to="/setting">
+          {props.selectedNav === "setting" ? (
+            <IoSettings className="navIcon" />
+          ) : (
+            <IoSettingsOutline className="navIcon" />
+          )}
+        </Link>
       </div>
     </nav>
   );

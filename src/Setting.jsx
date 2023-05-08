@@ -1,8 +1,11 @@
 import React from "react";
+import BottomNav from "./BottomNav";
+// import { Link } from "react-router-dom";
 
 const Setting = (props) => {
-  const sendisLoggedIn = (bool) => {
-    props.getIsLoggedIn(bool);
+  const logout=()=>{
+    localStorage.removeItem("logintoken");
+    window.location.reload();
   }
   const styleObj = {
     width: "150px",
@@ -16,7 +19,7 @@ const Setting = (props) => {
   return (
     <div className="Setting mobileWeb">
 
-      <button style={styleObj} onClick={() => sendisLoggedIn(false)}>로그아웃</button>
+      <button style={styleObj} onClick={logout}>로그아웃</button>
 
       <p>홍익대학교 2023 졸업프로젝트</p>
       <br />
@@ -32,7 +35,7 @@ const Setting = (props) => {
       <p>유채연(FE)</p>
       <p>u_chaen@naver.com</p>
 
-
+      <BottomNav selectedNav="setting"/>
     </div>
   );
 };
