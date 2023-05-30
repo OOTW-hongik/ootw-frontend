@@ -1,0 +1,83 @@
+.RegisterCategory * {
+    text-align: left;
+}
+
+.RegisterCategory {
+    width: 360px;
+    height: auto;
+
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0 4px 4px 0 rgb(0, 0, 0, 0.1);
+
+    margin-top: 10px;
+}
+
+.ratingWrapper {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid lightgray;
+    margin: 0 15px;
+}
+
+.title {
+    font-size: 20px;
+    padding : 7px 5px ;
+}
+
+.ratingText {
+    width: 60px;
+    height: 30px;
+
+    background-color: #CFCFCF;
+    border-radius: 10px;
+    color: white;
+    font-size: 20px;
+    text-align: center;
+}
+
+.ratingBtn {
+    border-radius: 50%;
+    border: 3px solid #CFCFCF;
+    width: 13px;
+    height: 13px;
+    background-color: white;
+    margin-left: 5px;
+}
+
+
+.active1 {
+    border-color:#5f6dea;
+    background-color: #5f6dea;
+    /* #4154ff */
+}
+.active2 {
+    border-color:#96a1ff;
+    background-color: #96a1ff;
+    /* #8b97ff */
+}
+.active3 {
+    border-color:#c0c0c0;
+    background: #c0c0c0;
+    /* linear-gradient(to right, #96a1ff, #FFA7A1 );     */
+    /* 연두 #bfe9a5 */
+    /* 보라 #d5afeb */
+}
+.active4 {
+    border-color:#FFA7A1;
+    background-color: #FFA7A1;
+}
+.active5 {
+    border-color:#f1786f;
+    background-color: #f1786f;
+    /* #FF5D53 */
+}
+
+
+.centerLeftRight > a {
+    /* 플러스 버튼 */
+    font-size: 50px;
+    color: black;
+    padding-bottom: 3px;
+    height: 50px;
+}

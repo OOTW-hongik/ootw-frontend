@@ -1,0 +1,7 @@
+.areaSwitchBtn {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    margin: 0;
+    padding: 10px 15px;
+}

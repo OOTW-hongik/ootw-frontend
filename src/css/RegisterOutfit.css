@@ -1,0 +1,54 @@
+.upperWrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+.datePicker {
+    text-align: left;
+    background-color: #FAFAFA;
+    border: 0;
+    margin-left: 15px;
+    margin-top: 15px;
+    font-size: 15px;
+}
+.datePicker:focus {
+    outline: 0;
+}
+
+.lowerWrapper {
+    justify-content: center;
+    align-items: center;
+}
+
+.comment {
+    width: 360px;
+    height: auto;
+
+    text-align: left;
+
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0 4px 4px 0 rgb(0, 0, 0, 0.1);
+
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.comment > input {
+    margin: 10px 15px;
+    text-align: left;
+    border: 0;
+    width: 330px;
+}
+.comment > input:focus {
+    border-bottom: 1px solid #CFCFCF;
+    outline: 0;
+}
+
+.commentTitle {
+    text-align: left;
+    font-size: 20px;
+    padding : 7px 5px ;
+    border-bottom: 1px solid lightgray;
+    margin: 0 15px;
+}

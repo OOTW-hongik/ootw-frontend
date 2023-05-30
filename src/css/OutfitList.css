@@ -1,5 +1,12 @@
+.pageTitle {
+    padding-top: 30px;
+    text-align:center;
+}
+
 .btnWrapper {
     display: flex;
+    text-align:center;
+    justify-content: center; /* 좌우 중앙정렬 */
 }
 
 .btnWrapper > button {

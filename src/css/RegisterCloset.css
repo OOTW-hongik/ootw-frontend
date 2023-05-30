@@ -1,0 +1,51 @@
+.RegisterCloset {
+    text-align: left;
+}
+.RegisterCloset > div {
+    text-align: left;
+}
+
+.inputBorder {
+    border-radius: 20px;
+    border: 2px solid #CFCFCF;
+}
+
+.inputTitle {
+    font-size: 20px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.inputFileBtn {
+    display: flex;
+    width:100px;
+    height:100px;
+    align-items: center;
+    justify-content: center;
+}
+.inputFileBtn:active {
+    border-color: gray;
+}
+#inputFile {
+    display: none;
+}
+
+#subCategoryDropdown {
+    display: flex;
+    align-items: center;
+    width: 130px;
+    height: 50px;
+}
+#subcateDropdownOption {
+    width: 100px;
+    padding: 5px 0;
+}
+.RegisterCloset > input {
+    text-align: left;
+    font-size: 15px;
+    padding: 7px;
+    width: 280px;
+}
+.RegisterCloset > input:focus {
+    outline: 0;
+}

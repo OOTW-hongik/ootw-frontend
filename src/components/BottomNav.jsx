@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./BottomNav.css";
+import "../css/BottomNav.css";
 import {
   IoHomeOutline,
   IoHome,
@@ -14,9 +14,9 @@ import {
 
 function BottomNav(props) {
   return (
-    <nav className="wrapper">
+    <nav className="navWrapper">
       <div>
-        <Link to="/main">
+        <Link to="/home">
           {props.selectedNav === "main" ? (
             <IoHome className="navIcon" />
           ) : (

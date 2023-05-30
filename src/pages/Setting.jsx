@@ -1,5 +1,5 @@
 import React from "react";
-import BottomNav from "./BottomNav";
+import BottomNav from "../components/BottomNav";
 // import { Link } from "react-router-dom";
 
 const Setting = (props) => {
@@ -10,22 +10,24 @@ const Setting = (props) => {
   const styleObj = {
     width: "150px",
     height: "60px",
-    margin: "150px 0",
+    marginTop: "150px",
+    marginBottom: "100px",
     backgroundColor: "white",
     border: "1px solid gray",
     borderRadius: "20px",
-    fontSize: "20px"
+    fontSize: "20px",
   }
   return (
     <div className="Setting mobileWeb">
+      <div>&nbsp;</div>
 
-      <button style={styleObj} onClick={logout}>로그아웃</button>
+      <button className="centerLeftRight" style={styleObj} onClick={logout}>로그아웃</button>
 
       <p>홍익대학교 2023 졸업프로젝트</p>
       <br />
 
       <p>장우석(BE)</p>
-      <p>jjang9877@naver.com</p>
+      <p>jjang9877@gmail.com</p>
       <br />
 
       <p>권재현(AI, BE) </p>

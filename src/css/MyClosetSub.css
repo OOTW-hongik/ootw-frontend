@@ -1,0 +1,22 @@
+.subCategory {
+    display: flex;
+    text-align: center; /* 좌우 중앙정렬 */
+    align-items: center; /* 상하 중앙정렬 */
+
+    width: 100%;
+    height: 50px;
+    border-bottom: 1px solid gray;
+}
+
+
+
+.registerClosetBtn {
+    width: 80px;
+    height: 80px;
+
+    background-color: white;
+    border: solid 1px gray;
+    border-radius: 20px;
+    
+    font-size: 50px;
+}

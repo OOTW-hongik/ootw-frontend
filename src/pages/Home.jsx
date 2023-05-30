@@ -1,10 +1,12 @@
-import './Main.css';
+import '../css/Home.css';
 // import axios from 'axios';
-// import { useState, useEffect } from "react";
-import { FaMapMarkerAlt } from "react-icons/fa";
-import BottomNav from "./BottomNav";
+import { useState, useEffect } from "react";
+import BottomNav from "../components/BottomNav";
+import AreaSwitchBtn from "../components/AreaSwitchBtn";
+import { Link } from "react-router-dom";
 
 function Main() {
+
   // const [weather, setWeather] = useState();
   // useEffect(() => {
   //   fetch('https://apihub.kma.go.kr/api/typ01/url/kma_sfcdd.php?tm=20150715&stn=0&help=1&authKey=LY63uUczQTmOt7lHMyE5XA', {
@@ -18,19 +20,19 @@ function Main() {
 
   return (
     <div className="Main mobileWeb">
-      <div className='areaSwitchBtn'>
-        <FaMapMarkerAlt />서울
-      </div>
+      <AreaSwitchBtn className="alignLeft" />
       <div>날씨</div>
       <div>그래프</div>
-
-      <button className='registerOutfitBtn'>착장 기록하기</button>
-
+      <Link to="/registeroutfit" style={{ textDecoration: "none" }} >
+        <button className='registerOutfitBtn centerLeftRight'>
+          착장 기록하기
+        </button>
+      </Link>
       <div>비슷한 체감온도에서 입었던 옷이에요</div>
       <div>리스트1</div>
       <div>리스트2</div>
       <div>리스트3</div>
-      <BottomNav selectedNav="main"/>
+      <BottomNav selectedNav="main" />
     </div>
   );
 }
