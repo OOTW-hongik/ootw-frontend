@@ -1,16 +1,18 @@
 import React, { useState } from "react";
 import '../css/MyClosetSub.css';
 import Modal from "./Modal";
-import RegisterCloset from "./RegisterCloset";
-
-const MyClosetSub = (props) => {
+import UploadCloset from "./UploadCloset";
+type Props = {
+  category: string;
+}
+const MyClosetSub = ({category}:Props) => {
   const [selectedSubCate, setSelectedSubCate] = useState("all");
   const [isModalOpened, setIsModalOpened] = useState(false);
 
   return (
     <div>
       <div className="subCategory">
-        <div>{props.category}</div>
+        <div>{category}</div>
       </div>
       <div className="col4GridContainer">
         <button className="registerClosetBtn centerLeftRight" onClick={() => setIsModalOpened(true)}>+</button>
@@ -22,7 +24,7 @@ const MyClosetSub = (props) => {
       </div>
       {isModalOpened &&
         <Modal closeModal={() => setIsModalOpened(false)}>
-          <RegisterCloset category={props.category} />
+          <UploadCloset category={category} />
         </Modal>}
     </div>
 

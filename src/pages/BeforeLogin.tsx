@@ -1,9 +1,13 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-const BeforeLogin = (props) => {
+const BeforeLogin = () => {
   const navigate = useNavigate();
+  const url = "http://43.200.138.39:8080/oauth2/authorization/kakao"
   const login = () => {
+    // eslint-disable-next-line no-restricted-globals
+    location.href='http://43.200.138.39:8080/oauth2/authorization/kakao';
+    // window.open(url);
     localStorage.setItem("logintoken", "1");
     navigate("/home");
   };

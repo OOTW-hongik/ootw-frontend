@@ -9,7 +9,7 @@ import { ko } from 'date-fns/esm/locale';
 
 
 function RegisterOutfit() {
-  const [startDate, setStartDate] = useState(new Date());
+  const [startDate, setStartDate] = useState<Date>(new Date());
 
   return (
     <div className="RegisterOutfit mobileWeb">
@@ -23,7 +23,7 @@ function RegisterOutfit() {
             locale={ko}
             onChange={(date) => setStartDate(date)}
           />
-          <AreaSwitchBtn />
+          <AreaSwitchBtn /> 
         </div>
         <div>날씨</div>
       </div>

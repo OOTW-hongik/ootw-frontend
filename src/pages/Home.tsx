@@ -5,7 +5,7 @@ import BottomNav from "../components/BottomNav";
 import AreaSwitchBtn from "../components/AreaSwitchBtn";
 import { Link } from "react-router-dom";
 
-function Main() {
+const Home = () => {
 
   // const [weather, setWeather] = useState();
   // useEffect(() => {
@@ -17,10 +17,9 @@ function Main() {
   //   });
   // }, []);
 
-
   return (
-    <div className="Main mobileWeb">
-      <AreaSwitchBtn className="alignLeft" />
+    <div className="Home mobileWeb">
+      <AreaSwitchBtn />
       <div>날씨</div>
       <div>그래프</div>
       <Link to="/registeroutfit" style={{ textDecoration: "none" }} >
@@ -32,9 +31,9 @@ function Main() {
       <div>리스트1</div>
       <div>리스트2</div>
       <div>리스트3</div>
-      <BottomNav selectedNav="main" />
+      <BottomNav selectedNav="home" />
     </div>
   );
 }
 
-export default Main;
+export default Home;

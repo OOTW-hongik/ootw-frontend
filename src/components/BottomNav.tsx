@@ -11,13 +11,16 @@ import {
   IoSettingsOutline,
   IoSettings,
 } from "react-icons/io5";
+type Props = {
+  selectedNav: string;
+}
 
-function BottomNav(props) {
+const BottomNav = ({selectedNav}:Props) => {
   return (
     <nav className="navWrapper">
       <div>
         <Link to="/home">
-          {props.selectedNav === "main" ? (
+          {selectedNav === "home" ? (
             <IoHome className="navIcon" />
           ) : (
             <IoHomeOutline className="navIcon" />
@@ -26,7 +29,7 @@ function BottomNav(props) {
       </div>
       <div>
         <Link to="/mycloset">
-          {props.selectedNav === "mycloset" ? (
+          {selectedNav === "mycloset" ? (
             <IoShirt className="navIcon" />
           ) : (
             <IoShirtOutline className="navIcon" />
@@ -35,7 +38,7 @@ function BottomNav(props) {
       </div>
       <div>
         <Link to="/outfitlist">
-          {props.selectedNav === "outfitlist" ? (
+          {selectedNav === "outfitlist" ? (
             <IoList className="navIcon" />
           ) : (
             <IoListOutline className="navIcon" />
@@ -44,7 +47,7 @@ function BottomNav(props) {
       </div>
       <div>
         <Link to="/setting">
-          {props.selectedNav === "setting" ? (
+          {selectedNav === "setting" ? (
             <IoSettings className="navIcon" />
           ) : (
             <IoSettingsOutline className="navIcon" />

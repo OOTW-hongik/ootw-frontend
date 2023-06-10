@@ -2,8 +2,10 @@ import "../css/RegisterCategory.css";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import {GoPlusSmall} from "react-icons/go";
-
-function RegisterCategory(props) {
+type Props = {
+  title:string;
+}
+function RegisterCategory({title}:Props) {
   const ratingList = [
     {
       cssName: " active1",
@@ -33,7 +35,7 @@ function RegisterCategory(props) {
   return (
     <div className="RegisterCategory centerLeftRight">
       <div className="ratingWrapper">
-        <div className="title">{props.title}</div>
+        <div className="title">{title}</div>
         <div className={"ratingText" + ratingList[rating - 1].cssName}>
           {ratingList[rating - 1].text}
         </div>
@@ -51,7 +53,7 @@ function RegisterCategory(props) {
 
       <div className="col4GridContainer">
         <div className="centerLeftRight">
-          <Link to="/registeroutfit/chooseOutfit" state={{ title: props.title }}><GoPlusSmall/></Link>
+          <Link to="/registeroutfit/chooseOutfit" state={{ title: {title} }}><GoPlusSmall/></Link>
         </div>
         <div>옷1</div>
         <div>옷2</div>

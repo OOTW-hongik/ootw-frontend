@@ -2,7 +2,8 @@ import { FaMapMarkerAlt } from "react-icons/fa";
 import { useState } from "react";
 import "../css/AreaSwitchBtn.css";
 
-function AreaSwitchBtn() {
+function AreaSwitchBtn () {
+
   const [selectedArea, setSelectedArea] = useState(41);
   const [isDropdownOpened, setIsDropdownOpened] = useState(false);
   const areaList = [

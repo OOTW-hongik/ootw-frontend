@@ -2,7 +2,7 @@ import React from "react";
 import BottomNav from "../components/BottomNav";
 // import { Link } from "react-router-dom";
 
-const Setting = (props) => {
+const Setting = () => {
   const logout=()=>{
     localStorage.removeItem("logintoken");
     window.location.reload();

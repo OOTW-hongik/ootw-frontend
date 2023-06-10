@@ -1,13 +1,15 @@
-import "../css/RegisterCloset.css";
+import "../css/UploadCloset.css";
 import { useState } from "react";
 import { IoImagesOutline } from "react-icons/io5";
 import { TiArrowSortedDown } from "react-icons/ti";
 
-function RegisterCloset(props) {
-  const [selectedSubCategory, setSelectedSubCategory] = useState(
-    props.category
-  );
-  const [isDropdownOpened, setIsDropdownOpened] = useState(false);
+type Props = {
+  category: string;
+};
+
+function UploadCloset({ category }: Props) {
+  const [selectedSubCategory, setSelectedSubCategory] = useState(category);
+  const [isDropdownOpened, setIsDropdownOpened] = useState<boolean>(false);
   const outerSubCategoryList = [
     { subCategoryName: "후드집업" },
     { subCategoryName: "자켓" },
@@ -27,14 +29,27 @@ function RegisterCloset(props) {
     { subCategoryName: "반바지" },
     { subCategoryName: "치마" },
   ];
-  const etcSubCategoryList = [
-    { subCategoryName: "기타" }
-  ];
+  const etcSubCategoryList = [{ subCategoryName: "기타" }];
+
+  let selectedList = outerSubCategoryList;
+  switch (category) {
+    case "아우터":
+      selectedList = outerSubCategoryList;
+      break;
+    case "상의":
+      selectedList = topSubCategoryList;
+      break;
+    case "하의":
+      selectedList = bottomSubCategoryList;
+      break;
+    case "기타":
+      selectedList = etcSubCategoryList;
+  }
 
   return (
-    <div className="RegisterCloset">
+    <div className="UploadCloset">
       <div className="inputTitle">사진</div>
-      <label for="inputFile">
+      <label htmlFor="inputFile">
         <div className="inputFileBtn inputBorder">
           <IoImagesOutline size={"50px"} />
         </div>
@@ -54,12 +69,7 @@ function RegisterCloset(props) {
       </div>
       {isDropdownOpened && (
         <div className="dropdown">
-          {{
-            "아우터": outerSubCategoryList,
-            "상의": topSubCategoryList,
-            "하의": bottomSubCategoryList,
-            "기타": etcSubCategoryList,
-          }[props.category].map((element) => (
+          {selectedList.map((element: any) => (
             <div
               className="dropdownOption"
               id="subcateDropdownOption"
@@ -84,4 +94,4 @@ function RegisterCloset(props) {
   );
 }
 
-export default RegisterCloset;
+export default UploadCloset;

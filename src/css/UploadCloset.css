@@ -1,7 +1,7 @@
-.RegisterCloset {
+.UploadCloset {
     text-align: left;
 }
-.RegisterCloset > div {
+.UploadCloset > div {
     text-align: left;
 }
 
@@ -40,12 +40,12 @@
     width: 100px;
     padding: 5px 0;
 }
-.RegisterCloset > input {
+.UploadCloset > input {
     text-align: left;
     font-size: 15px;
     padding: 7px;
     width: 280px;
 }
-.RegisterCloset > input:focus {
+.UploadCloset > input:focus {
     outline: 0;
 }
