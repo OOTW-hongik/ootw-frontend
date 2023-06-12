@@ -9,7 +9,7 @@ import { ko } from 'date-fns/esm/locale';
 
 
 function RegisterOutfit() {
-  const [startDate, setStartDate] = useState<Date>(new Date());
+  const [startDate, setStartDate] = useState(new Date());
 
   return (
     <div className="RegisterOutfit mobileWeb">

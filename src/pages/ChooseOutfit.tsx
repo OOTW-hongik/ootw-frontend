@@ -4,7 +4,8 @@ import MyClosetSub from "../components/MyClosetSub";
 import "../css/ChooseOutfit.css"
 
 function ChooseOutfit() {
-  const title = useLocation().state.title;
+  const title = useLocation().state;
+
   return (
     <div className="ChooseOutfit mobileWeb">
       <div

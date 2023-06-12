@@ -15,20 +15,18 @@ import ChooseOutfit from "./pages/ChooseOutfit";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path={"/"} element={<App />} />
-        <Route path={"/login"} element={<BeforeLogin />} />
-        <Route element={<AuthLayout />}>
-          <Route path={"/home"} element={<Home />} />
-          <Route path={"/mycloset"} element={<MyCloset />} />
-          <Route path={"/outfitlist"} element={<OutfitList />} />
-          <Route path={"/setting"} element={<Setting />} />
-          <Route path={"/registeroutfit"} element={<RegisterOutfit/>} />
-          <Route path={"/registeroutfit/chooseOutfit"} element={<ChooseOutfit/>} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
-  </React.StrictMode>
+  <BrowserRouter>
+    <Routes>
+      <Route path={"/"} element={<App />} />
+      <Route path={"/login"} element={<BeforeLogin />} />
+      <Route element={<AuthLayout />}>
+        <Route path={"/home"} element={<Home />} />
+        <Route path={"/mycloset"} element={<MyCloset />} />
+        <Route path={"/outfitlist"} element={<OutfitList />} />
+        <Route path={"/setting"} element={<Setting />} />
+        <Route path={"/registeroutfit"} element={<RegisterOutfit/>} />
+        <Route path={"/registeroutfit/chooseOutfit"} element={<ChooseOutfit/>} />
+      </Route>
+    </Routes>
+  </BrowserRouter>
 );

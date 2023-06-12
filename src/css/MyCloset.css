@@ -28,5 +28,6 @@
 }
 
 .selected {
-    background-color: #cfcfcf;
+    background-color: #a0a0a0;
+    color: white;
 }

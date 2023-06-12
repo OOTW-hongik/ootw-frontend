@@ -1,15 +1,15 @@
 import "../css/RegisterCategory.css";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import {GoPlusSmall} from "react-icons/go";
+import { GoPlusSmall } from "react-icons/go";
 type Props = {
-  title:string;
-}
-function RegisterCategory({title}:Props) {
+  title: string;
+};
+function RegisterCategory({ title }: Props) {
   const ratingList = [
     {
       cssName: " active1",
-      text: "추움"
+      text: "추움",
     },
     {
       cssName: " active2",
@@ -29,9 +29,8 @@ function RegisterCategory({title}:Props) {
     },
   ];
 
-  const array = [1, 2, 3, 4, 5];
-  const [rating, setRating] = useState(3);
-
+  const array: number[] = [1, 2, 3, 4, 5];
+  const [rating, setRating] = useState<number>(3);
   return (
     <div className="RegisterCategory centerLeftRight">
       <div className="ratingWrapper">
@@ -53,15 +52,15 @@ function RegisterCategory({title}:Props) {
 
       <div className="col4GridContainer">
         <div className="centerLeftRight">
-          <Link to="/registeroutfit/chooseOutfit" state={{ title: {title} }}><GoPlusSmall/></Link>
+          <Link to="/registeroutfit/chooseOutfit" state={title}>
+            <GoPlusSmall />
+          </Link>
         </div>
         <div>옷1</div>
         <div>옷2</div>
         <div>옷3</div>
         <div>옷4</div>
       </div>
-
-
     </div>
   );
 }
