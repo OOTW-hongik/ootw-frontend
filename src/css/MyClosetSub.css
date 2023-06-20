@@ -1,22 +1,40 @@
-.subCategory {
+.subCategoryWrapper {
     display: flex;
     text-align: center; /* 좌우 중앙정렬 */
     align-items: center; /* 상하 중앙정렬 */
 
-    width: 100%;
+    width: 380px;
     height: 50px;
-    border-bottom: 1px solid gray;
+    background-color: #FAFAFA;
+    padding-left: 10px;
 }
 
-
+#subCategory {
+    padding: 10px;
+}
+#selectedSubCategory {
+    padding: 10px;
+    font-weight: bold;
+}
+#subCategory::after { /* bold로 변경 시 사이즈 변화 방지 */
+    display: block;
+    content: attr(title);
+    font-weight: bold;
+    height: 1px;
+    color: transparent;
+    overflow: hidden;
+    visibility: hidden;
+  }
 
 .registerClosetBtn {
     width: 80px;
     height: 80px;
 
     background-color: white;
-    border: solid 1px gray;
+    border: solid 1px #ccc;
     border-radius: 20px;
     
     font-size: 50px;
+    margin-top: 9px;
+    margin-bottom: 9px;
 }

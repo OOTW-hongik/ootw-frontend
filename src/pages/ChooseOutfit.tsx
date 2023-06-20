@@ -12,7 +12,6 @@ function ChooseOutfit() {
         style={{
           fontSize: "30px",
           padding: "20px",
-          borderBottom: "solid 1px gray",
         }}
       >
         {title} 선택

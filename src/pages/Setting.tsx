@@ -13,7 +13,7 @@ const Setting = () => {
     marginTop: "150px",
     marginBottom: "100px",
     backgroundColor: "white",
-    border: "1px solid gray",
+    border: "none",
     borderRadius: "20px",
     fontSize: "20px",
   }

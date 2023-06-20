@@ -1,35 +1,25 @@
 import "../css/UploadCloset.css";
-import { useState } from "react";
+import {
+  outerSubCategoryList,
+  topSubCategoryList,
+  bottomSubCategoryList,
+} from "./reuse";
+import { SetStateAction, useState } from "react";
 import { IoImagesOutline } from "react-icons/io5";
 import { TiArrowSortedDown } from "react-icons/ti";
 
+import { TfiSave } from "react-icons/tfi";
+
 type Props = {
   category: string;
+  changeFromChild: Function;
 };
 
-function UploadCloset({ category }: Props) {
+function UploadCloset({ category, changeFromChild }: Props) {
   const [selectedSubCategory, setSelectedSubCategory] = useState(category);
   const [isDropdownOpened, setIsDropdownOpened] = useState<boolean>(false);
-  const outerSubCategoryList = [
-    { subCategoryName: "후드집업" },
-    { subCategoryName: "자켓" },
-    { subCategoryName: "가디건" },
-    { subCategoryName: "코트" },
-    { subCategoryName: "패딩" },
-  ];
-  const topSubCategoryList = [
-    { subCategoryName: "반팔티" },
-    { subCategoryName: "긴팔티" },
-    { subCategoryName: "셔츠" },
-    { subCategoryName: "후드티" },
-    { subCategoryName: "원피스" },
-  ];
-  const bottomSubCategoryList = [
-    { subCategoryName: "긴바지" },
-    { subCategoryName: "반바지" },
-    { subCategoryName: "치마" },
-  ];
-  const etcSubCategoryList = [{ subCategoryName: "기타" }];
+  const [inputtedPhoto, setInputtedPhoto] = useState("");
+  const [inputtedComment, setInputtedComment] = useState("");
 
   let selectedList = outerSubCategoryList;
   switch (category) {
@@ -41,9 +31,36 @@ function UploadCloset({ category }: Props) {
       break;
     case "하의":
       selectedList = bottomSubCategoryList;
-      break;
-    case "기타":
-      selectedList = etcSubCategoryList;
+  }
+  const commentChange = (e: { target: { value: SetStateAction<string> } }) => {
+    setInputtedComment(e.target.value);
+  };
+  const photoChange = (e: { target: { value: SetStateAction<string> } }) => {
+    setInputtedPhoto(e.target.value);
+    setSelectedSubCategory(selectedList[0].subCategoryName);
+  };
+
+  function upload() {
+    if (inputtedPhoto) {
+      fetch(`http://43.200.138.39:8080/clothes`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          memberId: 1,
+          category: category,
+          subCategory: selectedSubCategory,
+          clothesPhoto: inputtedPhoto,
+          clothesComment: inputtedComment,
+          hidden: false,
+        }),
+      });
+      changeFromChild(false);      
+      window.location.reload();
+    } else {
+      alert("사진 필수!");
+    }
   }
 
   return (
@@ -54,25 +71,38 @@ function UploadCloset({ category }: Props) {
           <IoImagesOutline size={"50px"} />
         </div>
       </label>
-      <input type="file" id="inputFile" accept="image/*" />
+      <input
+        type="file"
+        id="inputFile"
+        accept="image/*"
+        onChange={photoChange}
+      />
 
       <div className="inputTitle">카테고리</div>
-      <div
-        id="subCategoryDropdown"
-        className="inputBorder"
-        onClick={() => {
-          setIsDropdownOpened(!isDropdownOpened);
-        }}
-      >
-        <TiArrowSortedDown size={"20px"} style={{ margin: "13px" }} />
-        {selectedSubCategory}
-      </div>
+      {category === "기타" ? (
+        <div id="subCategoryDropdown" className="inputBorder disabled">
+          <TiArrowSortedDown size={"20px"} style={{ margin: "13px" }} />
+          {selectedSubCategory}
+        </div>
+      ) : (
+        <div
+          id="subCategoryDropdown"
+          className="inputBorder"
+          onClick={() => {
+            setIsDropdownOpened(!isDropdownOpened);
+          }}
+        >
+          <TiArrowSortedDown size={"20px"} style={{ margin: "13px" }} />
+          {selectedSubCategory}
+        </div>
+      )}
       {isDropdownOpened && (
         <div className="dropdown">
           {selectedList.map((element: any) => (
             <div
               className="dropdownOption"
               id="subcateDropdownOption"
+              key={element.id}
               onClick={() => {
                 setSelectedSubCategory(element.subCategoryName);
                 setIsDropdownOpened(false);
@@ -84,12 +114,22 @@ function UploadCloset({ category }: Props) {
         </div>
       )}
 
-      <div className="inputTitle">한줄평</div>
+      <div
+        className="inputTitle"
+        style={{
+          marginTop: "20px",
+        }}
+      >
+        한줄평
+      </div>
       <input
         type="text"
         className="inputBorder"
         placeholder="한줄평을 입력해보세요."
+        onChange={commentChange}
       />
+
+      <TfiSave id="saveBtn" size={25} onClick={upload} />
     </div>
   );
 }

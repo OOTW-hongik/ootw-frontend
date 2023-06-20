@@ -1,0 +1,23 @@
+#MiniWeather > div {
+  display: flex;
+  justify-content: space-between;
+  margin-right: 15px;
+  width: 110px;
+}
+
+#miniIcon {
+  display: flex;
+  justify-content: center;
+  width: 32px;
+  font-size: 20px;
+  margin-top: 2px;
+}
+#chegam { 
+  font-size: 14px;
+  margin-top: 2px;
+  width: 32px;
+}
+.width32 {
+  width: 32px;
+  text-align: right;
+}

@@ -14,7 +14,7 @@
     align-items: center; /* 상하 중앙정렬 */
 
     height: 70px;
-    border-top: 1px solid black;
+    border-top: 1px solid gray;
     background-color: white;
 }
 
@@ -26,5 +26,5 @@ nav > div {
     width: 30px;
     height: 30px;
     text-decoration: none; 
-    color: black; 
+    color: #444444; 
 }

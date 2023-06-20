@@ -1,51 +1,35 @@
 import "../css/RegisterCategory.css";
-import { useState } from "react";
+import { ratingList } from "./reuse";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { GoPlusSmall } from "react-icons/go";
 type Props = {
   title: string;
+  ratingChange : Function;
 };
-function RegisterCategory({ title }: Props) {
-  const ratingList = [
-    {
-      cssName: " active1",
-      text: "추움",
-    },
-    {
-      cssName: " active2",
-      text: "시원",
-    },
-    {
-      cssName: " active3",
-      text: "적당",
-    },
-    {
-      cssName: " active4",
-      text: "따뜻",
-    },
-    {
-      cssName: " active5",
-      text: "더움",
-    },
-  ];
-
-  const array: number[] = [1, 2, 3, 4, 5];
-  const [rating, setRating] = useState<number>(3);
+function RegisterCategory({ title, ratingChange }: Props) {
+  const array: number[] = [0, 1, 2, 3, 4];
+  const [rating, setRating] = useState<number>(2);
+  const titleArr = ["아우터","상의","하의","기타"];
+  useEffect(() => {
+    ratingChange(titleArr.indexOf(title), rating);
+  }, [rating]);
   return (
     <div className="RegisterCategory centerLeftRight">
       <div className="ratingWrapper">
         <div className="title">{title}</div>
-        <div className={"ratingText" + ratingList[rating - 1].cssName}>
-          {ratingList[rating - 1].text}
+        <div className={"ratingText" + ratingList[rating].cssName}>
+          {ratingList[rating].text}
         </div>
 
-        {array.map((arrayindex) => (
+        {array.map((element) => (
           <div
             className={
               "ratingBtn" +
-              (rating === arrayindex ? ratingList[rating - 1].cssName : "")
+              (rating === element ? ratingList[rating].cssName : "")
             }
-            onClick={() => setRating(arrayindex)}
+            key={array.indexOf(element)}
+            onClick={() => setRating(element)}
           />
         ))}
       </div>
@@ -56,10 +40,6 @@ function RegisterCategory({ title }: Props) {
             <GoPlusSmall />
           </Link>
         </div>
-        <div>옷1</div>
-        <div>옷2</div>
-        <div>옷3</div>
-        <div>옷4</div>
       </div>
     </div>
   );

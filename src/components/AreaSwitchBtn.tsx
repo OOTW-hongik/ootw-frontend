@@ -1,10 +1,12 @@
 import { FaMapMarkerAlt } from "react-icons/fa";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "../css/AreaSwitchBtn.css";
-
-function AreaSwitchBtn () {
-
-  const [selectedArea, setSelectedArea] = useState(41);
+type Props = {
+  fetchLocationInfo: string;
+  changeLocationInfo: Function;
+};
+function AreaSwitchBtn({ fetchLocationInfo, changeLocationInfo }: Props) {
+  const [selectedArea, setSelectedArea] = useState(fetchLocationInfo);
   const [isDropdownOpened, setIsDropdownOpened] = useState(false);
   const areaList = [
     { id: 0, areaNum: 105, areaName: "강릉" },
@@ -104,25 +106,31 @@ function AreaSwitchBtn () {
     { id: 94, areaNum: 212, areaName: "홍천" },
     { id: 95, areaNum: 169, areaName: "흑산도" },
   ];
+  useEffect(() => {
+    setSelectedArea(fetchLocationInfo);
+  }, [fetchLocationInfo]);
+  
   return (
     <div>
       <div
-        className="areaSwitchBtn"
+        id="areaSwitchBtn"
         onClick={() => {
           setIsDropdownOpened(!isDropdownOpened);
         }}
       >
         <FaMapMarkerAlt />
-        {areaList[selectedArea].areaName}
+        {selectedArea}
       </div>
       {isDropdownOpened && (
         <div className="dropdown">
           {areaList.map((element) => (
             <div
               className="dropdownOption"
+              key={element.id}
               onClick={() => {
-                setSelectedArea(element.id);
+                setSelectedArea(element.areaName);
                 setIsDropdownOpened(false);
+                changeLocationInfo(fetchLocationInfo);
               }}
             >
               {element.areaName}

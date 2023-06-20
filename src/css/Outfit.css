@@ -1,0 +1,30 @@
+#Outfit {
+    width: 360px;
+    height: 90px;
+    background-color: white;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    
+    box-shadow: 0 2px 4px 0 rgb(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: space-between;
+}
+
+#outfitLeftWrapper {
+    margin-left: 15px;
+    
+}
+#outfitRightWrapper {
+    margin-right: 15px;
+}
+#outfitRightWrapper > div {
+    width: 65px;
+}
+#outfitRightWrapper > div > div {
+    display: flex;
+    justify-content: center;
+}
+.mainClothesPhoto {
+    width: 55px;
+    height: 55px;
+}

@@ -47,8 +47,17 @@
 
 .commentTitle {
     text-align: left;
-    font-size: 20px;
+    font-size: 18px;
     padding : 7px 5px ;
     border-bottom: 1px solid lightgray;
     margin: 0 15px;
+}
+
+#registerSaveBtn {
+    padding: 5px;
+    width: 25px;
+    height: 25px;
+}
+#registerSaveBtn:hover {
+    cursor: pointer;
 }

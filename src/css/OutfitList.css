@@ -1,33 +1,24 @@
-.pageTitle {
-    padding-top: 30px;
-    text-align:center;
-}
 
-.btnWrapper {
+#titleWrapper {
     display: flex;
-    text-align:center;
-    justify-content: center; /* 좌우 중앙정렬 */
+    justify-content: space-between;
 }
-
-.btnWrapper > button {
+#btnWrapper {
     display: flex;
-    align-items: center; /* 글씨 상하 중앙정렬 */
-    justify-content: center; /* 글씨 좌우 중앙정렬 */
-
-    width: 130px;
-    height: 60px;
-
-    background-color: white;
-    border: 1px solid gray;
-    border-radius: 20px;
-
-    margin: 10px 25px;
-
-    font-size: 20px;
+    text-align: right;
+    margin-right: 25px;
 }
+#btnWrapper:hover {
+    cursor: pointer;
+}
+
+#btnWrapper > div {
+    display: flex;
+}
+
 
 .icon {
-
-    margin-right: 5px;
-    text-align: center;
+    margin-left: 15px;
+    width: 15px;
+    height: 15px;
 }

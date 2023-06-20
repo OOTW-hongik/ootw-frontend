@@ -2,18 +2,81 @@
     margin-left: 15px;
 }
 
-.registerOutfitBtn {
+#registerOutfitBtn {
     width: 360px;
     height: 65px;
 
     background-color: white;
-    border: solid 2px #CFCFCF;
-    border-radius: 20px;
-    box-shadow: 0 2px 4px 0 rgb(0, 0, 0, 0.1);
+    border:none;
+    color:#7db8e4;
+    font-weight: 600;
+    border-radius: 50px;
+    box-shadow: 0 2px 4px 0 rgb(0, 0, 0, 0.2);
     
     font-size: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
-.registerOutfitBtn:active {
-    border-color: gray;
+#registerOutfitBtn:active {
+    background-color: #DCEDFA;
+    color: white;
+}
+#registerOutfitBtn:hover {
+    cursor: pointer;
 }
 
+
+#WeatherBox {
+    width: 340px;
+    height: auto;
+    background-color: #DCEDFA;
+    border-radius: 20px;
+    padding: 10px;
+}
+#weatherUpperWrapper{
+    display: flex;
+    justify-content: space-between;
+}
+#weatherIcon {
+    color: white;
+    margin-left: 40px;
+}
+#weatherIcon * {
+    height: 80px;
+    width: 80px;
+}
+#weatherTextWrapper {
+    margin-right: 15px;
+}
+#weatherTextWrapper > div {
+    text-align: right;
+    font-size: 20px;
+    margin: 6px 0;
+    color: #444444;
+}
+#weatherIndexWrapper {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+    color: #444444;
+}
+
+#WeatherGraph {
+    width: 330px;
+    height: 50px;
+}
+
+#weatherTextWrapper > div {
+    display: flex;
+    justify-content: right;
+    width: 170px;
+  }
+
+  .width38 {
+    width: 40px;
+    text-align: right;
+  }
+  #width80 {
+    width: 80px;    
+    text-align: right;
+  }
