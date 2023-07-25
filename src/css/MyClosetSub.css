@@ -9,22 +9,9 @@
     padding-left: 10px;
 }
 
-#subCategory {
+.subCategory {
     padding: 10px;
 }
-#selectedSubCategory {
-    padding: 10px;
-    font-weight: bold;
-}
-#subCategory::after { /* bold로 변경 시 사이즈 변화 방지 */
-    display: block;
-    content: attr(title);
-    font-weight: bold;
-    height: 1px;
-    color: transparent;
-    overflow: hidden;
-    visibility: hidden;
-  }
 
 .registerClosetBtn {
     width: 80px;
@@ -37,4 +24,14 @@
     font-size: 50px;
     margin-top: 9px;
     margin-bottom: 9px;
+}
+
+#clothes {
+    width: 80px;
+    height: 80px;
+}
+
+.selectedCloth {
+    border: 3px solid #cfcfcf;
+    border-radius: 5px;
 }

@@ -3,22 +3,22 @@
     display: flex;
     justify-content: space-between;
 }
-#btnWrapper {
+.btnWrapper {
     display: flex;
     text-align: right;
     margin-right: 25px;
 }
-#btnWrapper:hover {
+.btn:hover {
     cursor: pointer;
 }
 
-#btnWrapper > div {
+.btn {
     display: flex;
 }
-
 
 .icon {
     margin-left: 15px;
     width: 15px;
     height: 15px;
 }
+

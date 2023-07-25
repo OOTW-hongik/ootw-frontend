@@ -28,3 +28,16 @@
     width: 55px;
     height: 55px;
 }
+.clothWrapper {
+    position: relative;
+}
+.plus {
+    position: absolute;
+    top:2px;
+    right:2px;
+    background-color: #cfcfcf;
+    width: 12px;
+    height: 12px;
+    border-radius: 100%;
+    z-index: 1;
+}

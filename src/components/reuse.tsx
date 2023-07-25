@@ -35,23 +35,25 @@ const weatherIconList = [
 ];
 
 const outerSubCategoryList = [
-  { id:0, subCategoryName: "후드집업" },
-  { id:1, subCategoryName: "자켓" },
-  { id:2, subCategoryName: "가디건" },
-  { id:3, subCategoryName: "코트" },
-  { id:4, subCategoryName: "패딩" },
+  "후드집업" ,
+  "자켓" ,
+  "가디건" ,
+  "코트" ,
+  "패딩" ,
 ];
 const topSubCategoryList = [
-  { id:0, subCategoryName: "반팔티" },
-  { id:1, subCategoryName: "긴팔티" },
-  { id:2, subCategoryName: "셔츠" },
-  { id:3, subCategoryName: "후드티" },
-  { id:4, subCategoryName: "원피스" },
+  "반팔티" ,
+  "긴팔티" ,
+  "셔츠" ,
+  "후드티" ,
+  "원피스" ,
+  "폴로티" ,
+  "블라우스" ,
 ];
 const bottomSubCategoryList = [
-  { id:0, subCategoryName: "긴바지" },
-  { id:1, subCategoryName: "반바지" },
-  { id:2, subCategoryName: "치마" },
+  "긴바지" ,
+  "반바지" ,
+  "치마" ,
 ];
 
 const ratingList = [

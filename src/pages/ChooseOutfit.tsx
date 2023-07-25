@@ -1,7 +1,8 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
-import MyClosetSub from "../components/MyClosetSub";
+import SelectCloth from "../components/SelectCloth";
 import "../css/ChooseOutfit.css"
+
 
 function ChooseOutfit() {
   const title = useLocation().state;
@@ -16,7 +17,7 @@ function ChooseOutfit() {
       >
         {title} 선택
       </div> 
-      <MyClosetSub category={title}></MyClosetSub>
+      <SelectCloth category={title}></SelectCloth>
     </div>
   );
 }

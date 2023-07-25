@@ -3,6 +3,7 @@ import { ratingList } from "./reuse";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { GoPlusSmall } from "react-icons/go";
+
 type Props = {
   title: string;
   ratingChange : Function;

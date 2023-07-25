@@ -1,4 +1,4 @@
-import "../css/UploadCloset.css";
+import "../css/ClosetCRUD.css";
 import {
   outerSubCategoryList,
   topSubCategoryList,
@@ -7,7 +7,7 @@ import {
 import { SetStateAction, useState } from "react";
 import { IoImagesOutline } from "react-icons/io5";
 import { TiArrowSortedDown } from "react-icons/ti";
-
+import Dropdown from "../components/Dropdown";
 import { TfiSave } from "react-icons/tfi";
 
 type Props = {
@@ -15,10 +15,10 @@ type Props = {
   changeFromChild: Function;
 };
 
-function UploadCloset({ category, changeFromChild }: Props) {
+function ClosetCreate({ category, changeFromChild }: Props) {
   const [selectedSubCategory, setSelectedSubCategory] = useState(category);
   const [isDropdownOpened, setIsDropdownOpened] = useState<boolean>(false);
-  const [inputtedPhoto, setInputtedPhoto] = useState("");
+  const [inputtedPhoto, setInputtedPhoto] = useState<FileList | null>();
   const [inputtedComment, setInputtedComment] = useState("");
 
   let selectedList = outerSubCategoryList;
@@ -35,28 +35,39 @@ function UploadCloset({ category, changeFromChild }: Props) {
   const commentChange = (e: { target: { value: SetStateAction<string> } }) => {
     setInputtedComment(e.target.value);
   };
-  const photoChange = (e: { target: { value: SetStateAction<string> } }) => {
-    setInputtedPhoto(e.target.value);
-    setSelectedSubCategory(selectedList[0].subCategoryName);
+  const photoChange = (e: React.ChangeEvent<HTMLInputElement>) => {   
+    setInputtedPhoto(e.target.files);
+    setSelectedSubCategory(selectedList[0]);
+    // console.log(e.target.files);
   };
 
   function upload() {
     if (inputtedPhoto) {
+      let formData = new FormData();
+
+      formData.append("clothesPhoto", inputtedPhoto[0]);
+      formData.append(
+        "clothesRequest",
+        new Blob(
+          [
+            JSON.stringify({
+              memberId: 1,
+              category: category,
+              subCategory: selectedSubCategory,
+              clothesPhoto: inputtedPhoto,
+              clothesComment: inputtedComment,
+              hidden: false,
+            }),
+          ],
+          { type: "application/json" }
+        )
+      );
+      console.log(formData);
       fetch(`http://43.200.138.39:8080/clothes`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          memberId: 1,
-          category: category,
-          subCategory: selectedSubCategory,
-          clothesPhoto: inputtedPhoto,
-          clothesComment: inputtedComment,
-          hidden: false,
-        }),
+        body: formData,
       });
-      changeFromChild(false);      
+      changeFromChild(false);
       window.location.reload();
     } else {
       alert("사진 필수!");
@@ -97,21 +108,30 @@ function UploadCloset({ category, changeFromChild }: Props) {
         </div>
       )}
       {isDropdownOpened && (
-        <div className="dropdown">
-          {selectedList.map((element: any) => (
-            <div
-              className="dropdownOption"
-              id="subcateDropdownOption"
-              key={element.id}
-              onClick={() => {
-                setSelectedSubCategory(element.subCategoryName);
-                setIsDropdownOpened(false);
-              }}
-            >
-              {element.subCategoryName}
-            </div>
-          ))}
-        </div>
+                <Dropdown
+                closeDropdown={() => setIsDropdownOpened(false)}
+                selectResult={(value: string) => setSelectedSubCategory(value)}
+                dropList={selectedList}
+                selectedList={selectedList.map((element: string) =>
+                  Boolean(selectedSubCategory === element)
+                )}
+              />
+        // <div className="dropdown">
+          
+        //   {selectedList.map((element: any) => (
+        //     <div
+        //       className="dropdownOption"
+        //       id="subcateDropdownOption"
+        //       key={element.id}
+        //       onClick={() => {
+        //         setSelectedSubCategory(element.subCategoryName);
+        //         setIsDropdownOpened(false);
+        //       }}
+        //     >
+        //       {element.subCategoryName}
+        //     </div>
+        //   ))}
+        // </div>
       )}
 
       <div
@@ -129,9 +149,9 @@ function UploadCloset({ category, changeFromChild }: Props) {
         onChange={commentChange}
       />
 
-      <TfiSave id="saveBtn" size={25} onClick={upload} />
+      <TfiSave className="CRUDBtn" id="rightBtn" size={25} onClick={upload} />
     </div>
   );
 }
 
-export default UploadCloset;
+export default ClosetCreate;

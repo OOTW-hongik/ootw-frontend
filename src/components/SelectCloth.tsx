@@ -2,16 +2,16 @@ import React, { useState, useEffect } from "react";
 import "../css/MyClosetSub.css";
 import Modal from "./Modal";
 import ClosetCreate from "./ClosetCreate";
-import NoServerAlert from "../components/NoServerAlert";
+import NoServerAlert from "./NoServerAlert";
 import ClosetRead from "./ClosetRead";
 
 type Props = {
   category: string;
 };
-const MyClosetSub = ({ category }: Props) => {
+const SelectCloth = ({ category }: Props) => {
   const [selectedSubCate, setSelectedSubCate] = useState("전체");
   const [isModalOpened, setIsModalOpened] = useState(false);
-  const [isDetailOpened, setIsDetailOpened] = useState(0);
+  const [isSelected, setIsSelected] = useState(0);
   const [errorMsg, setErrorMsg] = useState();
   const [subCategoryNameList, setSubCategoryNameList] = useState([]);
   const [clothesList, setClothesList] = useState([
@@ -73,13 +73,25 @@ const MyClosetSub = ({ category }: Props) => {
         {clothesList &&
           clothesList.map((element) =>
             selectedSubCate === "전체" ? (
-              <div onClick={() => setIsDetailOpened(element.clothesId)}>
-                <img id="clothes" src={element.clothesUrl} />
+              <div onClick={() => setIsSelected(element.clothesId)}>
+                <img
+                  id="clothes"
+                  className={
+                    element.clothesId === isSelected ? "selectedCloth" : ""
+                  }
+                  src={element.clothesUrl}
+                />
               </div>
             ) : (
               selectedSubCate === element.subCategory && (
-                <div onClick={() => setIsDetailOpened(element.clothesId)}>
-                  <img id="clothes" src={element.clothesUrl} />
+                <div onClick={() => setIsSelected(element.clothesId)}>
+                  <img
+                    id="clothes"
+                    className={
+                      element.clothesId === isSelected ? "selectedCloth" : ""
+                    }
+                    src={element.clothesUrl}
+                  />
                 </div>
               )
             )
@@ -90,15 +102,8 @@ const MyClosetSub = ({ category }: Props) => {
           <ClosetCreate category={category} changeFromChild={changeFromChild} />
         </Modal>
       )}
-      {isDetailOpened ? (
-        <Modal closeModal={() => setIsDetailOpened(0)}>
-          <ClosetRead id={isDetailOpened} />
-        </Modal>
-      ) : (
-        <></>
-      )}
     </div>
   );
 };
 
-export default MyClosetSub;
+export default SelectCloth;

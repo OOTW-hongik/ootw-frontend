@@ -1,5 +1,4 @@
 import "../css/Home.css";
-// import axios from 'axios';
 import { useState, useEffect } from "react";
 import BottomNav from "../components/BottomNav";
 import AreaSwitchBtn from "../components/AreaSwitchBtn";
@@ -8,15 +7,14 @@ import { Line } from "react-chartjs-2";
 import { Chart as ChartJS, registerables } from "chart.js";
 import { weatherIconList } from "../components/reuse";
 import Outfit from "../components/Outfit";
+import NoServerAlert from "../components/NoServerAlert";
 
 ChartJS.register(...registerables);
 
 const Home = () => {
-  const [fetchLocationInfo, setFetchLocationInfo] = useState("");
+  const [fetchLocationInfo, setFetchLocationInfo] = useState("서울경기");
   const [fetchOutfitList, setFetchOutfitList] = useState([]);
-  const changeLocationInfo = (value:string) => {
-    setFetchLocationInfo(value);
-  };
+  const [errorMsg, setErrorMsg] = useState();
   useEffect(() => {
     fetch("http://43.200.138.39:8080/home?memberId=1", {
       method: "GET",
@@ -25,13 +23,20 @@ const Home = () => {
       .then((res) => {
         setFetchLocationInfo(res.location);
         setFetchOutfitList(res.outfitResponseList);
-      });
+      })
+      .catch((error) => setErrorMsg(error.message));
   }, []);
   //location 바뀔때마다 fetch
 
   return (
     <div className="Home mobileWeb">
-      <AreaSwitchBtn fetchLocationInfo={fetchLocationInfo} changeLocationInfo={changeLocationInfo}/>
+      {errorMsg && <NoServerAlert errorMsg={errorMsg} />}
+      <AreaSwitchBtn
+        fetchLocationInfo={fetchLocationInfo}
+        changeLocationInfo={(value: string) => {
+          setFetchLocationInfo(value);
+        }}
+      />
       <WeatherBox />
       <Link to="/registeroutfit" style={{ textDecoration: "none" }}>
         <button id="registerOutfitBtn" className="centerLeftRight">
@@ -41,9 +46,11 @@ const Home = () => {
       <div style={{ marginBottom: "10px" }}>
         비슷한 체감온도에서 입었던 옷이에요
       </div>
-      {fetchOutfitList &&
-        fetchOutfitList
-          .map((element) => <Outfit element={element} />)}
+      {fetchOutfitList.length > 0 ? (
+        fetchOutfitList.map((element) => <Outfit element={element} />)
+      ) : (
+        <div style={{ marginTop: "20px", fontSize: "20px" }}>기록이 없어요</div>
+      )}
       <BottomNav selectedNav="home" />
     </div>
   );
@@ -55,43 +62,43 @@ function WeatherBox() {
   const [skyCondition, setSkyCondition] = useState(1);
   const weatherInfoList = [
     {
-      id:0,
+      id: 0,
       time: 6,
       temp: 10,
       icon: 0,
     },
     {
-      id:1,
+      id: 1,
       time: 9,
       temp: 21,
       icon: 2,
     },
     {
-      id:2,
+      id: 2,
       time: 12,
       temp: 24,
       icon: 2,
     },
     {
-      id:3,
+      id: 3,
       time: 15,
       temp: 18,
       icon: 2,
     },
     {
-      id:4,
+      id: 4,
       time: 18,
       temp: 24,
       icon: 2,
     },
     {
-      id:5,
+      id: 5,
       time: 21,
       temp: 21,
       icon: 2,
     },
     {
-      id:6,
+      id: 6,
       time: 24,
       temp: 25,
       icon: 2,
@@ -116,7 +123,7 @@ function WeatherBox() {
       <div id="weatherIndexWrapper">
         {weatherInfoList.map((element) => (
           <div style={{ width: "30px" }} key={element.id}>
-            <div style={{ fontSize: "13px" }} >{element.time}시</div>
+            <div style={{ fontSize: "13px" }}>{element.time}시</div>
             {/* <div>{weatherIconList[element.icon].tag}</div> */}
             <div style={{ fontSize: "15px" }}>{element.temp}°</div>
           </div>

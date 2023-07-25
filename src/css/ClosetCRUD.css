@@ -51,11 +51,16 @@
     outline: 0;
 }
 
-#saveBtn {
+.CRUDBtn {
     position: absolute;
     bottom: 40px;
+}
+.CRUDBtn:hover {
+    cursor: pointer;
+}
+#rightBtn {
     right: 50px;
 }
-#saveBtn:hover {
-    cursor: pointer;
+#leftBtn {
+    right: 100px;
 }

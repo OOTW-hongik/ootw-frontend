@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "../css/Outfit.css";
 import MiniWeather from "./MiniWeather";
 import { ratingList } from "./reuse";
+import {BsPlus} from "react-icons/bs";
 
 type Props = {
   element: {
@@ -39,24 +40,35 @@ const Outfit = ({ element }: Props) => {
         />
       </div>
       <div id="outfitRightWrapper" className="flex">
-        <div>
-          <div className="mainClothesPhoto" >{element.outerUrl}</div>
+        <div className="clothWrapper">
+          {element.manyOuter && <BsPlus className="plus" />}
+          <img
+            className="mainClothesPhoto"
+            src={element.outerUrl}
+            alt="아우터"
+          />
           <div
-            className={"ratingText" + ratingList[element.outerRating].cssName}
+            className={"ratingText centerLeftRight" + ratingList[element.outerRating].cssName}
           >
             {ratingList[element.outerRating].text}
           </div>
         </div>
-        <div>
-          <div className="mainClothesPhoto" >{element.topUrl}</div>
-          <div className={"ratingText" + ratingList[element.topRating].cssName}>
+        <div className="clothWrapper">
+          {element.manyTop && <BsPlus className="plus" />}
+          <img className="mainClothesPhoto" src={element.topUrl} alt="상의" />
+          <div className={"ratingText centerLeftRight" + ratingList[element.topRating].cssName}>
             {ratingList[element.topRating].text}
           </div>
         </div>
-        <div>
-          <div className="mainClothesPhoto" >{element.bottomUrl}</div>
+        <div className="clothWrapper">
+          {element.manyBottom && <BsPlus className="plus" />}
+          <img
+            className="mainClothesPhoto"
+            src={element.bottomUrl}
+            alt="하의"
+          />
           <div
-            className={"ratingText" + ratingList[element.bottomRating].cssName}
+            className={"ratingText centerLeftRight" + ratingList[element.bottomRating].cssName}
           >
             {ratingList[element.bottomRating].text}
           </div>
