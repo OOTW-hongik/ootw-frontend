@@ -1,4 +1,5 @@
 import "../css/Home.css";
+// import axios from 'axios';
 import { useState, useEffect } from "react";
 import BottomNav from "../components/BottomNav";
 import AreaSwitchBtn from "../components/AreaSwitchBtn";
@@ -12,7 +13,7 @@ import NoServerAlert from "../components/NoServerAlert";
 ChartJS.register(...registerables);
 
 const Home = () => {
-  const [fetchLocationInfo, setFetchLocationInfo] = useState("서울경기");
+  const [fetchLocationInfo, setFetchLocationInfo] = useState("");
   const [fetchOutfitList, setFetchOutfitList] = useState([]);
   const [errorMsg, setErrorMsg] = useState();
   useEffect(() => {
@@ -21,8 +22,7 @@ const Home = () => {
     })
       .then((res) => res.json())
       .then((res) => {
-        setFetchLocationInfo(res.location);
-        setFetchOutfitList(res.outfitResponseList);
+        setFetchOutfitList(res.outfitSummaryList);
       })
       .catch((error) => setErrorMsg(error.message));
   }, []);
@@ -32,7 +32,6 @@ const Home = () => {
     <div className="Home mobileWeb">
       {errorMsg && <NoServerAlert errorMsg={errorMsg} />}
       <AreaSwitchBtn
-        fetchLocationInfo={fetchLocationInfo}
         changeLocationInfo={(value: string) => {
           setFetchLocationInfo(value);
         }}

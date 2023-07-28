@@ -23,12 +23,17 @@
     justify-content: center;
     
     margin-bottom: 20px;
+    margin-right: 10px;
 }
 .inputFileBtn:active {
     border-color: gray;
 }
 #inputFile {
     display: none;
+}
+#photoWrapper {
+ display: flex;
+ 
 }
 
 #subCategoryDropdown {

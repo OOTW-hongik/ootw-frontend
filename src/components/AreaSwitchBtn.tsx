@@ -1,13 +1,13 @@
 import { FaMapMarkerAlt } from "react-icons/fa";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useLayoutEffect } from "react";
 import "../css/AreaSwitchBtn.css";
 import Dropdown from "../components/Dropdown";
+import NoServerAlert from "../components/NoServerAlert";
 
 type Props = {
-  fetchLocationInfo: string;
   changeLocationInfo: (value: string) => void;
 };
-function AreaSwitchBtn({ fetchLocationInfo, changeLocationInfo }: Props) {
+function AreaSwitchBtn({ changeLocationInfo }: Props) {
   const areaList = [
     "서울경기",
     "강원영서",
@@ -32,12 +32,27 @@ function AreaSwitchBtn({ fetchLocationInfo, changeLocationInfo }: Props) {
     // { id: 9, areaName: "제주도" },
     // { id: 10, areaName: "울릉독도" },
   ];
-  const [selectedArea, setSelectedArea] = useState(fetchLocationInfo);
+  const [selectedArea, setSelectedArea] = useState("");
   const [isDropdownOpened, setIsDropdownOpened] = useState(false);
+  const [errorMsg, setErrorMsg] = useState();
 
-  useEffect(() => {
-    setSelectedArea(fetchLocationInfo);
+  useLayoutEffect(() => {
+    let fLI = sessionStorage.getItem('fetchLocationInfo');
+    if (fLI) {
+      setSelectedArea(fLI);
+    } else {
+      fetch('http://43.200.138.39:8080/home?memberId=1', {
+        method: "GET"
+      }).then(res => res.json()).then(res => {
+        setSelectedArea(res.location);
+        // console.log("로케", res.location);
+      })
+        .catch((error) => setErrorMsg(error.message));
+    }
+    // console.log("ASB uLE",selectedArea);
   }, []);
+
+
   useEffect(() => {
     changeLocationInfo(selectedArea);
   }, [selectedArea]);

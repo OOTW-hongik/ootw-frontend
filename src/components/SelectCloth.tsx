@@ -3,7 +3,7 @@ import "../css/MyClosetSub.css";
 import Modal from "./Modal";
 import ClosetCreate from "./ClosetCreate";
 import NoServerAlert from "./NoServerAlert";
-import ClosetRead from "./ClosetRead";
+import { Link } from "react-router-dom";
 
 type Props = {
   category: string;
@@ -11,13 +11,12 @@ type Props = {
 const SelectCloth = ({ category }: Props) => {
   const [selectedSubCate, setSelectedSubCate] = useState("전체");
   const [isModalOpened, setIsModalOpened] = useState(false);
-  const [isSelected, setIsSelected] = useState(0);
   const [errorMsg, setErrorMsg] = useState();
   const [subCategoryNameList, setSubCategoryNameList] = useState([]);
   const [clothesList, setClothesList] = useState([
     { clothesId: 0, clothesUrl: "", subCategory: "" },
   ]);
-  const changeFromChild = (value: boolean) => {
+  const closeFromChild = (value: boolean) => {
     setIsModalOpened(value);
   };
   useEffect(() => {
@@ -70,36 +69,41 @@ const SelectCloth = ({ category }: Props) => {
         >
           +
         </button>
+
         {clothesList &&
           clothesList.map((element) =>
             selectedSubCate === "전체" ? (
-              <div onClick={() => setIsSelected(element.clothesId)}>
-                <img
-                  id="clothes"
-                  className={
-                    element.clothesId === isSelected ? "selectedCloth" : ""
-                  }
-                  src={element.clothesUrl}
-                />
-              </div>
+              <Link
+                to="/registeroutfit"
+                onClick={() =>
+                  sessionStorage.setItem(
+                    `inputted${category}`,
+                    String(element.clothesId)
+                  )
+                }
+              >
+                <img id="clothes" src={element.clothesUrl} />
+              </Link>
             ) : (
               selectedSubCate === element.subCategory && (
-                <div onClick={() => setIsSelected(element.clothesId)}>
-                  <img
-                    id="clothes"
-                    className={
-                      element.clothesId === isSelected ? "selectedCloth" : ""
-                    }
-                    src={element.clothesUrl}
-                  />
-                </div>
+                <Link
+                  to="/registeroutfit"
+                  onClick={() =>
+                    sessionStorage.setItem(
+                      `inputted${category}`,
+                      String(element.clothesId)
+                    )
+                  }
+                >
+                  <img id="clothes" src={element.clothesUrl} />
+                </Link>
               )
             )
           )}
       </div>
       {isModalOpened && (
         <Modal closeModal={() => setIsModalOpened(false)}>
-          <ClosetCreate category={category} changeFromChild={changeFromChild} />
+          <ClosetCreate category={category} closeFromChild={closeFromChild} />
         </Modal>
       )}
     </div>

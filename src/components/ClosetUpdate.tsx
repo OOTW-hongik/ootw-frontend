@@ -4,25 +4,47 @@ import {
   topSubCategoryList,
   bottomSubCategoryList,
 } from "./reuse";
-import { SetStateAction, useState } from "react";
+import { SetStateAction, useState, useEffect } from "react";
 import { IoImagesOutline } from "react-icons/io5";
 import { TiArrowSortedDown } from "react-icons/ti";
 import Dropdown from "../components/Dropdown";
 import { TfiSave } from "react-icons/tfi";
 
 type Props = {
+  id: number;
   category: string;
   closeFromChild: Function;
 };
 
-function ClosetCreate({ category, closeFromChild }: Props) {
-  const [selectedSubCategory, setSelectedSubCategory] = useState<string | null>(
+function ClosetUpdate({ category, id, closeFromChild }: Props) {
+  const [selectedSubCategory, setSelectedSubCategory] = useState<string>(
     category
   );
   const [isDropdownOpened, setIsDropdownOpened] = useState<boolean>(false);
   const [inputtedPhoto, setInputtedPhoto] =
     useState<FormDataEntryValue | null>();
   const [inputtedComment, setInputtedComment] = useState("");
+  const [fetchInfo, setFetchInfo] = useState({
+    clothesId: 0,
+    subCategory: "string",
+    clothesComment: "string",
+    clothesUrl: "string",
+    hidden: true,
+  });
+  const [errorMsg, setErrorMsg] = useState();
+
+  useEffect(() => {
+    fetch(`http://43.200.138.39:8080/clothes?clothesId=${id}`, {
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        setFetchInfo(res);
+        setSelectedSubCategory(res.subCategory);
+        setInputtedComment(res.clothesComment);
+      })
+      .catch((error) => setErrorMsg(error.message));
+  }, []);
 
   let selectedList = outerSubCategoryList;
   switch (category) {
@@ -65,17 +87,20 @@ function ClosetCreate({ category, closeFromChild }: Props) {
     }
   };
 
-  function upload() {
-    if (inputtedPhoto) {
+  function update() {
+    if (inputtedPhoto || fetchInfo.clothesUrl) {
       let formData = new FormData();
-
-      formData.append("clothesPhoto", inputtedPhoto);
+      if (inputtedPhoto) {
+        formData.append("clothesPhoto", inputtedPhoto);
+      } else {
+        formData.append("clothesPhoto", fetchInfo.clothesUrl);
+      }
       formData.append(
-        "clothesRequest",
+        "clothesUpdateRequest",
         new Blob(
           [
             JSON.stringify({
-              memberId: 1,
+              clothesId: id,
               category: category,
               subCategory: selectedSubCategory,
               clothesPhoto: inputtedPhoto,
@@ -88,10 +113,9 @@ function ClosetCreate({ category, closeFromChild }: Props) {
       );
       console.log(formData);
       fetch(`http://43.200.138.39:8080/clothes`, {
-        method: "POST",
+        method: "PUT",
         body: formData,
       });
-      closeFromChild("m");
       window.location.reload();
     } else {
       alert("사진 필수!");
@@ -101,17 +125,33 @@ function ClosetCreate({ category, closeFromChild }: Props) {
   return (
     <div className="UploadCloset">
       <div className="inputTitle">사진</div>
-      <label htmlFor="inputFile">
-        <div className="inputFileBtn inputBorder">
-          <IoImagesOutline size={"50px"} />
-        </div>
-      </label>
-      <input
-        type="file"
-        id="inputFile"
-        accept="image/*"
-        onChange={photoChange}
-      />
+      <div id="photoWrapper">
+        <label htmlFor="inputFile">
+          <div className="inputFileBtn inputBorder">
+            <IoImagesOutline size={"50px"} />
+          </div>
+        </label>
+        <input
+          type="file"
+          id="inputFile"
+          accept="image/*"
+          onChange={photoChange}
+        />
+        {inputtedPhoto ? (
+          // 새로넣은 이미지가 있으면 
+          <img
+            className="inputFileBtn"
+            src={String(inputtedPhoto)}
+            alt={selectedSubCategory}
+          />
+        ) : (
+          <img
+            className="inputFileBtn"
+            src={fetchInfo.clothesUrl}
+            alt={selectedSubCategory}
+          />
+        )}
+      </div>
 
       <div className="inputTitle">카테고리</div>
       {category === "기타" ? (
@@ -154,12 +194,13 @@ function ClosetCreate({ category, closeFromChild }: Props) {
         type="text"
         className="inputBorder"
         placeholder="한줄평을 입력해보세요."
+        value={inputtedComment}
         onChange={commentChange}
       />
 
-      <TfiSave className="CRUDBtn" id="rightBtn" size={25} onClick={upload} />
+      <TfiSave className="CRUDBtn" id="rightBtn" size={25} onClick={update} />
     </div>
   );
 }
 
-export default ClosetCreate;
+export default ClosetUpdate;

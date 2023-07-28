@@ -32,17 +32,8 @@ const OutfitList = () => {
   ]);
   const [isSortOpened, setIsSortOpened] = useState<boolean>(false);
   const [isFilterOpened, setIsFilterOpened] = useState<boolean>(false);
-  const sortList = [
-    "최근등록순","체감비슷순"
-    // { id: 0, name: "최근등록순" },
-    // { id: 1, name: "체감비슷순" },
-  ];
-  const filterList = [
-    "아우터","상의","하의"
-    // { id: 0, name: "아우터" },
-    // { id: 1, name: "상의" },
-    // { id: 2, name: "하의" },
-  ];
+  const sortList = ["최근등록순", "체감비슷순"];
+  const filterList = ["아우터", "상의", "하의"];
   const [selectedSort, setSelectedSort] = useState<string>(sortList[0]);
   const [selectedFilter, setSelectedFilter] = useState<string>("");
   const [isFilterChecked, setIsFilterChecked] = useState<boolean>(false);
@@ -58,14 +49,15 @@ const OutfitList = () => {
       .then((res) => res.json())
       .then((res) => {
         setFetchNameInfo(res.name);
-        setFetchOutfitList(res.outfitResponse);
+        setFetchOutfitList(res.outfitSummary);
       })
       .catch((error) => setErrorMsg(error.message));
   }, []);
   useEffect(() => {
     // spread 사용하여 리스트 state 변경
     let copy = [...checkedFilterList];
-    copy[filterList.indexOf(selectedFilter)] = !checkedFilterList[filterList.indexOf(selectedFilter)];
+    copy[filterList.indexOf(selectedFilter)] =
+      !checkedFilterList[filterList.indexOf(selectedFilter)];
     setCheckedFilterList(copy);
 
     // 불 들어올까 말까 결정
@@ -132,14 +124,14 @@ const OutfitList = () => {
       </div>
 
       {fetchOutfitList.length > 0 ? (
-          fetchOutfitList.map(
-            (element) =>
-              (checkedFilterList[0] ? element.outerRating === 2 : true) &&
-              (checkedFilterList[1] ? element.topRating === 2 : true) &&
-              (checkedFilterList[2] ? element.bottomRating === 2 : true) && (
-                <Outfit element={element} />
-              )
-          )
+        fetchOutfitList.map(
+          (element) =>
+            (checkedFilterList[0] ? element.outerRating === 3 : true) &&
+            (checkedFilterList[1] ? element.topRating === 3 : true) &&
+            (checkedFilterList[2] ? element.bottomRating === 3 : true) && (
+              <Outfit element={element} />
+            )
+        )
       ) : (
         <div style={{ marginTop: "20px", fontSize: "20px" }}>기록이 없어요</div>
       )}

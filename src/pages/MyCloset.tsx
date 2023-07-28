@@ -1,37 +1,43 @@
-import React, { useState } from "react";
-import '../css/MyCloset.css';
+import React, { useState, useEffect } from "react";
+import "../css/MyCloset.css";
+import { BiCheckbox, BiCheckboxSquare } from "react-icons/bi";
 import BottomNav from "../components/BottomNav";
 import MyClosetSub from "../components/MyClosetSub";
 
 const MyCloset = () => {
-  const [selectedCate, setSelectedCate] = useState("아우터");
+  const cateList = ["아우터", "상의", "하의", "기타"];
+  const [selectedCate, setSelectedCate] = useState(cateList[0]);
+  const [showHidden, setShowHidden] = useState(false);
+
   return (
     <div className="MyCloset mobileWeb">
-      <h3 className="pageTitle">내 옷장</h3>
-      <div className="categoryWrapper">
-        <div
-          onClick={() => setSelectedCate("아우터")}
-          className={selectedCate === "아우터" ? "category selected" : "category"}>
-          아우터
-        </div>
-        <div
-          onClick={() => setSelectedCate("상의")}
-          className={selectedCate === "상의" ? "category selected" : "category"}>
-          상의
-        </div>
-        <div onClick={() => setSelectedCate("하의")}
-          className={selectedCate === "하의" ? "category selected" : "category"}>
-          하의
-        </div>
-        <div onClick={() => setSelectedCate("기타")}
-          className={selectedCate === "기타" ? "category selected" : "category"}>
-          기타
+      <div id="titleWrapper">
+        <h3 className="pageTitle">내 옷장</h3>
+        <div id="showHiddenBtn" onClick={() => setShowHidden(!showHidden)}>
+          {showHidden ? (
+            <BiCheckboxSquare size={20} style={{ paddingTop: "3px" }} />
+          ) : (
+            <BiCheckbox size={20} style={{ paddingTop: "3px" }} />
+          )}
+          숨긴옷만 보기
         </div>
       </div>
+      <div className="categoryWrapper">
+        {cateList.map((element) => (
+          <div
+            onClick={() => setSelectedCate(element)}
+            className={
+              selectedCate === element ? "category selected" : "category"
+            }
+          >
+            {element}
+          </div>
+        ))}
+      </div>
 
-      <MyClosetSub category={selectedCate} />
+      <MyClosetSub category={selectedCate} showHidden={showHidden} />
 
-      <BottomNav selectedNav="mycloset"/>
+      <BottomNav selectedNav="mycloset" />
     </div>
   );
 };
