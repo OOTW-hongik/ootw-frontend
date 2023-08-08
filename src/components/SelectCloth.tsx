@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "../css/MyClosetSub.css";
+import "../css/MyCloset.css";
 import Modal from "./Modal";
 import ClosetCreate from "./ClosetCreate";
 import NoServerAlert from "./NoServerAlert";
@@ -18,6 +18,27 @@ const SelectCloth = ({ category }: Props) => {
   ]);
   const closeFromChild = (value: boolean) => {
     setIsModalOpened(value);
+  };
+  const addToSession = (value: number) => {
+    let ssData = sessionStorage.getItem(`inputted${category}`);
+    let isUnique = true;
+    // console.log("diq",ssInfo);
+    ssData?.split(",").map((element) => {
+      if (String(value) === element) isUnique = false;
+    });
+    if (ssData) {
+      // 기존선택 존재
+      if (isUnique) {
+        // 중복아님
+        sessionStorage.setItem(
+          `inputted${category}`,
+          ssData + "," + String(value)
+        );
+      }
+    } else {
+      // 최초 선택
+      sessionStorage.setItem(`inputted${category}`, String(value));
+    }
   };
   useEffect(() => {
     fetch(`http://43.200.138.39:8080/closet?memberId=1&category=${category}`, {
@@ -72,33 +93,16 @@ const SelectCloth = ({ category }: Props) => {
 
         {clothesList &&
           clothesList.map((element) =>
-            selectedSubCate === "전체" ? (
-              <Link
-                to="/registeroutfit"
-                onClick={() =>
-                  sessionStorage.setItem(
-                    `inputted${category}`,
-                    String(element.clothesId)
-                  )
-                }
-              >
-                <img id="clothes" src={element.clothesUrl} />
-              </Link>
-            ) : (
-              selectedSubCate === element.subCategory && (
-                <Link
-                  to="/registeroutfit"
-                  onClick={() =>
-                    sessionStorage.setItem(
-                      `inputted${category}`,
-                      String(element.clothesId)
-                    )
-                  }
-                >
-                  <img id="clothes" src={element.clothesUrl} />
-                </Link>
-              )
-            )
+            (selectedSubCate === "전체"
+              ? true
+              : selectedSubCate === element.subCategory) && (
+                  <Link
+                    to="/registeroutfit"
+                    onClick={() => addToSession(element.clothesId)}
+                  >
+                    <img id="clothes" src={element.clothesUrl} />
+                  </Link>
+                )
           )}
       </div>
       {isModalOpened && (

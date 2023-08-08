@@ -1,28 +1,38 @@
-import "../css/RegisterCategory.css";
+import "../css/OutfitCateCRUD.css";
 import { ratingList } from "./reuse";
 import { useState, useEffect, useLayoutEffect } from "react";
 import { Link } from "react-router-dom";
 import { GoPlusSmall } from "react-icons/go";
+import NoServerAlert from "./NoServerAlert";
 
 type Props = {
   title: string;
   ratingChange: Function;
 };
-function RegisterCategory({ title, ratingChange }: Props) {
+function OutfitCateCreate({ title, ratingChange }: Props) {
   const array: number[] = [1, 2, 3, 4, 5];
   const [rating, setRating] = useState<number>(3);
-  const [selectedClothesPhoto, setSelectedClothesPhoto] = useState();
+  const [selectedClothesPhoto, setSelectedClothesPhoto] = useState<string[]>(
+    []
+  );
   const titleArr = ["아우터", "상의", "하의", "기타"];
+  const [errorMsg, setErrorMsg] = useState();
 
   useLayoutEffect(() => {
     const ssData = sessionStorage.getItem(`inputted${title}`);
+
     if (ssData) {
-      fetch(`http://43.200.138.39:8080/clothes?clothesId=${ssData}`)
-        .then((res) => res.json())
-        .then((res) => {
-          setSelectedClothesPhoto(res.clothesUrl);
-        });
-      // .catch((error) => setErrorMsg(error.message));
+      ssData.split(",").map((element) => {
+        fetch(`http://43.200.138.39:8080/clothes?clothesId=${element}`)
+          .then((res) => res.json())
+          .then((res) => {
+            setSelectedClothesPhoto((selectedClothesPhoto) => [
+              ...selectedClothesPhoto,
+              res.clothesUrl,
+            ]);
+          })
+          .catch((error) => setErrorMsg(error.message));
+      });
     }
   }, []);
 
@@ -37,6 +47,7 @@ function RegisterCategory({ title, ratingChange }: Props) {
 
   return (
     <div className="RegisterCategory centerLeftRight">
+      {errorMsg && <NoServerAlert errorMsg={errorMsg} />}
       <div className="ratingWrapper">
         <div className="title">{title}</div>
         <div className={"ratingText" + ratingList[rating].cssName}>
@@ -61,12 +72,15 @@ function RegisterCategory({ title, ratingChange }: Props) {
             <GoPlusSmall />
           </Link>
         </div>
-        {selectedClothesPhoto && (
-          <img id="clothes" src={selectedClothesPhoto} />
-        )}
+
+        {selectedClothesPhoto.map((element) => (
+          <div>
+            <img id="clothes" src={element} />
+          </div>
+        ))}
       </div>
     </div>
   );
 }
 
-export default RegisterCategory;
+export default OutfitCateCreate;

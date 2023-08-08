@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "../css/MyClosetSub.css";
+import "../css/MyCloset.css";
 import Modal from "./Modal";
 import ClosetCreate from "./ClosetCreate";
 import NoServerAlert from "../components/NoServerAlert";
@@ -21,19 +21,22 @@ const MyClosetSub = ({ category, showHidden }: Props) => {
   const [clothesList, setClothesList] = useState([
     { clothesId: 0, clothesUrl: "", subCategory: "" },
   ]);
-  const openFromChild = (value:number) => {
+  const openFromChild = (value: number) => {
     setIsUpdateOpened(value);
-  }
-  const closeFromChild = (value:string) => {
-    if (value=="m") setIsModalOpened(false);
-    if (value=="d") setIsDetailOpened(0);
-    if (value=="u") setIsUpdateOpened(0);
+  };
+  const closeFromChild = (value: string) => {
+    if (value == "m") setIsModalOpened(false);
+    if (value == "d") setIsDetailOpened(0);
+    if (value == "u") setIsUpdateOpened(0);
   };
   useEffect(() => {
-    if(showHidden){
-      fetch(`http://43.200.138.39:8080/closet/hidden?memberId=1&category=${category}`, {
-        method: "GET",
-      })
+    if (showHidden) {
+      fetch(
+        `http://43.200.138.39:8080/closet/hidden?memberId=1&category=${category}`,
+        {
+          method: "GET",
+        }
+      )
         .then((res) => res.json())
         .then((res) => {
           setSubCategoryNameList(res.subCategoryName);
@@ -41,10 +44,13 @@ const MyClosetSub = ({ category, showHidden }: Props) => {
           setSelectedSubCate("전체");
         })
         .catch((error) => setErrorMsg(error.message));
-    }else{
-      fetch(`http://43.200.138.39:8080/closet?memberId=1&category=${category}`, {
-        method: "GET",
-      })
+    } else {
+      fetch(
+        `http://43.200.138.39:8080/closet?memberId=1&category=${category}`,
+        {
+          method: "GET",
+        }
+      )
         .then((res) => res.json())
         .then((res) => {
           setSubCategoryNameList(res.subCategoryName);
@@ -53,7 +59,7 @@ const MyClosetSub = ({ category, showHidden }: Props) => {
         })
         .catch((error) => setErrorMsg(error.message));
     }
-  }, [category,showHidden]);
+  }, [category, showHidden]);
 
   return (
     <div>
@@ -93,18 +99,15 @@ const MyClosetSub = ({ category, showHidden }: Props) => {
           +
         </button>
         {clothesList &&
-          clothesList.map((element) =>
-            selectedSubCate === "전체" ? (
-              <div onClick={() => setIsDetailOpened(element.clothesId)}>
-                <img id="clothes" src={element.clothesUrl} />
-              </div>
-            ) : (
-              selectedSubCate === element.subCategory && (
+          clothesList.map(
+            (element) =>
+              (selectedSubCate === "전체"
+                ? true
+                : selectedSubCate === element.subCategory) && (
                 <div onClick={() => setIsDetailOpened(element.clothesId)}>
                   <img id="clothes" src={element.clothesUrl} />
                 </div>
               )
-            )
           )}
       </div>
       {isModalOpened && (
@@ -114,14 +117,23 @@ const MyClosetSub = ({ category, showHidden }: Props) => {
       )}
       {isDetailOpened ? (
         <Modal closeModal={() => setIsDetailOpened(0)}>
-          <ClosetRead category={category} id={isDetailOpened} closeFromChild={closeFromChild} openFromChild={openFromChild} />
+          <ClosetRead
+            category={category}
+            id={isDetailOpened}
+            closeFromChild={closeFromChild}
+            openFromChild={openFromChild}
+          />
         </Modal>
       ) : (
         <></>
       )}
       {isUpdateOpened ? (
         <Modal closeModal={() => setIsUpdateOpened(0)}>
-          <ClosetUpdate category={category} id={isUpdateOpened} closeFromChild={closeFromChild} />
+          <ClosetUpdate
+            category={category}
+            id={isUpdateOpened}
+            closeFromChild={closeFromChild}
+          />
         </Modal>
       ) : (
         <></>

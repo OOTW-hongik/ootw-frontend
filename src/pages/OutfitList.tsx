@@ -6,6 +6,7 @@ import BottomNav from "../components/BottomNav";
 import Outfit from "../components/Outfit";
 import Dropdown from "../components/Dropdown";
 import NoServerAlert from "../components/NoServerAlert";
+import { Link } from "react-router-dom";
 
 const OutfitList = () => {
   const [errorMsg, setErrorMsg] = useState();
@@ -129,7 +130,7 @@ const OutfitList = () => {
             (checkedFilterList[0] ? element.outerRating === 3 : true) &&
             (checkedFilterList[1] ? element.topRating === 3 : true) &&
             (checkedFilterList[2] ? element.bottomRating === 3 : true) && (
-              <Outfit element={element} />
+              <Link to={`/outfitlist/${element.outfitId}`} ><Outfit element={element} /></Link>
             )
         )
       ) : (

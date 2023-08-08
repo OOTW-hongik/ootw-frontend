@@ -9,6 +9,9 @@ import { IoImagesOutline } from "react-icons/io5";
 import { TiArrowSortedDown } from "react-icons/ti";
 import Dropdown from "../components/Dropdown";
 import { TfiSave } from "react-icons/tfi";
+import Loading from "./Loading";
+import NoServerAlert from "./NoServerAlert";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 type Props = {
   id: number;
@@ -24,6 +27,8 @@ function ClosetUpdate({ category, id, closeFromChild }: Props) {
   const [inputtedPhoto, setInputtedPhoto] =
     useState<FormDataEntryValue | null>();
   const [inputtedComment, setInputtedComment] = useState("");
+  const [inputtedHidden, setInputtedHidden] = useState(false);
+
   const [fetchInfo, setFetchInfo] = useState({
     clothesId: 0,
     subCategory: "string",
@@ -32,6 +37,8 @@ function ClosetUpdate({ category, id, closeFromChild }: Props) {
     hidden: true,
   });
   const [errorMsg, setErrorMsg] = useState();
+  const [loading, setLoading] = useState(false);
+
 
   useEffect(() => {
     fetch(`http://43.200.138.39:8080/clothes?clothesId=${id}`, {
@@ -42,6 +49,7 @@ function ClosetUpdate({ category, id, closeFromChild }: Props) {
         setFetchInfo(res);
         setSelectedSubCategory(res.subCategory);
         setInputtedComment(res.clothesComment);
+        setInputtedHidden(res.hidden);
       })
       .catch((error) => setErrorMsg(error.message));
   }, []);
@@ -64,7 +72,7 @@ function ClosetUpdate({ category, id, closeFromChild }: Props) {
     let pht = e.target.files;
     if (pht) {
       let formData = new FormData();
-
+      setLoading(true);
       formData.append("image", pht[0]);
       fetch(`http://43.202.82.91/remove_background`, {
         method: "POST",
@@ -82,8 +90,9 @@ function ClosetUpdate({ category, id, closeFromChild }: Props) {
               setSelectedSubCategory(String(contents)); // AI서버에서 받아온 classification 결과값
             };
           }
-        });
-      // .catch((error) => setErrorMsg(error.message));
+          setLoading(false);
+        })
+      .catch((error) => setErrorMsg(error.message));
     }
   };
 
@@ -103,9 +112,8 @@ function ClosetUpdate({ category, id, closeFromChild }: Props) {
               clothesId: id,
               category: category,
               subCategory: selectedSubCategory,
-              clothesPhoto: inputtedPhoto,
               clothesComment: inputtedComment,
-              hidden: false,
+              hidden: inputtedHidden,
             }),
           ],
           { type: "application/json" }
@@ -124,6 +132,8 @@ function ClosetUpdate({ category, id, closeFromChild }: Props) {
 
   return (
     <div className="UploadCloset">
+            {errorMsg && <NoServerAlert errorMsg={errorMsg} />}
+      {loading && <Loading />}
       <div className="inputTitle">사진</div>
       <div id="photoWrapper">
         <label htmlFor="inputFile">
@@ -197,7 +207,21 @@ function ClosetUpdate({ category, id, closeFromChild }: Props) {
         value={inputtedComment}
         onChange={commentChange}
       />
-
+      {inputtedHidden ? (
+        <AiOutlineEyeInvisible
+          className="CRUDBtn"
+          id="leftBtn"
+          size={25}
+          onClick={() => setInputtedHidden(false)}
+        />
+      ) : (
+        <AiOutlineEye
+          className="CRUDBtn"
+          id="leftBtn"
+          size={25}
+          onClick={() => setInputtedHidden(true)}
+        />
+      )}
       <TfiSave className="CRUDBtn" id="rightBtn" size={25} onClick={update} />
     </div>
   );

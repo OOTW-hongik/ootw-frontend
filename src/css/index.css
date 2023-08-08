@@ -2,6 +2,11 @@ body {
   margin: 0; /* 여백없애기 */
 }
 
+a {
+  text-decoration: none;
+  color: black;
+}
+
 .mobileWeb { 
   /* 모바일 웹에 맞게 */
   max-width : 390px;

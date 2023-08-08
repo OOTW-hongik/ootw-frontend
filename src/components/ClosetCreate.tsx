@@ -8,7 +8,10 @@ import { SetStateAction, useState } from "react";
 import { IoImagesOutline } from "react-icons/io5";
 import { TiArrowSortedDown } from "react-icons/ti";
 import Dropdown from "../components/Dropdown";
+import NoServerAlert from "./NoServerAlert";
+import Loading from "./Loading";
 import { TfiSave } from "react-icons/tfi";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 type Props = {
   category: string;
@@ -16,13 +19,15 @@ type Props = {
 };
 
 function ClosetCreate({ category, closeFromChild }: Props) {
-  const [selectedSubCategory, setSelectedSubCategory] = useState<string | null>(
-    category
-  );
+  const [selectedSubCategory, setSelectedSubCategory] =
+    useState<string>(category);
   const [isDropdownOpened, setIsDropdownOpened] = useState<boolean>(false);
   const [inputtedPhoto, setInputtedPhoto] =
     useState<FormDataEntryValue | null>();
   const [inputtedComment, setInputtedComment] = useState("");
+  const [inputtedHidden, setInputtedHidden] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState();
 
   let selectedList = outerSubCategoryList;
   switch (category) {
@@ -41,6 +46,7 @@ function ClosetCreate({ category, closeFromChild }: Props) {
   const photoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let pht = e.target.files;
     if (pht) {
+      setLoading(true);
       let formData = new FormData();
 
       formData.append("image", pht[0]);
@@ -51,17 +57,23 @@ function ClosetCreate({ category, closeFromChild }: Props) {
         .then((res) => res.formData())
         .then((res) => {
           setInputtedPhoto(res.get("image")); // AI서버에서 받아온 이미지
-
+          console.log(res.get("image"));
+          console.log(res.get("ClothClass"));
           const fileEntryValue = res.get("ClothClass");
           if (fileEntryValue instanceof File) {
+            console.log("if내부");
             const reader = new FileReader();
             reader.onload = (e) => {
               const contents = e.target?.result;
+
+              console.log("onload내부");
               setSelectedSubCategory(String(contents)); // AI서버에서 받아온 classification 결과값
+              console.log(String(contents));
             };
           }
-        });
-      // .catch((error) => setErrorMsg(error.message));
+          setLoading(false);
+        })
+        .catch((error) => setErrorMsg(error.message));
     }
   };
 
@@ -80,7 +92,7 @@ function ClosetCreate({ category, closeFromChild }: Props) {
               subCategory: selectedSubCategory,
               clothesPhoto: inputtedPhoto,
               clothesComment: inputtedComment,
-              hidden: false,
+              hidden: inputtedHidden,
             }),
           ],
           { type: "application/json" }
@@ -100,19 +112,30 @@ function ClosetCreate({ category, closeFromChild }: Props) {
 
   return (
     <div className="UploadCloset">
+      {errorMsg && <NoServerAlert errorMsg={errorMsg} />}
+      {loading && <Loading />}
       <div className="inputTitle">사진</div>
-      <label htmlFor="inputFile">
-        <div className="inputFileBtn inputBorder">
-          <IoImagesOutline size={"50px"} />
-        </div>
-      </label>
-      <input
-        type="file"
-        id="inputFile"
-        accept="image/*"
-        onChange={photoChange}
-      />
-
+      <div id="photoWrapper">
+        <label htmlFor="inputFile">
+          <div className="inputFileBtn inputBorder">
+            <IoImagesOutline size={"50px"} />
+          </div>
+        </label>
+        <input
+          type="file"
+          id="inputFile"
+          accept="image/*"
+          onChange={photoChange}
+        />
+        {inputtedPhoto && (
+          // 넣은 이미지가 있으면
+          <img
+            className="inputFileBtn"
+            src={String(inputtedPhoto)}
+            alt={selectedSubCategory}
+          />
+        )}
+      </div>
       <div className="inputTitle">카테고리</div>
       {category === "기타" ? (
         <div id="subCategoryDropdown" className="inputBorder disabled">
@@ -156,6 +179,21 @@ function ClosetCreate({ category, closeFromChild }: Props) {
         placeholder="한줄평을 입력해보세요."
         onChange={commentChange}
       />
+      {inputtedHidden ? (
+        <AiOutlineEyeInvisible
+          className="CRUDBtn"
+          id="leftBtn"
+          size={25}
+          onClick={() => setInputtedHidden(false)}
+        />
+      ) : (
+        <AiOutlineEye
+          className="CRUDBtn"
+          id="leftBtn"
+          size={25}
+          onClick={() => setInputtedHidden(true)}
+        />
+      )}
 
       <TfiSave className="CRUDBtn" id="rightBtn" size={25} onClick={upload} />
     </div>

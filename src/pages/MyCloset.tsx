@@ -19,7 +19,7 @@ const MyCloset = () => {
           ) : (
             <BiCheckbox size={20} style={{ paddingTop: "3px" }} />
           )}
-          숨긴옷만 보기
+          숨긴 옷 보기
         </div>
       </div>
       <div className="categoryWrapper">

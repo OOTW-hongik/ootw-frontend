@@ -1,6 +1,6 @@
 import "../css/RegisterOutfit.css";
 import AreaSwitchBtn from "../components/AreaSwitchBtn";
-import RegisterCategory from "../components/RegisterCategory";
+import OutfitCateCreate from "../components/OutfitCateCreate";
 import MiniWeather from "../components/MiniWeather";
 import { TfiSave } from "react-icons/tfi";
 import DatePicker from "react-datepicker";
@@ -23,7 +23,6 @@ function RegisterOutfit() {
     lowTemp: 0
   });
   const [ratingInfo, setRatingInfo] = useState([]);
-  const [inputtedClothes, setinputtedClothes] = useState([], [], [], []);
   const [inputtedComment, setInputtedComment] = useState("");
   const [errorMsg, setErrorMsg] = useState();
 
@@ -33,9 +32,6 @@ function RegisterOutfit() {
     setRatingInfo(copy);
     console.log("ratingChange", copy);
   };
-  const commentChange = (e) => {
-    setInputtedComment(e.target.value);
-  };
   useLayoutEffect(() => { // 페이지 첫 진입 ~ 화면뜨기 전
     let ssInputtedDate = sessionStorage.getItem('inputtedDate');
     if (ssInputtedDate) {
@@ -44,16 +40,11 @@ function RegisterOutfit() {
       setInputtedDate(ssInputtedDate);
     }
 
-    // let ssInputtedOuter = sessionStorage.getItem('inputted아우터');
-    // if (ssInputtedOuter) {
-    //   setinputtedClothes(ssInputtedOuter); 이거 set배열함수 만들어야해 
-    // }
-
     let ssInputtedComment = sessionStorage.getItem('inputtedComment');
     if (ssInputtedComment) setInputtedComment(ssInputtedComment);
   }, []);
 
-  useEffect(() => {
+  useEffect(() => { // 평가 데이터 불러오기
     let ssRatingInfo = sessionStorage.getItem("ratingInfo")?.split(",");
     if (ssRatingInfo) {
       let arr = [Number(ssRatingInfo[0]), Number(ssRatingInfo[1]), Number(ssRatingInfo[2]), Number(ssRatingInfo[3])]
@@ -63,7 +54,7 @@ function RegisterOutfit() {
     }
   }, [])
 
-  useEffect(() => { // 세션에 저장
+  useEffect(() => { // 날짜,위치,평가,한줄평 세션에 저장
     if (inputtedDate && fetchLocationInfo) {
       sessionStorage.setItem('inputtedDate', inputtedDate);
       sessionStorage.setItem('fetchLocationInfo', fetchLocationInfo);
@@ -92,13 +83,28 @@ function RegisterOutfit() {
         .catch((error) => setErrorMsg(error.message));
     }
   }, [inputtedDate, fetchLocationInfo]);
+
+  function dateToStr(date) {
+    let dD = date.getDate();
+    let dM = date.getMonth() + 1;
+    return (`${date.getFullYear()}-${dM < 10 ? 0 + "" + dM : dM}-${dD < 10 ? 0 + "" + dD : dD}(${week[date.getDay()]})`);
+  }
+
   function register() {
-    console.log();
     const ssRating = sessionStorage.getItem("ratingInfo");
-    const ssOuter= sessionStorage.getItem("inputted아우터");
-    const ssTop= sessionStorage.getItem("inputted상의");
-    const ssBottom= sessionStorage.getItem("inputted하의");
-    if (ssOuter&&ssTop&&ssBottom) {
+    const ssOuter = sessionStorage.getItem("inputted아우터");
+    const ssTop = sessionStorage.getItem("inputted상의");
+    const ssBottom = sessionStorage.getItem("inputted하의");
+    const ssEtc = sessionStorage.getItem("inputted기타");
+    if (ssOuter && ssTop && ssBottom) {
+      const outerIdList = ssOuter.split(",").map(Number);
+      const topIdList = ssTop.split(",").map(Number);
+      const bottomIdList = ssBottom.split(",").map(Number);
+      let etcIdList;
+      if (ssEtc) {
+        etcIdList = ssEtc.split(",").map(Number);
+      } else { etcIdList = [] }
+      console.log(outerIdList, topIdList, bottomIdList, etcIdList);
       fetch(`http://43.200.138.39:8080/outfit/`, {
         method: "POST",
         headers: {
@@ -118,30 +124,19 @@ function RegisterOutfit() {
           bottomRating: Number(ssRating[4]),
           etcRating: Number(ssRating[6]),
           outfitComment: inputtedComment,
-          "outerIdList": [
-            Number(ssOuter)
-          ],
-          "topIdList": [
-            Number(ssTop)
-          ],
-          "bottomIdList": [
-            Number(ssBottom)
-          ],
-          "etcIdList": [
-          ]
+          "outerIdList": outerIdList,
+          "topIdList": topIdList,
+          "bottomIdList": bottomIdList,
+          "etcIdList": etcIdList
         }),
       });
       sessionStorage.clear();
       window.location.replace("/outfitList");
     } else {
-      alert("아우터, 상의, 하의 필수!");
+      alert("아우터, 상의, 하의 선택 필수!");
     }
   }
-  function dateToStr(date) {
-    let dD = date.getDate();
-    let dM = date.getMonth() + 1;
-    return (`${date.getFullYear()}-${dM < 10 ? 0 + "" + dM : dM}-${dD < 10 ? 0 + "" + dD : dD}(${week[date.getDay()]})`);
-  }
+
   return (
     <div className="RegisterOutfit mobileWeb">
       {errorMsg && <NoServerAlert errorMsg={errorMsg} />}
@@ -171,14 +166,16 @@ function RegisterOutfit() {
 
       <div className="lowerWrapper">
 
-        <RegisterCategory title="아우터" ratingChange={ratingChange} />
-        <RegisterCategory title="상의" ratingChange={ratingChange} />
-        <RegisterCategory title="하의" ratingChange={ratingChange} />
-        <RegisterCategory title="기타" ratingChange={ratingChange} />
+        <OutfitCateCreate title="아우터" ratingChange={ratingChange} />
+        <OutfitCateCreate title="상의" ratingChange={ratingChange} />
+        <OutfitCateCreate title="하의" ratingChange={ratingChange} />
+        <OutfitCateCreate title="기타" ratingChange={ratingChange} />
 
         <div className="comment centerLeftRight">
           <div className="commentTitle">한줄평</div>
-          <input type="text" placeholder="한줄평을 입력해보세요." value={inputtedComment} onChange={commentChange} />
+          <input type="text" placeholder="한줄평을 입력해보세요." value={inputtedComment} onChange={(e) => {
+            setInputtedComment(e.target.value);
+          }} />
         </div>
 
         <TfiSave id="registerSaveBtn" className="centerLeftRight" onClick={register} />

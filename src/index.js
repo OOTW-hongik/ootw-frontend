@@ -12,6 +12,7 @@ import OutfitList from "./pages/OutfitList";
 import Setting from "./pages/Setting";
 import RegisterOutfit from "./pages/RegisterOutfit";
 import ChooseOutfit from "./pages/ChooseOutfit";
+import OutfitRead from "./components/OutfitRead";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -23,6 +24,7 @@ root.render(
         <Route path={"/home"} element={<Home />} />
         <Route path={"/mycloset"} element={<MyCloset />} />
         <Route path={"/outfitlist"} element={<OutfitList />} />
+        <Route path="/outfitlist/:outfitId" element={<OutfitRead />} />
         <Route path={"/setting"} element={<Setting />} />
         <Route path={"/registeroutfit"} element={<RegisterOutfit/>} />
         <Route path={"/registeroutfit/chooseOutfit"} element={<ChooseOutfit/>} />
