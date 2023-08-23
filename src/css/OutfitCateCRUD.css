@@ -1,75 +1,75 @@
 .RegisterCategory * {
-    text-align: left;
+  text-align: left;
 }
 
 .RegisterCategory {
-    width: 360px;
-    height: auto;
+  width: 360px;
+  height: auto;
 
-    background-color: white;
-    border-radius: 20px;
-    box-shadow: 0 2px 4px 0 rgb(0, 0, 0, 0.1);
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 2px 4px 0 rgb(0, 0, 0, 0.1);
 
-    margin-top: 10px;
+  margin-top: 10px;
+  padding-bottom: 5px;
 }
 
 .ratingWrapper {
-    display: flex;
-    align-items: center;
-    border-bottom: 1px solid lightgray;
-    margin: 0 15px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid lightgray;
+  margin: 0 15px;
 }
 
 .title {
-    font-size: 18px;
-    /* font-weight: 600; */
-    padding : 10px 5px ;
-    margin-right: 10px;
-    width: 55px;
+  font-size: 18px;
+  /* font-weight: 600; */
+  padding: 10px 5px;
+  margin-right: 10px;
+  width: 55px;
 }
 
 .ratingBtn {
-    border-radius: 50%;
-    border: 3px solid #CFCFCF;
-    width: 10px;
-    height: 10px;
-    background-color: white;
-    margin-left: 5px;
+  border-radius: 50%;
+  border: 3px solid #cfcfcf;
+  width: 10px;
+  height: 10px;
+  background-color: white;
+  margin-left: 5px;
 }
 .active1 {
-    border-color:#5f6dea;
-    background-color: #5f6dea;
-    /* #4154ff */
-  }
-  .active2 {
-    border-color:#96a1ff;
-    background-color: #96a1ff;
-    /* #8b97ff */
-  }
-  .active3 {
-    border-color:#c0c0c0;
-    background: #c0c0c0;
-    /* linear-gradient(to right, #96a1ff, #FFA7A1 );     */
-    /* 연두 #bfe9a5 */
-    /* 보라 #d5afeb */
-  }
-  .active4 {
-    border-color:#FFA7A1;
-    background-color: #FFA7A1;
-  }
-  .active5 {
-    border-color:#f1786f;
-    background-color: #f1786f;
-    /* #FF5D53 */
-  }
-  
+  border-color: #5f6dea;
+  background-color: #5f6dea;
+  /* #4154ff */
+}
+.active2 {
+  border-color: #96a1ff;
+  background-color: #96a1ff;
+  /* #8b97ff */
+}
+.active3 {
+  border-color: #c0c0c0;
+  background: #c0c0c0;
+  /* linear-gradient(to right, #96a1ff, #FFA7A1 );     */
+  /* 연두 #bfe9a5 */
+  /* 보라 #d5afeb */
+}
+.active4 {
+  border-color: #ffa7a1;
+  background-color: #ffa7a1;
+}
+.active5 {
+  border-color: #f1786f;
+  background-color: #f1786f;
+  /* #FF5D53 */
+}
 
 .centerLeftRight > a {
-    /* 플러스 버튼 */
-    font-size: 50px;
-    color: black;
-    padding-bottom: 3px;
-    height: 50px;
+  /* 플러스 버튼 */
+  font-size: 50px;
+  color: black;
+  padding-bottom: 3px;
+  height: 50px;
 }
 
 #inputtedComment {
@@ -78,4 +78,41 @@
   border: 0;
   width: 330px;
   font-size: 14px;
+}
+
+#btnWrapper {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 30px;
+}
+
+#xBtn {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  border: none;
+  color: rgba(0, 0, 0, 0.5);
+  background-color: transparent;
+  font-size: 13px;
+  padding:0;
+}
+#mainImgBtn {
+  position: absolute;
+  top: 5px;
+  left: 3px;
+  border: none;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+  font-size: 5px;
+}
+#notMainBtn {
+  position: absolute;
+  top: 5px;
+  left: 3px;
+  border: 2px dotted rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+  background-color: transparent;
+  width: 27px;
+  height: 15px;
+  padding: 0;
 }

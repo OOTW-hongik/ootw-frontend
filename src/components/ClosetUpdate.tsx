@@ -20,12 +20,12 @@ type Props = {
 };
 
 function ClosetUpdate({ category, id, closeFromChild }: Props) {
-  const [selectedSubCategory, setSelectedSubCategory] = useState<string>(
-    category
-  );
+  const [selectedSubCategory, setSelectedSubCategory] =
+    useState<string>(category);
   const [isDropdownOpened, setIsDropdownOpened] = useState<boolean>(false);
   const [inputtedPhoto, setInputtedPhoto] =
     useState<FormDataEntryValue | null>();
+  const [previewURL, setPreviewURL] = useState<string>();
   const [inputtedComment, setInputtedComment] = useState("");
   const [inputtedHidden, setInputtedHidden] = useState(false);
 
@@ -39,10 +39,14 @@ function ClosetUpdate({ category, id, closeFromChild }: Props) {
   const [errorMsg, setErrorMsg] = useState();
   const [loading, setLoading] = useState(false);
 
-
   useEffect(() => {
     fetch(`http://43.200.138.39:8080/clothes?clothesId=${id}`, {
       method: "GET",
+      headers: {
+        "Cache-Control": "no-cache, no-store, must-revalidate", // 캐시 사용하지 않도록
+        Pragma: "no-cache",
+        Expires: '0',
+      },
     })
       .then((res) => res.json())
       .then((res) => {
@@ -74,36 +78,50 @@ function ClosetUpdate({ category, id, closeFromChild }: Props) {
       let formData = new FormData();
       setLoading(true);
       formData.append("image", pht[0]);
+      switch (category) {
+        case "아우터":
+          formData.append("category", "outer");
+          break;
+        case "상의":
+          formData.append("category", "top");
+          break;
+        case "하의":
+          formData.append("category", "bottom");
+      }
+
       fetch(`http://43.202.82.91/remove_background`, {
         method: "POST",
         body: formData,
       })
         .then((res) => res.formData())
         .then((res) => {
-          setInputtedPhoto(res.get("image")); // AI서버에서 받아온 이미지
-
+          const imageFile = res.get("image"); // AI서버에서 받아온 이미지 파일 객체
+          if (imageFile !== null && imageFile instanceof Blob) {
+            setInputtedPhoto(imageFile);
+            const imageBlobUrl = URL.createObjectURL(imageFile);
+            setPreviewURL(imageBlobUrl);
+          }
           const fileEntryValue = res.get("ClothClass");
           if (fileEntryValue instanceof File) {
             const reader = new FileReader();
             reader.onload = (e) => {
               const contents = e.target?.result;
               setSelectedSubCategory(String(contents)); // AI서버에서 받아온 classification 결과값
+              console.log(String(contents));
             };
+            reader.readAsText(fileEntryValue); // 파일을 읽어옴
           }
           setLoading(false);
         })
-      .catch((error) => setErrorMsg(error.message));
+        .catch((error) => setErrorMsg(error.message));
     }
   };
 
   function update() {
-    if (inputtedPhoto || fetchInfo.clothesUrl) {
+    if (inputtedPhoto) {
+      // 사진 수정함
       let formData = new FormData();
-      if (inputtedPhoto) {
-        formData.append("clothesPhoto", inputtedPhoto);
-      } else {
-        formData.append("clothesPhoto", fetchInfo.clothesUrl);
-      }
+      formData.append("clothesPhoto", inputtedPhoto);
       formData.append(
         "clothesUpdateRequest",
         new Blob(
@@ -119,20 +137,33 @@ function ClosetUpdate({ category, id, closeFromChild }: Props) {
           { type: "application/json" }
         )
       );
-      console.log(formData);
+      console.log(inputtedPhoto);
       fetch(`http://43.200.138.39:8080/clothes`, {
         method: "PUT",
         body: formData,
       });
       window.location.reload();
     } else {
-      alert("사진 필수!");
+      fetch(`http://43.200.138.39:8080/clothes`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          clothesId: id,
+          category: category,
+          subCategory: selectedSubCategory,
+          clothesComment: inputtedComment,
+          hidden: inputtedHidden,
+        }),
+      });
+      window.location.reload();
     }
   }
 
   return (
     <div className="UploadCloset">
-            {errorMsg && <NoServerAlert errorMsg={errorMsg} />}
+      {errorMsg && <NoServerAlert errorMsg={errorMsg} />}
       {loading && <Loading />}
       <div className="inputTitle">사진</div>
       <div id="photoWrapper">
@@ -147,11 +178,11 @@ function ClosetUpdate({ category, id, closeFromChild }: Props) {
           accept="image/*"
           onChange={photoChange}
         />
-        {inputtedPhoto ? (
-          // 새로넣은 이미지가 있으면 
+        {previewURL ? (
+          // 새로넣은 이미지가 있으면
           <img
             className="inputFileBtn"
-            src={String(inputtedPhoto)}
+            src={previewURL}
             alt={selectedSubCategory}
           />
         ) : (

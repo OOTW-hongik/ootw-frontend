@@ -1,9 +1,11 @@
 import "../css/ClosetCRUD.css";
+
 import { useEffect, useState } from "react";
-import { TiArrowSortedDown } from "react-icons/ti";
-import Modal from "./Modal";
+import { TiArrowSortedDown } from "react-icons/ti"
 import { TfiTrash, TfiPencilAlt } from "react-icons/tfi";
+
 import NoServerAlert from "./NoServerAlert";
+import DeleteConfirmPopup from "./DeleteConfirmPopup";
 
 type Props = {
   id: number;
@@ -21,10 +23,15 @@ function ClosetRead({ category, id, closeFromChild, openFromChild }: Props) {
     hidden: true,
   });
   const [errorMsg, setErrorMsg] = useState();
-
+  const [isPopupOpened, setIsPopupOpened] = useState(false);
   useEffect(() => {
     fetch(`http://43.200.138.39:8080/clothes?clothesId=${id}`, {
       method: "GET",
+      headers: {
+        "Cache-Control": "no-cache, no-store, must-revalidate", // 캐시 사용하지 않도록
+        Pragma: "no-cache",
+        Expires: "0",
+      },
     })
       .then((res) => res.json())
       .then((res) => {
@@ -33,18 +40,21 @@ function ClosetRead({ category, id, closeFromChild, openFromChild }: Props) {
       .catch((error) => setErrorMsg(error.message));
   }, []);
 
-  function ClothesDelete() {
+  function closetDelete() {
     fetch(
       `http://43.200.138.39:8080/clothes?clothesId=${fetchInfo.clothesId}`,
       {
         method: "DELETE",
       }
-    );
+    ).catch((error) => setErrorMsg(error.message));
+    window.location.reload();
   }
 
   return (
     <div className="UploadCloset">
       {errorMsg && <NoServerAlert errorMsg={errorMsg} />}
+      {isPopupOpened && <DeleteConfirmPopup confirmDel={closetDelete} cancelDel={()=>setIsPopupOpened(false)} />}
+
       <div className="inputTitle">사진</div>
       <img
         className="inputFileBtn"
@@ -74,7 +84,7 @@ function ClosetRead({ category, id, closeFromChild, openFromChild }: Props) {
           fontSize: "15px",
         }}
       >
-        {fetchInfo.clothesComment ? fetchInfo.clothesComment : '\u00A0'}
+        {fetchInfo.clothesComment ? fetchInfo.clothesComment : "\u00A0"}
       </div>
 
       <TfiPencilAlt
@@ -84,7 +94,7 @@ function ClosetRead({ category, id, closeFromChild, openFromChild }: Props) {
         onClick={() => {
           openFromChild(id);
           console.log("수정", id);
-          closeFromChild("d");
+          closeFromChild("r");
         }}
       />
 
@@ -92,7 +102,7 @@ function ClosetRead({ category, id, closeFromChild, openFromChild }: Props) {
         className="CRUDBtn"
         id="rightBtn"
         size={25}
-        // onClick={ClothesDelete}
+        onClick={()=>setIsPopupOpened(true)}
       />
     </div>
   );

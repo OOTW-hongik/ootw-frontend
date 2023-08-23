@@ -36,3 +36,26 @@
 #modalCloseBtn:hover {
   cursor: pointer;
 }
+
+.popupBody {
+  position: absolute;
+  width: 200px;
+  height: 120px;
+  padding: 15px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 10px;
+  box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
+}
+
+.popupBody > div {
+  padding: 8px 0;
+}
+#confirmDel {
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  color: red;
+  font-weight: 800;
+}
+#cancelDel {
+  color: gray;
+}

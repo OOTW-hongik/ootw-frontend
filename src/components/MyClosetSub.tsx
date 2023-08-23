@@ -13,28 +13,34 @@ type Props = {
 };
 const MyClosetSub = ({ category, showHidden }: Props) => {
   const [selectedSubCate, setSelectedSubCate] = useState("전체");
-  const [isModalOpened, setIsModalOpened] = useState(false);
-  const [isDetailOpened, setIsDetailOpened] = useState(0);
-  const [isUpdateOpened, setIsUpdateOpened] = useState(0);
+  const [isCreateModalOpened, setIsCreateModalOpened] = useState(false);
+  const [isReadModalOpened, setIsReadModalOpened] = useState(0);
+  const [isUpdateModalOpened, setIsUpdateModalOpened] = useState(0);
   const [errorMsg, setErrorMsg] = useState();
   const [subCategoryNameList, setSubCategoryNameList] = useState([]);
   const [clothesList, setClothesList] = useState([
     { clothesId: 0, clothesUrl: "", subCategory: "" },
   ]);
   const openFromChild = (value: number) => {
-    setIsUpdateOpened(value);
+    setIsUpdateModalOpened(value);
   };
   const closeFromChild = (value: string) => {
-    if (value == "m") setIsModalOpened(false);
-    if (value == "d") setIsDetailOpened(0);
-    if (value == "u") setIsUpdateOpened(0);
+    if (value == "c") setIsCreateModalOpened(false);
+    if (value == "r") setIsReadModalOpened(0);
+    if (value == "u") setIsUpdateModalOpened(0);
   };
   useEffect(() => {
     if (showHidden) {
+      //숨긴옷보기
       fetch(
         `http://43.200.138.39:8080/closet/hidden?memberId=1&category=${category}`,
         {
           method: "GET",
+          headers: {
+            "Cache-Control": "no-cache, no-store, must-revalidate", // 캐시 사용하지 않도록
+            Pragma: "no-cache",
+            Expires: "0",
+          },
         }
       )
         .then((res) => res.json())
@@ -45,10 +51,16 @@ const MyClosetSub = ({ category, showHidden }: Props) => {
         })
         .catch((error) => setErrorMsg(error.message));
     } else {
+      // 안숨긴옷 보기
       fetch(
         `http://43.200.138.39:8080/closet?memberId=1&category=${category}`,
         {
           method: "GET",
+          headers: {
+            "Cache-Control": "no-cache, no-store, must-revalidate", // 캐시 사용하지 않도록
+            Pragma: "no-cache",
+            Expires: "0",
+          },
         }
       )
         .then((res) => res.json())
@@ -94,7 +106,7 @@ const MyClosetSub = ({ category, showHidden }: Props) => {
       <div className="col4GridContainer">
         <button
           className="registerClosetBtn centerLeftRight"
-          onClick={() => setIsModalOpened(true)}
+          onClick={() => setIsCreateModalOpened(true)}
         >
           +
         </button>
@@ -104,22 +116,22 @@ const MyClosetSub = ({ category, showHidden }: Props) => {
               (selectedSubCate === "전체"
                 ? true
                 : selectedSubCate === element.subCategory) && (
-                <div onClick={() => setIsDetailOpened(element.clothesId)}>
+                <div onClick={() => setIsReadModalOpened(element.clothesId)}>
                   <img id="clothes" src={element.clothesUrl} />
                 </div>
               )
           )}
       </div>
-      {isModalOpened && (
-        <Modal closeModal={() => setIsModalOpened(false)}>
+      {isCreateModalOpened && (
+        <Modal closeModal={() => setIsCreateModalOpened(false)}>
           <ClosetCreate category={category} closeFromChild={closeFromChild} />
         </Modal>
       )}
-      {isDetailOpened ? (
-        <Modal closeModal={() => setIsDetailOpened(0)}>
+      {isReadModalOpened ? (
+        <Modal closeModal={() => setIsReadModalOpened(0)}>
           <ClosetRead
             category={category}
-            id={isDetailOpened}
+            id={isReadModalOpened}
             closeFromChild={closeFromChild}
             openFromChild={openFromChild}
           />
@@ -127,11 +139,11 @@ const MyClosetSub = ({ category, showHidden }: Props) => {
       ) : (
         <></>
       )}
-      {isUpdateOpened ? (
-        <Modal closeModal={() => setIsUpdateOpened(0)}>
+      {isUpdateModalOpened ? (
+        <Modal closeModal={() => setIsUpdateModalOpened(0)}>
           <ClosetUpdate
             category={category}
-            id={isUpdateOpened}
+            id={isUpdateModalOpened}
             closeFromChild={closeFromChild}
           />
         </Modal>

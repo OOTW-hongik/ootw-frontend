@@ -6,16 +6,28 @@ a {
   text-decoration: none;
   color: black;
 }
+/* @media screen and (max-width:767px) {
+   태블릿 ~ 데스크탑
+  .mobileWeb {    
+    width:100%;
+    min-height: 100%;
 
+    margin : 0 auto;
+    
+    background-color: #FAFAFA;
+  }
+}
+@media screen and (min-width:768px) {  
+    모바일
+
+} */
 .mobileWeb { 
-  /* 모바일 웹에 맞게 */
   max-width : 390px;
   min-height: 740px;
   margin : 0 auto;
   
   background-color: #FAFAFA;
 }
-
 .mobileWeb * {
   margin-top: 0; /* 상단 흰색 띠 제거 */
   text-align: center; /* 좌우 중앙정렬 */    
@@ -31,6 +43,11 @@ button {
   display: block;
 }
 
+.pointer:hover{
+  cursor:pointer;
+}
+
+
 .centerLeftRight {
   margin-left: auto;
   margin-right: auto;
@@ -43,6 +60,7 @@ p {
 .col4GridContainer {
   display: grid;
   grid-template-columns: repeat(4, 25%);
+  margin:0 15px;
 }
 .col4GridContainer > div { 
   /* 가로세로 비율 유지 - 부모 */
@@ -106,4 +124,20 @@ p {
   color: transparent;
   overflow: hidden;
   visibility: hidden;
+}
+
+::-webkit-scrollbar-button {
+  width: 0;
+  height: 0;
+}
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  background-color: #ccc;
 }

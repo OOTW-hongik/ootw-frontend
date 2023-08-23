@@ -33,7 +33,7 @@ const OutfitList = () => {
   ]);
   const [isSortOpened, setIsSortOpened] = useState<boolean>(false);
   const [isFilterOpened, setIsFilterOpened] = useState<boolean>(false);
-  const sortList = ["최근등록순", "체감비슷순"];
+  const sortList = ["체감비슷순", "최근날짜순"];
   const filterList = ["아우터", "상의", "하의"];
   const [selectedSort, setSelectedSort] = useState<string>(sortList[0]);
   const [selectedFilter, setSelectedFilter] = useState<string>("");
@@ -54,7 +54,32 @@ const OutfitList = () => {
       })
       .catch((error) => setErrorMsg(error.message));
   }, []);
-  useEffect(() => {
+  useEffect(()=>{ // 정렬 변경 
+    if (selectedSort === "최근날짜순") {
+      // fetchOutfitList을 복사해서 시간순으로 정렬 후 set
+      let sortedByDate = [...fetchOutfitList];
+      sortedByDate=sortedByDate.sort((a,b) => {
+        if(a.outfitDate > b.outfitDate) return -1;
+        if(a.outfitDate < b.outfitDate) return 1;
+        return 0;
+      });
+      // 정렬된 내용 저장 
+      setFetchOutfitList(sortedByDate);
+      console.log(sortedByDate);
+    }
+    else { // 체감비슷순 선택 
+      fetch("http://43.200.138.39:8080/outfit/list?memberId=1", {
+        method: "GET",
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          setFetchOutfitList(res.outfitSummary);
+        })
+        .catch((error) => setErrorMsg(error.message));
+    }
+  },[selectedSort]);
+
+  useEffect(() => { // 필터 변경 
     // spread 사용하여 리스트 state 변경
     let copy = [...checkedFilterList];
     copy[filterList.indexOf(selectedFilter)] =

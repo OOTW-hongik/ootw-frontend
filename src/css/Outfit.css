@@ -27,6 +27,7 @@
 .mainClothesPhoto {
     width: 55px;
     height: 55px;
+    object-fit: contain;
 }
 .clothWrapper {
     position: relative;

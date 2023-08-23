@@ -8,8 +8,9 @@ import NoServerAlert from "./NoServerAlert";
 type Props = {
   title: string;
   ratingChange: Function;
+  outfitId: string | number;
 };
-function OutfitCateCreate({ title, ratingChange }: Props) {
+function OutfitCateCreate({ title, ratingChange, outfitId }: Props) {
   const array: number[] = [1, 2, 3, 4, 5];
   const [rating, setRating] = useState<number>(3);
   const [selectedClothesPhoto, setSelectedClothesPhoto] = useState<string[]>(
@@ -18,9 +19,13 @@ function OutfitCateCreate({ title, ratingChange }: Props) {
   const titleArr = ["아우터", "상의", "하의", "기타"];
   const [errorMsg, setErrorMsg] = useState();
 
-  useLayoutEffect(() => {
-    const ssData = sessionStorage.getItem(`inputted${title}`);
+  useEffect(() => {
+    let ssRatingInfo = sessionStorage
+      .getItem(`ratingInfo${outfitId}`)
+      ?.split(",");
+    if (ssRatingInfo) setRating(Number(ssRatingInfo[titleArr.indexOf(title)])); // 있으면
 
+    const ssData = sessionStorage.getItem(`inputted${title}${outfitId}`);
     if (ssData) {
       ssData.split(",").map((element) => {
         fetch(`http://43.200.138.39:8080/clothes?clothesId=${element}`)
@@ -34,16 +39,35 @@ function OutfitCateCreate({ title, ratingChange }: Props) {
           .catch((error) => setErrorMsg(error.message));
       });
     }
+    // setSelectedClothesPhoto(fetchPhotos);
   }, []);
 
   useEffect(() => {
     ratingChange(titleArr.indexOf(title), rating);
   }, [rating]);
 
-  useEffect(() => {
-    let ssRatingInfo = sessionStorage.getItem("ratingInfo")?.split(",");
-    if (ssRatingInfo) setRating(Number(ssRatingInfo[titleArr.indexOf(title)])); // 있으면
-  }, []);
+  function cancelSelect(element: string) {
+    // element와 일치하지 않는 원소만 추출해서 새로운 배열을 만듦
+    setSelectedClothesPhoto(
+      selectedClothesPhoto.filter(
+        (selectedClothesPhoto) => selectedClothesPhoto !== element
+      )
+    );
+  }
+
+  function changeToMain(index:number){
+    let copy = [...selectedClothesPhoto];
+    [copy[index], copy[0]] = [copy[0], copy[index]];
+    setSelectedClothesPhoto(copy);
+
+    let ssDataArr = sessionStorage.getItem(`inputted${title}${outfitId}`)?.split(",");;
+    console.log(ssDataArr);
+    if(ssDataArr){
+
+      [ssDataArr[index], ssDataArr[0]] = [ssDataArr[0], ssDataArr[index]];
+      sessionStorage.setItem(`inputted${title}${outfitId}`,String(ssDataArr));
+    }
+  }
 
   return (
     <div className="RegisterCategory centerLeftRight">
@@ -68,7 +92,10 @@ function OutfitCateCreate({ title, ratingChange }: Props) {
 
       <div className="col4GridContainer">
         <div className="centerLeftRight">
-          <Link to="/registeroutfit/chooseOutfit" state={title}>
+          <Link
+            to="/registeroutfit/chooseOutfit"
+            state={{ category: title, outfitId: outfitId }}
+          >
             <GoPlusSmall />
           </Link>
         </div>
@@ -76,6 +103,12 @@ function OutfitCateCreate({ title, ratingChange }: Props) {
         {selectedClothesPhoto.map((element) => (
           <div>
             <img id="clothes" src={element} />
+            {selectedClothesPhoto[0] === element ? (
+              <button id="mainImgBtn">대표</button>
+            ):(<button id="notMainBtn" className="pointer" onClick={()=>changeToMain(selectedClothesPhoto.indexOf(element))} />)}
+            <button id="xBtn" className="pointer" onClick={() => cancelSelect(element)}>
+              ✖
+            </button>
           </div>
         ))}
       </div>

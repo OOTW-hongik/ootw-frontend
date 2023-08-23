@@ -22,8 +22,8 @@ function ClosetCreate({ category, closeFromChild }: Props) {
   const [selectedSubCategory, setSelectedSubCategory] =
     useState<string>(category);
   const [isDropdownOpened, setIsDropdownOpened] = useState<boolean>(false);
-  const [inputtedPhoto, setInputtedPhoto] =
-    useState<FormDataEntryValue | null>();
+  const [inputtedPhoto, setInputtedPhoto] = useState<FormDataEntryValue>();
+  const [previewURL, setPreviewURL] = useState<string>();
   const [inputtedComment, setInputtedComment] = useState("");
   const [inputtedHidden, setInputtedHidden] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -50,26 +50,41 @@ function ClosetCreate({ category, closeFromChild }: Props) {
       let formData = new FormData();
 
       formData.append("image", pht[0]);
+      switch (category) {
+        case "아우터":
+          formData.append("category", "outer");
+          break;
+        case "상의":
+          formData.append("category", "top");
+          break;
+        case "하의":
+          formData.append("category", "bottom");
+          break;
+        case "기타":
+          formData.append("category", "etc");
+      }
+
       fetch(`http://43.202.82.91/remove_background`, {
         method: "POST",
         body: formData,
       })
         .then((res) => res.formData())
         .then((res) => {
-          setInputtedPhoto(res.get("image")); // AI서버에서 받아온 이미지
-          console.log(res.get("image"));
-          console.log(res.get("ClothClass"));
+          const imageFile = res.get("image"); // AI서버에서 받아온 이미지 파일 객체
+          if (imageFile !== null && imageFile instanceof Blob) {
+            setInputtedPhoto(imageFile);
+            const imageBlobUrl = URL.createObjectURL(imageFile);
+            setPreviewURL(imageBlobUrl);
+          }
           const fileEntryValue = res.get("ClothClass");
           if (fileEntryValue instanceof File) {
-            console.log("if내부");
             const reader = new FileReader();
             reader.onload = (e) => {
               const contents = e.target?.result;
-
-              console.log("onload내부");
               setSelectedSubCategory(String(contents)); // AI서버에서 받아온 classification 결과값
               console.log(String(contents));
             };
+            reader.readAsText(fileEntryValue); // 파일을 읽어옴
           }
           setLoading(false);
         })
@@ -90,7 +105,7 @@ function ClosetCreate({ category, closeFromChild }: Props) {
               memberId: 1,
               category: category,
               subCategory: selectedSubCategory,
-              clothesPhoto: inputtedPhoto,
+              // clothesPhoto: inputtedPhoto,
               clothesComment: inputtedComment,
               hidden: inputtedHidden,
             }),
@@ -103,7 +118,7 @@ function ClosetCreate({ category, closeFromChild }: Props) {
         method: "POST",
         body: formData,
       });
-      closeFromChild("m");
+      closeFromChild("c");
       window.location.reload();
     } else {
       alert("사진 필수!");
@@ -127,11 +142,11 @@ function ClosetCreate({ category, closeFromChild }: Props) {
           accept="image/*"
           onChange={photoChange}
         />
-        {inputtedPhoto && (
+        {previewURL && (
           // 넣은 이미지가 있으면
           <img
             className="inputFileBtn"
-            src={String(inputtedPhoto)}
+            src={previewURL}
             alt={selectedSubCategory}
           />
         )}

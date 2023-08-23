@@ -7,8 +7,9 @@ import { Link } from "react-router-dom";
 
 type Props = {
   category: string;
+  outfitId:string|number;
 };
-const SelectCloth = ({ category }: Props) => {
+const SelectCloth = ({ category,outfitId }: Props) => {
   const [selectedSubCate, setSelectedSubCate] = useState("전체");
   const [isModalOpened, setIsModalOpened] = useState(false);
   const [errorMsg, setErrorMsg] = useState();
@@ -20,7 +21,7 @@ const SelectCloth = ({ category }: Props) => {
     setIsModalOpened(value);
   };
   const addToSession = (value: number) => {
-    let ssData = sessionStorage.getItem(`inputted${category}`);
+    let ssData = sessionStorage.getItem(`inputted${category}${outfitId}`);
     let isUnique = true;
     // console.log("diq",ssInfo);
     ssData?.split(",").map((element) => {
@@ -31,13 +32,13 @@ const SelectCloth = ({ category }: Props) => {
       if (isUnique) {
         // 중복아님
         sessionStorage.setItem(
-          `inputted${category}`,
+          `inputted${category}${outfitId}`,
           ssData + "," + String(value)
         );
       }
     } else {
       // 최초 선택
-      sessionStorage.setItem(`inputted${category}`, String(value));
+      sessionStorage.setItem(`inputted${category}${outfitId}`, String(value));
     }
   };
   useEffect(() => {
@@ -99,6 +100,7 @@ const SelectCloth = ({ category }: Props) => {
                   <Link
                     to="/registeroutfit"
                     onClick={() => addToSession(element.clothesId)}
+                    state={{outfitId:outfitId}}
                   >
                     <img id="clothes" src={element.clothesUrl} />
                   </Link>

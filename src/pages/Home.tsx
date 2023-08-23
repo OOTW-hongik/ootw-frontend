@@ -1,6 +1,6 @@
 import "../css/Home.css";
 // import axios from 'axios';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useLayoutEffect } from "react";
 import BottomNav from "../components/BottomNav";
 import AreaSwitchBtn from "../components/AreaSwitchBtn";
 import { Link } from "react-router-dom";
@@ -14,9 +14,28 @@ ChartJS.register(...registerables);
 
 const Home = () => {
   const [fetchLocationInfo, setFetchLocationInfo] = useState("");
-  const [fetchOutfitList, setFetchOutfitList] = useState([]);
+  const [fetchOutfitList, setFetchOutfitList] = useState([
+    {
+      outfitId: 0,
+      outfitDate: "string",
+      skyCondition: 0,
+      highWc: 0,
+      lowWc: 0,
+      highTemp: 0,
+      lowTemp: 0,
+      outerRating: 0,
+      topRating: 0,
+      bottomRating: 0,
+      outerUrl: "string",
+      topUrl: "string",
+      bottomUrl: "string",
+      manyOuter: false,
+      manyTop: false,
+      manyBottom: false,
+    },
+  ]);
   const [errorMsg, setErrorMsg] = useState();
-  useEffect(() => {
+  useLayoutEffect(() => {
     fetch("http://43.200.138.39:8080/home?memberId=1", {
       method: "GET",
     })
@@ -26,7 +45,7 @@ const Home = () => {
       })
       .catch((error) => setErrorMsg(error.message));
   }, []);
-  //location 바뀔때마다 fetch
+
 
   return (
     <div className="Home mobileWeb">
@@ -35,9 +54,10 @@ const Home = () => {
         changeLocationInfo={(value: string) => {
           setFetchLocationInfo(value);
         }}
+        whereUsed="home"
       />
-      <WeatherBox />
-      <Link to="/registeroutfit" style={{ textDecoration: "none" }}>
+      <WeatherBox fetchLocationInfo={fetchLocationInfo} />
+      <Link to="/registeroutfit" style={{ textDecoration: "none" }} state={{outfitId:0}}>
         <button id="registerOutfitBtn" className="centerLeftRight">
           착장 기록하기
         </button>
@@ -46,7 +66,11 @@ const Home = () => {
         비슷한 체감온도에서 입었던 옷이에요
       </div>
       {fetchOutfitList.length > 0 ? (
-        fetchOutfitList.map((element) => <Outfit element={element} />)
+        fetchOutfitList.map((element) => (
+          <Link to={`/outfitlist/${element.outfitId}`}>
+            <Outfit element={element} />
+          </Link>
+        ))
       ) : (
         <div style={{ marginTop: "20px", fontSize: "20px" }}>기록이 없어요</div>
       )}
@@ -57,71 +81,61 @@ const Home = () => {
 
 export default Home;
 
-function WeatherBox() {
-  const [skyCondition, setSkyCondition] = useState(1);
-  const weatherInfoList = [
+type WBProps = {
+  fetchLocationInfo: string;
+};
+function WeatherBox({fetchLocationInfo}:WBProps) {
+  const [errorMsg, setErrorMsg] = useState();
+  const [skyCondition, setSkyCondition] = useState(0);
+  const [highTemp, setHighTemp] = useState(0);
+  const [lowTemp, setLowTemp] = useState(0);
+  const [highWc, setHighWc] = useState(0);
+  const [lowWc, setLowWc] = useState(0);
+  const [weatherGraphInfoList, setWeatherGraphInfoList] = useState([
     {
-      id: 0,
-      time: 6,
-      temp: 10,
-      icon: 0,
+      time: 0,
+      temp: 0,
+      skyCondition: 0,
     },
-    {
-      id: 1,
-      time: 9,
-      temp: 21,
-      icon: 2,
-    },
-    {
-      id: 2,
-      time: 12,
-      temp: 24,
-      icon: 2,
-    },
-    {
-      id: 3,
-      time: 15,
-      temp: 18,
-      icon: 2,
-    },
-    {
-      id: 4,
-      time: 18,
-      temp: 24,
-      icon: 2,
-    },
-    {
-      id: 5,
-      time: 21,
-      temp: 21,
-      icon: 2,
-    },
-    {
-      id: 6,
-      time: 24,
-      temp: 25,
-      icon: 2,
-    },
-  ];
+  ]);
+  useEffect(() => {
+    fetch("http://43.200.138.39:8080/home?memberId=1", {
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        setWeatherGraphInfoList(res.weatherGraphInfoList);
+        setSkyCondition(res.skyCondition);
+        setHighTemp(res.highTemp);
+        setLowTemp(res.lowTemp);
+        setHighWc(res.highWc);
+        setLowWc(res.lowWc);
+      })
+      .catch((error) => setErrorMsg(error.message));
+  }, [fetchLocationInfo]);
   return (
     <div id="WeatherBox" className="centerLeftRight">
+      {errorMsg && <NoServerAlert errorMsg={errorMsg} />}
       <div id="weatherUpperWrapper">
         <div id="weatherIcon">{weatherIconList[skyCondition].tag}</div>
         <div id="weatherTextWrapper">
           <div>
             <div id="width80">{weatherIconList[skyCondition].name}</div>
-            <div className="width38">10°</div> /{" "}
-            <div className="width38">25°</div>
+            <div className="width38">{lowTemp}°</div> /{" "}
+            <div className="width38">{highTemp}°</div>
           </div>
           <div>
-            <div>체감</div> <div className="width38">12°</div> /{" "}
-            <div className="width38">28°</div>
+            <div>체감</div> <div className="width38">{lowWc}°</div> /{" "}
+            <div className="width38">{highWc}°</div>
           </div>
         </div>
       </div>
       <div id="weatherIndexWrapper">
-        {weatherInfoList.map((element) => (
-          <div style={{ width: "30px" }} key={element.id}>
+        {weatherGraphInfoList.map((element) => (
+          <div
+            style={{ width: "30px" }}
+            key={weatherGraphInfoList.indexOf(element)}
+          >
             <div style={{ fontSize: "13px" }}>{element.time}시</div>
             {/* <div>{weatherIconList[element.icon].tag}</div> */}
             <div style={{ fontSize: "15px" }}>{element.temp}°</div>
@@ -129,19 +143,28 @@ function WeatherBox() {
         ))}
       </div>
 
-      <WeatherGraph />
+      <WeatherGraph weatherGraphInfoList={weatherGraphInfoList} />
     </div>
   );
 }
-
-function WeatherGraph() {
+type weatherGraphInfoList = {
+  temp: number;
+  time: number;
+  skyCondition: number;
+};
+type Props = {
+  weatherGraphInfoList: weatherGraphInfoList[];
+};
+function WeatherGraph({ weatherGraphInfoList }: Props) {
+  let tempList: number[] = [];
+  weatherGraphInfoList.map((element) => tempList.push(element.temp));
   const data = {
     labels: ["06시", "09시", "12시", "15시", "18시", "21시", "24시"],
     datasets: [
       {
         borderColor: "rgb(54, 162, 235)",
         borderWidth: 2,
-        data: [10, 21, 24, 18, 24, 21, 25],
+        data: tempList,
       },
     ],
   };

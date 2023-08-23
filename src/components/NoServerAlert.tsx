@@ -14,7 +14,7 @@ function NoServerAlert({ errorMsg }: Props) {
     alignItems: "center",
     fontSize:"20px",
     color:"white",
-    zIndex: 1,
+    zIndex: 100,
     paddingTop:"300px"
   } as const;
   return (

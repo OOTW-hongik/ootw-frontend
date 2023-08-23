@@ -15,36 +15,46 @@ const weatherIconList = [
   {
     id: 1,
     tag: <IoPartlySunnyOutline />,
-    name: "구름조금",
+    name: "구름",
   },
   {
     id: 2,
     tag: <IoCloudyOutline />,
-    name: "흐림",
+    name: "흐림",    
   },
   {
     id: 3,
-    tag: <IoRainyOutline />,
-    name: "비",
-  },
-  {
-    id: 4,
     tag: <IoSnowOutline />,
     name: "눈",
   },
+  {
+    id: 4,
+    tag: <IoRainyOutline />,
+    name: "비",
+  },
 ];
 
-const outerSubCategoryList = ["후드집업", "자켓", "가디건", "코트", "패딩"];
+const outerSubCategoryList = [  
+  "자켓",
+  "코트",
+  "패딩",
+  "가디건",
+  "블레이저",
+  "후드집업",
+  "기타 아우터"
+];
 const topSubCategoryList = [
+  "셔츠",
   "반팔티",
   "긴팔티",
-  "셔츠",
   "후드티",
+  "카라티",
+  "민소매티",
+  "블라우스",  
   "원피스",
-  "폴로티",
-  "블라우스",
+  "기타 상의"
 ];
-const bottomSubCategoryList = ["긴바지", "반바지", "치마"];
+const bottomSubCategoryList = ["긴바지", "반바지", "스커트", "기타 하의"];
 
 const ratingList = [
   {

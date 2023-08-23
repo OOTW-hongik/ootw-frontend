@@ -5,7 +5,9 @@ import "../css/ChooseOutfit.css"
 
 
 function ChooseOutfit() {
-  const title = useLocation().state;
+  const title = useLocation().state.category;
+  const outfitId=useLocation().state.outfitId;
+  // console.log("co",title,outfitId);
 
   return (
     <div className="ChooseOutfit mobileWeb">
@@ -17,7 +19,7 @@ function ChooseOutfit() {
       >
         {title} 선택
       </div> 
-      <SelectCloth category={title}></SelectCloth>
+      <SelectCloth category={title} outfitId={outfitId}></SelectCloth>
     </div>
   );
 }

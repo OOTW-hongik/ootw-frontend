@@ -1,13 +1,17 @@
+import "../css/AreaSwitchBtn.css";
+
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { useState, useEffect, useLayoutEffect } from "react";
-import "../css/AreaSwitchBtn.css";
+import { useParams } from "react-router-dom";
+
 import Dropdown from "../components/Dropdown";
 import NoServerAlert from "../components/NoServerAlert";
 
 type Props = {
   changeLocationInfo: (value: string) => void;
+  whereUsed:string;
 };
-function AreaSwitchBtn({ changeLocationInfo }: Props) {
+function AreaSwitchBtn({ changeLocationInfo, whereUsed }: Props) {
   const areaList = [
     "서울경기",
     "강원영서",
@@ -35,26 +39,44 @@ function AreaSwitchBtn({ changeLocationInfo }: Props) {
   const [selectedArea, setSelectedArea] = useState("");
   const [isDropdownOpened, setIsDropdownOpened] = useState(false);
   const [errorMsg, setErrorMsg] = useState();
-
-  useLayoutEffect(() => {
-    let fLI = sessionStorage.getItem('fetchLocationInfo');
-    if (fLI) {
-      setSelectedArea(fLI);
-    } else {
-      fetch('http://43.200.138.39:8080/home?memberId=1', {
+  
+  useEffect(() => {
+    fetch('http://43.200.138.39:8080/home?memberId=1', {
         method: "GET"
       }).then(res => res.json()).then(res => {
-        setSelectedArea(res.location);
-        // console.log("로케", res.location);
+        const userLocation=res.location;
+
+        if (whereUsed==="home"){
+          setSelectedArea(userLocation);
+        } else {
+          let fLI = sessionStorage.getItem(`fetchLocationInfo${whereUsed}`);
+          if (fLI) {
+            setSelectedArea(fLI);
+          } else {
+            setSelectedArea(userLocation);
+          }
+        }
+        // console.log("AS UE",userLocation);
       })
         .catch((error) => setErrorMsg(error.message));
-    }
-    // console.log("ASB uLE",selectedArea);
   }, []);
 
 
-  useEffect(() => {
+  useEffect(() => {    
     changeLocationInfo(selectedArea);
+    if (whereUsed==="home" && selectedArea){
+      
+      fetch(`http://43.200.138.39:8080/home/location`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          memberId: 1,
+          location:selectedArea
+        }),
+      });
+    }
   }, [selectedArea]);
 
   return (
