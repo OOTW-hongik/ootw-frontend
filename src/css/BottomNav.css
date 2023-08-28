@@ -1,31 +1,65 @@
- .navWrapper {
-    /* 네비바 하단 고정 */
-    position: fixed;
-    bottom: 0;
-    left:0;
-    right:0;
-
-    /* 모바일웹 고려 */
-    margin : 0 auto;
-    max-width : 390px;
-
-    display: flex;
-    text-align: center; /* 좌우 중앙정렬 */
-    align-items: center; /* 상하 중앙정렬 */
-
-    height: 70px;
-    border-top: 1px solid gray;
-    background-color: white;
-    z-index: 10;
+@media screen and (max-device-width:767px) {
+    /* 모바일 */
+    .navWrapper {
+        /* 네비바 하단 고정 */
+        position: fixed;
+        bottom: 0;
+        left:0;
+        right:0;
+    
+        /* 모바일웹 고려 */
+        margin : 0 auto;
+        width : 100%;
+    
+        display: flex;
+        text-align: center; /* 좌우 중앙정렬 */
+        align-items: center; /* 상하 중앙정렬 */
+    
+        height: 175px;
+        border-top: 2px solid gray;
+        background-color: white;
+        z-index: 10;
+    }
+    .navIcon {
+        width: 75px;
+        height: 75px;
+        text-decoration: none; 
+        color: #444444; 
+    }
 }
+ @media screen and (min-device-width:768px) {
+		/* 태블릿 ~ 데스크탑 */
+        .navWrapper {
+            /* 네비바 하단 고정 */
+            position: fixed;
+            bottom: 0;
+            left:0;
+            right:0;
+        
+            /* 모바일웹 고려 */
+            margin : 0 auto;
+            max-width : 390px;
+        
+            display: flex;
+            text-align: center; /* 좌우 중앙정렬 */
+            align-items: center; /* 상하 중앙정렬 */
+        
+            height: 70px;
+            border-top: 1px solid gray;
+            background-color: white;
+            z-index: 10;
+        }
+        .navIcon {
+            width: 30px;
+            height: 30px;
+            text-decoration: none; 
+            color: #444444; 
+        }
+}
+
+
 
 nav > div {
     width: 25%; /* 4개의 button을 각각 25% width만큼 할당 */
 }
 
-.navIcon {
-    width: 30px;
-    height: 30px;
-    text-decoration: none; 
-    color: #444444; 
-}

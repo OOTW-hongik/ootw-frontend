@@ -30,7 +30,7 @@ const Outfit = ({ element }: Props) => {
   return (
     <div id="Outfit" className="centerLeftRight">
       <div id="outfitLeftWrapper">
-        <div>{element.outfitDate}</div>
+        <div id="outfitDate">{element.outfitDate}</div>
         <MiniWeather
           skyCondition={element.skyCondition}
           highWc={element.highWc}

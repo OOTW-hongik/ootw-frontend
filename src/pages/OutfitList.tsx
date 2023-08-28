@@ -7,6 +7,7 @@ import Outfit from "../components/Outfit";
 import Dropdown from "../components/Dropdown";
 import NoServerAlert from "../components/NoServerAlert";
 import { Link } from "react-router-dom";
+import { useMediaQuery } from "react-responsive";
 
 const OutfitList = () => {
   const [errorMsg, setErrorMsg] = useState();
@@ -43,6 +44,12 @@ const OutfitList = () => {
     false,
     false,
   ]);
+  const isMobile = useMediaQuery({
+    query: "(max-device-width:767px)",
+  });
+  const isPc = useMediaQuery({
+    query: "(min-device-width:768px)",
+  });
   useEffect(() => {
     fetch("http://43.200.138.39:8080/outfit/list?memberId=1", {
       method: "GET",
@@ -103,7 +110,7 @@ const OutfitList = () => {
         <div className="btnWrapper">
           <div>
             <div
-              className="btn"
+              className="btn pointer"
               onClick={() => {
                 setIsSortOpened(!isSortOpened);
                 setIsFilterOpened(false);
@@ -124,7 +131,7 @@ const OutfitList = () => {
           </div>
           <div>
             <div
-              className="btn"
+              className="btn pointer"
               onClick={() => {
                 setIsFilterOpened(!isFilterOpened);
                 setIsSortOpened(false);
@@ -159,9 +166,10 @@ const OutfitList = () => {
             )
         )
       ) : (
-        <div style={{ marginTop: "20px", fontSize: "20px" }}>기록이 없어요</div>
+        <div id="noRecordText">기록이 없어요</div>
       )}
-      <div style={{ paddingBottom: "90px" }} />
+      {isMobile && <div style={{ paddingTop: "200px" }}/>}
+      {isPc && <div style={{ paddingTop: "80px" }} />}
       <BottomNav selectedNav="outfitlist" />
     </div>
   );

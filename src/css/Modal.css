@@ -1,3 +1,108 @@
+@media screen and (max-device-width: 767px) {
+  /* 모바일 */
+
+  /* modal창 */
+  .modalBody {
+    position: absolute;
+    width: 700px;
+    height: 1000px;
+    padding: 100px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 25px;
+    box-shadow: 0 5px 7px 0 rgba(34, 36, 38, 0.15);
+  }
+
+  #modalCloseBtn {
+    position: absolute;
+    top: 37px;
+    right: 37px;
+    border: none;
+    color: rgba(0, 0, 0, 0.7);
+    background-color: transparent;
+    font-size: 50px;
+  }
+
+  .popupBody {
+    position: absolute;
+    width: 500px;
+    height: 300px;
+    padding: 37px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 25px;
+    box-shadow: 0 5px 7px 0 rgba(34, 36, 38, 0.15);
+  }
+
+  .popupBody > div { 
+    padding: 20px 0;
+  }
+  #confirmDel {
+    border-top: 2px solid #ccc;
+    border-bottom: 2px solid #ccc;
+    color: red;
+    font-weight: 800;
+    font-size:40px;
+  }
+  #deleteGuideText {
+    padding-bottom:50px;
+    font-size:40px;
+  }
+  #cancelDel {
+    color: gray;
+    font-size: 40px;
+  }
+  
+}
+@media screen and (min-device-width: 768px) {
+  /* 태블릿 ~ 데스크탑 */
+
+  /* modal창 */
+  .modalBody {
+    position: absolute;
+    width: 280px;
+    height: 400px;
+    padding: 40px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
+  }
+
+  #modalCloseBtn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    border: none;
+    color: rgba(0, 0, 0, 0.7);
+    background-color: transparent;
+    font-size: 20px;
+  }
+
+  .popupBody {
+    position: absolute;
+    width: 200px;
+    height: 120px;
+    padding: 15px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
+  }
+
+  .popupBody > div {
+    padding: 8px 0;
+  }
+  #deleteGuideText {
+    padding-bottom:20px;
+  }
+  #confirmDel {
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    color: red;
+    font-weight: 800;
+  }
+  #cancelDel {
+    color: gray;
+  }
+  
+}
 /* modal창 외부화면 */
 .Modal {
   position: fixed;
@@ -11,51 +116,6 @@
   align-items: center;
   z-index: 100;
 }
-
-/* modal창 */
-.modalBody {
-  position: absolute;
-  width: 280px;
-  height: 400px;
-  padding: 40px;
-  background-color: rgb(255, 255, 255);
-  border-radius: 10px;
-  box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
-}
-
-#modalCloseBtn {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  border: none;
-  color: rgba(0, 0, 0, 0.7);
-  background-color: transparent;
-  font-size: 20px;
-}
-
 #modalCloseBtn:hover {
   cursor: pointer;
-}
-
-.popupBody {
-  position: absolute;
-  width: 200px;
-  height: 120px;
-  padding: 15px;
-  background-color: rgb(255, 255, 255);
-  border-radius: 10px;
-  box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
-}
-
-.popupBody > div {
-  padding: 8px 0;
-}
-#confirmDel {
-  border-top: 1px solid #ccc;
-  border-bottom: 1px solid #ccc;
-  color: red;
-  font-weight: 800;
-}
-#cancelDel {
-  color: gray;
 }

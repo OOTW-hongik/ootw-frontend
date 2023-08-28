@@ -15,9 +15,9 @@ const MyCloset = () => {
         <h3 className="pageTitle">내 옷장</h3>
         <div id="showHiddenBtn" onClick={() => setShowHidden(!showHidden)}>
           {showHidden ? (
-            <BiCheckboxSquare size={20} style={{ paddingTop: "3px" }} />
+            <BiCheckboxSquare className="hiddenCheckbox"/>
           ) : (
-            <BiCheckbox size={20} style={{ paddingTop: "3px" }} />
+            <BiCheckbox className="hiddenCheckbox" />
           )}
           숨긴 옷 보기
         </div>

@@ -214,7 +214,7 @@ function RegisterOutfit() {
 
         <div className="comment centerLeftRight">
           <div className="commentTitle">한줄평</div>
-          <input type="text" placeholder="한줄평을 입력해보세요." value={inputtedComment} onChange={(e) => {
+          <input className="inputBorder" type="text" placeholder="한줄평을 입력해보세요." value={inputtedComment} onChange={(e) => {
             setInputtedComment(e.target.value);
           }} />
         </div>

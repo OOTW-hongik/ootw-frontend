@@ -1,26 +1,65 @@
-.upperWrapper {
-    display: flex;
-    justify-content: space-between;
-}
-
-.datePicker {
+@media screen and (max-device-width: 767px) {
+  /* 모바일 */
+  .datePicker {
     text-align: left;
-    background-color: #FAFAFA;
+    background-color: #fafafa;
+    border: 0;
+    margin-left: 37px;
+    margin-top: 37px;
+    font-size: 37px;
+  }
+
+  .comment {
+    width: 92%;
+    height: auto;
+
+    text-align: left;
+
+    background-color: white;
+    border-radius: 50px;
+    box-shadow: 0 5px 10px 0 rgb(0, 0, 0, 0.1);
+
+    margin-top: 25px;
+    margin-bottom: 50px;
+  }
+
+  .comment > input {
+    margin: 25px 37px;
+    text-align: left;
+    border: 0;
+    width: 84%;
+  }
+  .comment > input:focus {
+    border-bottom: 2px solid #cfcfcf;
+    outline: 0;
+  }
+
+  .commentTitle {
+    text-align: left;
+    font-size: 45px;
+    padding: 17px 12px;
+    border-bottom: 3px solid lightgray;
+    margin: 0 37px;
+  }
+
+  #registerSaveBtn {
+    padding: 12px;
+    width: 62px;
+    height: 62px;
+  }
+}
+@media screen and (min-device-width: 768px) {
+  /* 태블릿 ~ 데스크탑 */
+  .datePicker {
+    text-align: left;
+    background-color: #fafafa;
     border: 0;
     margin-left: 15px;
     margin-top: 15px;
     font-size: 15px;
-}
-.datePicker:focus {
-    outline: 0;
-}
+  }
 
-.lowerWrapper {
-    justify-content: center;
-    align-items: center;
-}
-
-.comment {
+  .comment {
     width: 360px;
     height: auto;
 
@@ -32,32 +71,48 @@
 
     margin-top: 10px;
     margin-bottom: 20px;
-}
+  }
 
-.comment > input {
+  .comment > input {
     margin: 10px 15px;
     text-align: left;
     border: 0;
     width: 330px;
-}
-.comment > input:focus {
-    border-bottom: 1px solid #CFCFCF;
+  }
+  .comment > input:focus {
+    border-bottom: 1px solid #cfcfcf;
     outline: 0;
-}
+  }
 
-.commentTitle {
+  .commentTitle {
     text-align: left;
     font-size: 18px;
-    padding : 7px 5px ;
+    padding: 7px 5px;
     border-bottom: 1px solid lightgray;
     margin: 0 15px;
-}
+  }
 
-#registerSaveBtn {
+  #registerSaveBtn {
     padding: 5px;
     width: 25px;
     height: 25px;
+  }
 }
+
+.upperWrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.datePicker:focus {
+  outline: 0;
+}
+
+.lowerWrapper {
+  justify-content: center;
+  align-items: center;
+}
+
 #registerSaveBtn:hover {
-    cursor: pointer;
+  cursor: pointer;
 }

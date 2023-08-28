@@ -83,11 +83,12 @@ function AreaSwitchBtn({ changeLocationInfo, whereUsed }: Props) {
     <div>
       <div
         id="areaSwitchBtn"
+        className="pointer"
         onClick={() => {
           setIsDropdownOpened(!isDropdownOpened);
         }}
       >
-        <FaMapMarkerAlt />
+        <FaMapMarkerAlt id="mapMarker" />
         {selectedArea}
       </div>
       {isDropdownOpened && (

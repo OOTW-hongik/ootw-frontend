@@ -158,13 +158,12 @@ function OutfitRead() {
         <div id="btnWrapper">
           <Link to="/registerOutfit" state={{ outfitId: outfitId }}>
             <TfiPencilAlt
-              style={{ paddingRight: "25px" }}
-              size={25}
+              id="outfitUpdateBtn"
               onClick={beforeUpdate}
             />
           </Link>
 
-          <TfiTrash className="pointer" size={25} onClick={()=>setIsPopupOpened(true)} />
+          <TfiTrash className="pointer" id="outfitDeleteBtn" onClick={()=>setIsPopupOpened(true)} />
         </div>
         
       </div>

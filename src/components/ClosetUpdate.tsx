@@ -169,7 +169,7 @@ function ClosetUpdate({ category, id, closeFromChild }: Props) {
       <div id="photoWrapper">
         <label htmlFor="inputFile">
           <div className="inputFileBtn inputBorder">
-            <IoImagesOutline size={"50px"} />
+            <IoImagesOutline id="galleryIcon" />
           </div>
         </label>
         <input
@@ -197,7 +197,7 @@ function ClosetUpdate({ category, id, closeFromChild }: Props) {
       <div className="inputTitle">카테고리</div>
       {category === "기타" ? (
         <div id="subCategoryDropdown" className="inputBorder disabled">
-          <TiArrowSortedDown size={"20px"} style={{ margin: "13px" }} />
+          <TiArrowSortedDown id="arrowIcon" />
           {selectedSubCategory}
         </div>
       ) : (
@@ -208,7 +208,7 @@ function ClosetUpdate({ category, id, closeFromChild }: Props) {
             setIsDropdownOpened(!isDropdownOpened);
           }}
         >
-          <TiArrowSortedDown size={"20px"} style={{ margin: "13px" }} />
+          <TiArrowSortedDown id="arrowIcon" />
           {selectedSubCategory}
         </div>
       )}
@@ -225,9 +225,7 @@ function ClosetUpdate({ category, id, closeFromChild }: Props) {
 
       <div
         className="inputTitle"
-        style={{
-          marginTop: "20px",
-        }}
+        id="commentTitle"
       >
         한줄평
       </div>
@@ -242,18 +240,16 @@ function ClosetUpdate({ category, id, closeFromChild }: Props) {
         <AiOutlineEyeInvisible
           className="CRUDBtn"
           id="leftBtn"
-          size={25}
           onClick={() => setInputtedHidden(false)}
         />
       ) : (
         <AiOutlineEye
           className="CRUDBtn"
           id="leftBtn"
-          size={25}
           onClick={() => setInputtedHidden(true)}
         />
       )}
-      <TfiSave className="CRUDBtn" id="rightBtn" size={25} onClick={update} />
+      <TfiSave className="CRUDBtn" id="rightBtn" onClick={update} />
     </div>
   );
 }

@@ -1,42 +1,211 @@
+@media screen and (max-device-width: 767px) {
+  /* 모바일 */
+
+  .RegisterCategory {
+    width: 92%;
+    height: auto;
+
+    background-color: white;
+    border-radius: 50px;
+    box-shadow: 0 5px 10px 0 rgb(0, 0, 0, 0.1);
+
+    margin-top: 25px;
+    padding-bottom: 12px;
+  }
+
+  .ratingWrapper {
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid lightgray;
+    margin: 0 37px;
+  }
+
+  .title {
+    font-size: 45px;
+    /* font-weight: 600; */
+    padding: 25px 12px;
+    margin-right: 25px;
+    width: 137px;
+  }
+
+  .ratingBtn {
+    border-radius: 50%;
+    border: 7px solid #cfcfcf;
+    width: 25px;
+    height: 25px;
+    background-color: white;
+    margin-left: 12px;
+  }
+
+  .centerLeftRight > a {
+    /* 플러스 버튼 */
+    font-size: 125px;
+    color: #444444;
+    padding-bottom: 7px;
+    height: 125px;
+  }
+
+  #inputtedComment {
+    padding: 25px 37px;
+    text-align: left;
+    border: 0;
+    width: 84%;
+    font-size: 35px;
+  }
+
+  #btnWrapper {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 75px;
+  }
+  #outfitUpdateBtn {
+    width: 62px;
+    height: 62px;
+    padding-right: 62px;
+  }
+  #outfitDeleteBtn {
+    width: 62px;
+    height: 62px;
+  }
+
+  #xBtn {
+    position: absolute;
+    top: 7px;
+    right: 7px;
+    border: none;
+    color: rgba(0, 0, 0, 0.5);
+    background-color: transparent;
+    font-size: 32px;
+    padding: 0;
+  }
+  #mainImgBtn {
+    position: absolute;
+    top: 12px;
+    left: 7px;
+    border: none;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 50px;
+    font-size: 25px;
+    padding: 2px 15px;
+  }
+  #notMainBtn {
+    position: absolute;
+    top: 12px;
+    left: 7px;
+    border: 5px dotted rgba(0, 0, 0, 0.2);
+    border-radius: 50px;
+    background-color: transparent;
+    width: 67px;
+    height: 37px;
+    padding: 0;
+  }
+}
+@media screen and (min-device-width: 768px) {
+  /* 태블릿 ~ 데스크탑 */
+
+  .RegisterCategory {
+    width: 360px;
+    height: auto;
+
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0 2px 4px 0 rgb(0, 0, 0, 0.1);
+
+    margin-top: 10px;
+    padding-bottom: 5px;
+  }
+
+  .ratingWrapper {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid lightgray;
+    margin: 0 15px;
+  }
+
+  .title {
+    font-size: 18px;
+    /* font-weight: 600; */
+    padding: 10px 5px;
+    margin-right: 10px;
+    width: 55px;
+  }
+
+  .ratingBtn {
+    border-radius: 50%;
+    border: 3px solid #cfcfcf;
+    width: 10px;
+    height: 10px;
+    background-color: white;
+    margin-left: 5px;
+  }
+
+  .centerLeftRight > a {
+    /* 플러스 버튼 */
+    font-size: 50px;
+    color: #444444;
+    padding-bottom: 3px;
+    height: 50px;
+  }
+
+  #inputtedComment {
+    padding: 10px 15px;
+    text-align: left;
+    border: 0;
+    width: 330px;
+    font-size: 14px;
+  }
+
+  #btnWrapper {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 30px;
+  }
+  #outfitUpdateBtn {
+    width: 25px;
+    height: 25px;
+    padding-right: 25px;
+  }
+  #outfitDeleteBtn {
+    width: 25px;
+    height: 25px;
+  }
+
+  #xBtn {
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    border: none;
+    color: rgba(0, 0, 0, 0.5);
+    background-color: transparent;
+    font-size: 13px;
+    padding: 0;
+  }
+  #mainImgBtn {
+    position: absolute;
+    top: 5px;
+    left: 3px;
+    border: none;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    font-size: 5px;
+  }
+  #notMainBtn {
+    position: absolute;
+    top: 5px;
+    left: 3px;
+    border: 2px dotted rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    background-color: transparent;
+    width: 27px;
+    height: 15px;
+    padding: 0;
+  }
+}
+
 .RegisterCategory * {
   text-align: left;
 }
 
-.RegisterCategory {
-  width: 360px;
-  height: auto;
-
-  background-color: white;
-  border-radius: 20px;
-  box-shadow: 0 2px 4px 0 rgb(0, 0, 0, 0.1);
-
-  margin-top: 10px;
-  padding-bottom: 5px;
-}
-
-.ratingWrapper {
-  display: flex;
-  align-items: center;
-  border-bottom: 1px solid lightgray;
-  margin: 0 15px;
-}
-
-.title {
-  font-size: 18px;
-  /* font-weight: 600; */
-  padding: 10px 5px;
-  margin-right: 10px;
-  width: 55px;
-}
-
-.ratingBtn {
-  border-radius: 50%;
-  border: 3px solid #cfcfcf;
-  width: 10px;
-  height: 10px;
-  background-color: white;
-  margin-left: 5px;
-}
 .active1 {
   border-color: #5f6dea;
   background-color: #5f6dea;
@@ -62,57 +231,4 @@
   border-color: #f1786f;
   background-color: #f1786f;
   /* #FF5D53 */
-}
-
-.centerLeftRight > a {
-  /* 플러스 버튼 */
-  font-size: 50px;
-  color: black;
-  padding-bottom: 3px;
-  height: 50px;
-}
-
-#inputtedComment {
-  padding: 10px 15px;
-  text-align: left;
-  border: 0;
-  width: 330px;
-  font-size: 14px;
-}
-
-#btnWrapper {
-  display: flex;
-  justify-content: flex-end;
-  padding-right: 30px;
-}
-
-#xBtn {
-  position: absolute;
-  top: 3px;
-  right: 3px;
-  border: none;
-  color: rgba(0, 0, 0, 0.5);
-  background-color: transparent;
-  font-size: 13px;
-  padding:0;
-}
-#mainImgBtn {
-  position: absolute;
-  top: 5px;
-  left: 3px;
-  border: none;
-  background-color: rgba(0, 0, 0, 0.2);
-  border-radius: 20px;
-  font-size: 5px;
-}
-#notMainBtn {
-  position: absolute;
-  top: 5px;
-  left: 3px;
-  border: 2px dotted rgba(0, 0, 0, 0.2);
-  border-radius: 20px;
-  background-color: transparent;
-  width: 27px;
-  height: 15px;
-  padding: 0;
 }

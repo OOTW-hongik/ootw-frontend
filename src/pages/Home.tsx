@@ -1,10 +1,12 @@
 import "../css/Home.css";
-// import axios from 'axios';
+
 import { useState, useEffect, useLayoutEffect } from "react";
 import BottomNav from "../components/BottomNav";
 import AreaSwitchBtn from "../components/AreaSwitchBtn";
 import { Link } from "react-router-dom";
 import { Line } from "react-chartjs-2";
+
+import { useMediaQuery } from "react-responsive";
 import { Chart as ChartJS, registerables } from "chart.js";
 import { weatherIconList } from "../components/reuse";
 import Outfit from "../components/Outfit";
@@ -35,6 +37,9 @@ const Home = () => {
     },
   ]);
   const [errorMsg, setErrorMsg] = useState();
+  const isPc = useMediaQuery({
+    query: "(min-device-width:768px)",
+  });
   useLayoutEffect(() => {
     fetch("http://43.200.138.39:8080/home?memberId=1", {
       method: "GET",
@@ -46,7 +51,6 @@ const Home = () => {
       .catch((error) => setErrorMsg(error.message));
   }, []);
 
-
   return (
     <div className="Home mobileWeb">
       {errorMsg && <NoServerAlert errorMsg={errorMsg} />}
@@ -57,14 +61,16 @@ const Home = () => {
         whereUsed="home"
       />
       <WeatherBox fetchLocationInfo={fetchLocationInfo} />
-      <Link to="/registeroutfit" style={{ textDecoration: "none" }} state={{outfitId:0}}>
-        <button id="registerOutfitBtn" className="centerLeftRight">
+      <Link
+        to="/registeroutfit"
+        style={{ textDecoration: "none" }}
+        state={{ outfitId: 0 }}
+      >
+        <button id="registerOutfitBtn" className="centerLeftRight pointer">
           착장 기록하기
         </button>
       </Link>
-      <div style={{ marginBottom: "10px" }}>
-        비슷한 체감온도에서 입었던 옷이에요
-      </div>
+      <div id="guideText">비슷한 체감온도에서 입었던 옷이에요</div>
       {fetchOutfitList.length > 0 ? (
         fetchOutfitList.map((element) => (
           <Link to={`/outfitlist/${element.outfitId}`}>
@@ -72,8 +78,9 @@ const Home = () => {
           </Link>
         ))
       ) : (
-        <div style={{ marginTop: "20px", fontSize: "20px" }}>기록이 없어요</div>
+        <div id="noRecordText">기록이 없어요</div>
       )}
+      {isPc && <div style={{ paddingTop: "80px" }} />}
       <BottomNav selectedNav="home" />
     </div>
   );
@@ -84,7 +91,7 @@ export default Home;
 type WBProps = {
   fetchLocationInfo: string;
 };
-function WeatherBox({fetchLocationInfo}:WBProps) {
+function WeatherBox({ fetchLocationInfo }: WBProps) {
   const [errorMsg, setErrorMsg] = useState();
   const [skyCondition, setSkyCondition] = useState(0);
   const [highTemp, setHighTemp] = useState(0);
@@ -133,12 +140,12 @@ function WeatherBox({fetchLocationInfo}:WBProps) {
       <div id="weatherIndexWrapper">
         {weatherGraphInfoList.map((element) => (
           <div
-            style={{ width: "30px" }}
+            id="weatherGraphIndexWrapper"
             key={weatherGraphInfoList.indexOf(element)}
           >
-            <div style={{ fontSize: "13px" }}>{element.time}시</div>
+            <div id="weatherGraphIndexTime">{element.time}시</div>
             {/* <div>{weatherIconList[element.icon].tag}</div> */}
-            <div style={{ fontSize: "15px" }}>{element.temp}°</div>
+            <div id="weatherGraphIndexTemp">{element.temp}°</div>
           </div>
         ))}
       </div>
@@ -158,7 +165,18 @@ type Props = {
 function WeatherGraph({ weatherGraphInfoList }: Props) {
   let tempList: number[] = [];
   weatherGraphInfoList.map((element) => tempList.push(element.temp));
-  const data = {
+  const mobileData = {
+    labels: ["06시", "09시", "12시", "15시", "18시", "21시", "24시"],
+    datasets: [
+      {
+        borderColor: "rgb(54, 162, 235)",
+        borderWidth: 5,
+        data: tempList,
+        pointRadius: 7,
+      },
+    ],
+  };
+  const pcData = {
     labels: ["06시", "09시", "12시", "15시", "18시", "21시", "24시"],
     datasets: [
       {
@@ -210,10 +228,16 @@ function WeatherGraph({ weatherGraphInfoList }: Props) {
       },
     },
   };
-
+  const isMobile = useMediaQuery({
+    query: "(max-device-width:767px)",
+  });
+  const isPc = useMediaQuery({
+    query: "(min-device-width:768px)",
+  });
   return (
     <div id="WeatherGraph" className="centerLeftRight">
-      <Line data={data} options={options} />
+      {isMobile && <Line data={mobileData} options={options} />}
+      {isPc && <Line data={pcData} options={options} />}
     </div>
   );
 }

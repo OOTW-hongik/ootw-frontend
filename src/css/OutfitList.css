@@ -1,24 +1,40 @@
+@media screen and (max-device-width: 767px) {
+  /* 모바일 */
 
-#titleWrapper {
-    display: flex;
-    justify-content: space-between;
-}
-.btnWrapper {
+  .icon {
+    margin-left: 37px;
+    width: 37px;
+    height: 37px;
+  }
+  .btnWrapper {
     display: flex;
     text-align: right;
-    margin-right: 25px;
+    margin-right: 62px;
+  }
+  .btn {
+    font-size:40px;
+  }
 }
-.btn:hover {
-    cursor: pointer;
-}
+@media screen and (min-device-width: 768px) {
+  /* 태블릿 ~ 데스크탑 */
 
-.btn {
-    display: flex;
-}
-
-.icon {
+  .icon {
     margin-left: 15px;
     width: 15px;
     height: 15px;
+  }
+  .btnWrapper {
+    display: flex;
+    text-align: right;
+    margin-right: 25px;
+  }
 }
 
+#titleWrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn {
+  display: flex;
+}

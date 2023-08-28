@@ -16,8 +16,8 @@ const BeforeLogin = () => {
   };
 
   return (
-    <div className="mobileWeb">
-      <h1 style={{ paddingTop: "200px" }}>OOTW</h1>
+    <div >
+      <h1 id="OOTW">OOTW</h1>
 
       <KakaoLogin
         token={kakaoClientId}
@@ -26,9 +26,9 @@ const BeforeLogin = () => {
         render={({ onClick }) => (
           <img
             className="centerLeftRight"
+            id="loginBtn"
             src="img/kakao_login_medium_wide.png"
             alt="카카오로그인"
-            style={{ display: "flex" }}
             onClick={(e) => {
               e.preventDefault();
               localStorage.setItem("logintoken","1");

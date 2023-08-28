@@ -65,24 +65,19 @@ function ClosetRead({ category, id, closeFromChild, openFromChild }: Props) {
       <div className="inputTitle">카테고리</div>
 
       <div id="subCategoryDropdown" className="inputBorder">
-        <TiArrowSortedDown size={"20px"} style={{ margin: "13px" }} />
+        <TiArrowSortedDown id="arrowIcon" />
         {fetchInfo.subCategory}
       </div>
 
       <div
         className="inputTitle"
-        style={{
-          marginTop: "20px",
-        }}
+        id="commentTitle"
       >
         한줄평
       </div>
       <div
         className="inputBorder"
-        style={{
-          padding: "6px",
-          fontSize: "15px",
-        }}
+        id="commentText"
       >
         {fetchInfo.clothesComment ? fetchInfo.clothesComment : "\u00A0"}
       </div>
@@ -90,7 +85,6 @@ function ClosetRead({ category, id, closeFromChild, openFromChild }: Props) {
       <TfiPencilAlt
         className="CRUDBtn"
         id="leftBtn"
-        size={25}
         onClick={() => {
           openFromChild(id);
           console.log("수정", id);
@@ -101,7 +95,6 @@ function ClosetRead({ category, id, closeFromChild, openFromChild }: Props) {
       <TfiTrash
         className="CRUDBtn"
         id="rightBtn"
-        size={25}
         onClick={()=>setIsPopupOpened(true)}
       />
     </div>

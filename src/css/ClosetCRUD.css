@@ -1,72 +1,164 @@
-.UploadCloset {
-    text-align: left;
-}
-.UploadCloset > div {
-    text-align: left;
-}
+@media screen and (max-device-width: 767px) {
+  /* 모바일 */
 
-.inputBorder {
-    border-radius: 20px;
-    border: 2px solid #CFCFCF;
-}
+  .inputBorder {
+    border-radius: 50px;
+    border: 5px solid #cfcfcf;
+    /* padding:15px; */
+    font-size: 40px;
+  }
 
-.inputTitle {
-    font-size: 20px;
-    margin-bottom: 10px;
-}
+  .inputTitle {
+    font-size: 50px;
+    margin-bottom: 25px;
+  }
 
-.inputFileBtn {
+  .inputFileBtn {
     display: flex;
-    width:100px;
-    height:100px;
+    width: 250px;
+    height: 250px;
     object-fit: contain;
     align-items: center;
     justify-content: center;
-    
+
+    margin-bottom: 50px;
+    margin-right: 25px;
+  }
+  #subCategoryDropdown {
+    display: flex;
+    align-items: center;
+    width: 325px;
+    height: 125px;
+    font-size: 40px;
+  }
+  #subcateDropdownOption {
+    width: 250px;
+    padding: 12px 0;
+  }
+  .UploadCloset > input {
+    text-align: left;
+    font-size: 37px;
+    padding: 17px;
+    width: 650px;
+  }
+  .CRUDBtn {
+    position: absolute;
+    bottom: 100px;
+    width: 62px;
+    height: 62px;
+  }
+  #rightBtn {
+    right: 125px;
+  }
+  #leftBtn {
+    right: 250px;
+  }
+
+  #galleryIcon {
+    width: 125px;
+    height: 125px;
+  }
+  #arrowIcon {
+    width: 50px;
+    height: 50px;
+    margin: 32px;
+  }
+  #commentTitle {
+    margin-top: 50px;
+  }
+  #commentText {
+    padding: 15px;
+  }
+}
+@media screen and (min-device-width: 768px) {
+  /* 태블릿 ~ 데스크탑 */
+  .inputBorder {
+    border-radius: 20px;
+    border: 2px solid #cfcfcf;
+  }
+  .inputTitle {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+
+  .inputFileBtn {
+    display: flex;
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    align-items: center;
+    justify-content: center;
+
     margin-bottom: 20px;
     margin-right: 10px;
-}
-.inputFileBtn:active {
-    border-color: gray;
-}
-#inputFile {
-    display: none;
-}
-#photoWrapper {
- display: flex;
- 
-}
-
-#subCategoryDropdown {
+  }
+  #subCategoryDropdown {
     display: flex;
     align-items: center;
     width: 130px;
     height: 50px;
-}
-#subcateDropdownOption {
+  }
+  #subcateDropdownOption {
     width: 100px;
     padding: 5px 0;
-}
-.UploadCloset > input {
+  }
+  .UploadCloset > input {
     text-align: left;
     font-size: 15px;
     padding: 7px;
     width: 260px;
-}
-.UploadCloset > input:focus {
-    outline: 0;
-}
-
-.CRUDBtn {
+  }
+  .CRUDBtn {
     position: absolute;
     bottom: 40px;
-}
-.CRUDBtn:hover {
-    cursor: pointer;
-}
-#rightBtn {
+    width: 25px;
+    height: 25px;
+  }
+  #rightBtn {
     right: 50px;
-}
-#leftBtn {
+  }
+  #leftBtn {
     right: 100px;
+  }
+
+  #galleryIcon {
+    width: 50px;
+    height: 50px;
+  }
+  #arrowIcon {
+    width: 20px;
+    height: 20px;
+    margin: 13px;
+  }
+  #commentTitle {
+    margin-top: 20px;
+  }
+  #commentText {
+    padding: 6px;
+  }
+}
+
+.UploadCloset {
+  text-align: left;
+}
+.UploadCloset > div {
+  text-align: left;
+}
+
+.inputFileBtn:active {
+  border-color: gray;
+}
+#inputFile {
+  display: none;
+}
+#photoWrapper {
+  display: flex;
+}
+
+.UploadCloset > input:focus {
+  outline: 0;
+}
+
+.CRUDBtn:hover {
+  cursor: pointer;
 }

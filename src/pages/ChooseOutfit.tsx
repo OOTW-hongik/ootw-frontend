@@ -11,12 +11,7 @@ function ChooseOutfit() {
 
   return (
     <div className="ChooseOutfit mobileWeb">
-      <div
-        style={{
-          fontSize: "30px",
-          padding: "20px",
-        }}
-      >
+      <div id="chooseOutfitTitle">
         {title} 선택
       </div> 
       <SelectCloth category={title} outfitId={outfitId}></SelectCloth>

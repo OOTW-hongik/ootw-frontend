@@ -1,11 +1,27 @@
-#areaSwitchBtn {
+@media screen and (max-device-width: 767px) {
+  /* 모바일 */
+  #areaSwitchBtn {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    width: 200px;
+    margin-left: 37px;
+    padding: 25px 0;
+    font-size: 40px;
+  }
+  #mapMarker {
+    width:40px;
+    height: 40px;
+  }
+}
+@media screen and (min-device-width: 768px) {
+  /* 태블릿 ~ 데스크탑 */
+  #areaSwitchBtn {
     display: flex;
     align-items: center;
     justify-content: left;
     width: 80px;
     margin-left: 15px;
     padding: 10px 0;
-}
-#areaSwitchBtn:hover {
-    cursor: pointer;
+  }
 }
