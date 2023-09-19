@@ -27,7 +27,7 @@
   #subCategoryDropdown {
     display: flex;
     align-items: center;
-    width: 325px;
+    width: 375px;
     height: 125px;
     font-size: 40px;
   }
@@ -95,7 +95,7 @@
   #subCategoryDropdown {
     display: flex;
     align-items: center;
-    width: 130px;
+    width: 150px;
     height: 50px;
   }
   #subcateDropdownOption {

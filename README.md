@@ -1,64 +1,21 @@
-## js파일 설명
+# 주요 기능
+### 회원가입/로그인
+- 카카오 로그인 API 활용
+### 옷장 기록
+- AI 서버와 통신하여 segmentation과 classification 결과를 출력
+### 착장 기록 및 평가
+- sesstionStorage를 이용한 임시 저장 기능 구현
+- 아우터/상의/하의/기타 4가지 카테고리 별로 대표옷 설정 가능
+- 각 카테고리 당 추움/시원/적당/따뜻/더움 평가 가능
+### 착장 리스트 출력
+- 평가가 "적당"인 착장 필터링 가능
+- 체감비슷순, 최근등록순으로 정렬 변경 가능
+### 기타
+- REST 아키텍처 기반
+- 미디어 쿼리를 활용한 반응형 웹 구현
+- AWS S3 이용한 배포
+- AWS CloudFront 이용한 https 적용
 
-### `App`
+# 화면 구성
 
-빈 url이 들어왔을 때 loginToken값이 있으면 Home, 없으면 BeforeLogin 페이지로 강제 다이렉트
-
-### `AreaSwitchBtn`
-
-지역을 변경할 수 있는 버튼
-
-### `AuthLayout`
-
-loginToken에 값이 존재하지 않으면 BeforeLogin 페이지로 강제 다이렉트\
-존재하면 원하는 페이지를 보여줌
-
-### `BeforeLogin`
-
-로그인 전 보이는 페이지
-
-### `BottomNav`
-
-로그인 후 보이는 하단 네비게이션 바\
-부모에게 selectedNav 값을 내려받아 아이콘에 색이 들어온다.
-
-### `ChooseOutfit`
-
-입었던 옷 선택 페이지
-
-### `Home`
-
-메인 페이지
-
-### `Modal`
-
-재사용이 가능한 모달 창 컴포넌트
-
-### `MyCloset`
-
-내 옷장 페이지
-
-### `MyClosetSub`
-
-부모에게 category 값을 내려받아 해당 목록 출력
-
-### `OutfitList`
-
-착장 리스트 페이지
-
-### `RegisterCategory`
-
-착장 등록 페이지에 있는 옷 선택&평가 박스
-
-### `RegisterCloset`
-
-옷장 등록 창
-
-### `RegisterOutfit`
-
-착장 등록 페이지
-
-### `Setting`
-
-설정 페이지\
-로그아웃 버튼 누를 시 loginToken 값 삭제
+# Installation

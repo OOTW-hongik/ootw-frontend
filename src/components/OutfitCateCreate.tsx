@@ -28,7 +28,7 @@ function OutfitCateCreate({ title, ratingChange, outfitId }: Props) {
     const ssData = sessionStorage.getItem(`inputted${title}${outfitId}`);
     if (ssData) {
       ssData.split(",").map((element) => {
-        fetch(`http://43.200.138.39:8080/clothes?clothesId=${element}`)
+        fetch(`https://api.ootw.store/clothes?clothesId=${element}`)
           .then((res) => res.json())
           .then((res) => {
             setSelectedClothesPhoto((selectedClothesPhoto) => [

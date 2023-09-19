@@ -1,16 +1,8 @@
-body {
-  margin: 0; /* 여백없애기 */
-}
-
-a {
-  text-decoration: none;
-  color: black;
-}
 @media screen and (max-device-width: 767px) {
   /* 모바일 */
   .mobileWeb {
     width: 100%;
-    min-height: 2200px;
+    height: 100vh;
 
     margin: 0 auto;
 
@@ -51,7 +43,7 @@ a {
   }
   #loginBtn {
     display: flex;
-    width:76%;
+    width: 76%;
   }
   #OOTW {
     padding-top: 670px;
@@ -109,9 +101,22 @@ a {
     text-align: center; /* 좌우 중앙정렬 */
     align-items: center; /* 상하 중앙정렬 */
   }
-  
 }
 
+body {
+  font-family: "Noto Sans KR", "Apple SD Gothic Neo", "Sans-serif";
+  margin: 0; /* 여백없애기 */
+}
+
+a {
+  text-decoration: none;
+  color: black;
+
+  /* 디폴트 스타일링 제거 */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
 .mobileWeb * {
   margin-top: 0; /* 상단 흰색 띠 제거 */
   text-align: center; /* 좌우 중앙정렬 */
@@ -124,6 +129,7 @@ button {
   -moz-appearance: none;
   appearance: none;
 
+  color: black;
   display: block;
 }
 
@@ -135,7 +141,6 @@ button {
   margin-left: auto;
   margin-right: auto;
 }
-
 
 .col4GridContainer > div {
   /* 가로세로 비율 유지 - 부모 */

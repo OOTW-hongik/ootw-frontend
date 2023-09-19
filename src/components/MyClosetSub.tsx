@@ -4,6 +4,7 @@ import Modal from "./Modal";
 import ClosetCreate from "./ClosetCreate";
 import NoServerAlert from "../components/NoServerAlert";
 import ClosetRead from "./ClosetRead";
+import { GoPlusSmall } from "react-icons/go";
 
 import ClosetUpdate from "./ClosetUpdate";
 
@@ -33,7 +34,7 @@ const MyClosetSub = ({ category, showHidden }: Props) => {
     if (showHidden) {
       //숨긴옷보기
       fetch(
-        `http://43.200.138.39:8080/closet/hidden?memberId=1&category=${category}`,
+        `https://api.ootw.store/closet/hidden?memberId=1&category=${category}`,
         {
           method: "GET",
           headers: {
@@ -53,7 +54,7 @@ const MyClosetSub = ({ category, showHidden }: Props) => {
     } else {
       // 안숨긴옷 보기
       fetch(
-        `http://43.200.138.39:8080/closet?memberId=1&category=${category}`,
+        `https://api.ootw.store/closet?memberId=1&category=${category}`,
         {
           method: "GET",
           headers: {
@@ -108,7 +109,7 @@ const MyClosetSub = ({ category, showHidden }: Props) => {
           className="registerClosetBtn centerLeftRight"
           onClick={() => setIsCreateModalOpened(true)}
         >
-          +
+          <GoPlusSmall />
         </button>
         {clothesList &&
           clothesList.map(

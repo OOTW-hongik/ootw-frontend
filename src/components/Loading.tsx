@@ -20,7 +20,7 @@ const Loading = () => {
   return (
     <div style={styleObj}>
       {/* <div>잠시만 기다려 주세요</div> */}
-      <img src="img/spinner.gif" alt="로딩중" width="25%"/>
+      <img src="img/spinner.gif" alt="로딩중" width="20%"/>
     </div>
   );
 };

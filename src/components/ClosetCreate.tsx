@@ -64,7 +64,7 @@ function ClosetCreate({ category, closeFromChild }: Props) {
           formData.append("category", "etc");
       }
 
-      fetch(`http://43.202.82.91/remove_background`, {
+      fetch(`https://ai.ootw.store/remove_background`, {
         method: "POST",
         body: formData,
       })
@@ -114,7 +114,7 @@ function ClosetCreate({ category, closeFromChild }: Props) {
         )
       );
       console.log(formData);
-      fetch(`http://43.200.138.39:8080/clothes`, {
+      fetch(`https://api.ootw.store/clothes`, {
         method: "POST",
         body: formData,
       });

@@ -41,7 +41,7 @@ function AreaSwitchBtn({ changeLocationInfo, whereUsed }: Props) {
   const [errorMsg, setErrorMsg] = useState();
   
   useEffect(() => {
-    fetch('http://43.200.138.39:8080/home?memberId=1', {
+    fetch('https://api.ootw.store/home?memberId=1', {
         method: "GET"
       }).then(res => res.json()).then(res => {
         const userLocation=res.location;
@@ -66,7 +66,7 @@ function AreaSwitchBtn({ changeLocationInfo, whereUsed }: Props) {
     changeLocationInfo(selectedArea);
     if (whereUsed==="home" && selectedArea){
       
-      fetch(`http://43.200.138.39:8080/home/location`, {
+      fetch(`https://api.ootw.store/home/location`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

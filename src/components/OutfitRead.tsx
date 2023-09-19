@@ -92,13 +92,13 @@ function OutfitRead() {
     );
   }
   function outfitDelete() {
-    fetch(`http://43.200.138.39:8080/outfit/?outfitId=${outfitId}`, {
+    fetch(`https://api.ootw.store/outfit/?outfitId=${outfitId}`, {
       method: "DELETE",
     }).catch((error) => setErrorMsg(error.message));
     window.location.reload();
   }
   useEffect(() => {
-    fetch(`http://43.200.138.39:8080/outfit/?outfitId=${outfitId}`, {
+    fetch(`https://api.ootw.store/outfit/?outfitId=${outfitId}`, {
       method: "GET",
     })
       .then((res) => res.json())

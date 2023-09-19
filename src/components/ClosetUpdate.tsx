@@ -40,7 +40,7 @@ function ClosetUpdate({ category, id, closeFromChild }: Props) {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    fetch(`http://43.200.138.39:8080/clothes?clothesId=${id}`, {
+    fetch(`https://api.ootw.store/clothes?clothesId=${id}`, {
       method: "GET",
       headers: {
         "Cache-Control": "no-cache, no-store, must-revalidate", // 캐시 사용하지 않도록
@@ -89,7 +89,7 @@ function ClosetUpdate({ category, id, closeFromChild }: Props) {
           formData.append("category", "bottom");
       }
 
-      fetch(`http://43.202.82.91/remove_background`, {
+      fetch(`https://ai.ootw.store/remove_background`, {
         method: "POST",
         body: formData,
       })
@@ -138,13 +138,13 @@ function ClosetUpdate({ category, id, closeFromChild }: Props) {
         )
       );
       console.log(inputtedPhoto);
-      fetch(`http://43.200.138.39:8080/clothes`, {
+      fetch(`https://api.ootw.store/clothes`, {
         method: "PUT",
         body: formData,
       });
       window.location.reload();
     } else {
-      fetch(`http://43.200.138.39:8080/clothes`, {
+      fetch(`https://api.ootw.store/clothes`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

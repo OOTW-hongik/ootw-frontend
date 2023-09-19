@@ -51,7 +51,7 @@ const OutfitList = () => {
     query: "(min-device-width:768px)",
   });
   useEffect(() => {
-    fetch("http://43.200.138.39:8080/outfit/list?memberId=1", {
+    fetch("https://api.ootw.store/outfit/list?memberId=1", {
       method: "GET",
     })
       .then((res) => res.json())
@@ -75,7 +75,7 @@ const OutfitList = () => {
       console.log(sortedByDate);
     }
     else { // 체감비슷순 선택 
-      fetch("http://43.200.138.39:8080/outfit/list?memberId=1", {
+      fetch("https://api.ootw.store/outfit/list?memberId=1", {
         method: "GET",
       })
         .then((res) => res.json())

@@ -40,7 +40,8 @@ function RegisterOutfit() {
 
     let ssInputtedDate = sessionStorage.getItem(`inputtedDate${outfitId}`);
     if (ssInputtedDate) {
-      let ssDate = new Date(ssInputtedDate);
+      // 크로스 브라우징 이슈 방지 : Date(year,month,day)
+      let ssDate = new Date(ssInputtedDate.slice(0,4),ssInputtedDate.slice(5,7)-1,ssInputtedDate.slice(8,10));
       setStartDate(ssDate);
       setInputtedDate(ssInputtedDate);
     }
@@ -85,7 +86,7 @@ function RegisterOutfit() {
   useEffect(() => { // 날짜, 위치 변경 시 날씨정보 받아옴 
     if (inputtedDate && fetchLocationInfo) {
       //console.log("날씨요청", inputtedDate, fetchLocationInfo)
-      fetch(`http://43.200.138.39:8080/outfit/register?outfitDate=${inputtedDate}&outfitLocation=${fetchLocationInfo}`
+      fetch(`https://api.ootw.store/outfit/register?outfitDate=${inputtedDate}&outfitLocation=${fetchLocationInfo}`
       ).then(res => res.json()).then(res => {
         setFetchWeatherInfo(res);
       })
@@ -117,7 +118,7 @@ function RegisterOutfit() {
       if (outfitId) { // update outfit
 
         console.log("put",outfitId);
-        fetch(`http://43.200.138.39:8080/outfit/`, {
+        fetch(`https://api.ootw.store/outfit/`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -144,7 +145,7 @@ function RegisterOutfit() {
         });
       } else { // create outfit
         console.log("post",outfitId);
-        fetch(`http://43.200.138.39:8080/outfit/`, {
+        fetch(`https://api.ootw.store/outfit/`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

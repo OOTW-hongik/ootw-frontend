@@ -41,7 +41,7 @@ const Home = () => {
     query: "(min-device-width:768px)",
   });
   useLayoutEffect(() => {
-    fetch("http://43.200.138.39:8080/home?memberId=1", {
+    fetch("https://api.ootw.store/home?memberId=1", {
       method: "GET",
     })
       .then((res) => res.json())
@@ -106,7 +106,7 @@ function WeatherBox({ fetchLocationInfo }: WBProps) {
     },
   ]);
   useEffect(() => {
-    fetch("http://43.200.138.39:8080/home?memberId=1", {
+    fetch("https://api.ootw.store/home?memberId=1", {
       method: "GET",
     })
       .then((res) => res.json())

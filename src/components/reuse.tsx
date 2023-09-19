@@ -41,7 +41,7 @@ const outerSubCategoryList = [
   "가디건",
   "블레이저",
   "후드집업",
-  "기타 아우터"
+  "기타아우터"
 ];
 const topSubCategoryList = [
   "셔츠",
@@ -52,9 +52,9 @@ const topSubCategoryList = [
   "민소매티",
   "블라우스",  
   "원피스",
-  "기타 상의"
+  "기타상의"
 ];
-const bottomSubCategoryList = ["긴바지", "반바지", "스커트", "기타 하의"];
+const bottomSubCategoryList = ["긴바지", "반바지", "스커트", "기타하의"];
 
 const ratingList = [
   {

@@ -70,6 +70,9 @@
     font-size: 125px;
     margin-top: 22px;
     margin-bottom: 22px;
+
+    display: flex;
+    justify-content: center;
   }
 
   #clothes {
@@ -154,6 +157,9 @@
     font-size: 50px;
     margin-top: 9px;
     margin-bottom: 9px;
+
+    display: flex;
+    justify-content: center;
   }
 
   #clothes {

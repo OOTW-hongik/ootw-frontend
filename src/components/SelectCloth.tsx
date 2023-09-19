@@ -42,7 +42,7 @@ const SelectCloth = ({ category,outfitId }: Props) => {
     }
   };
   useEffect(() => {
-    fetch(`http://43.200.138.39:8080/closet?memberId=1&category=${category}`, {
+    fetch(`https://api.ootw.store/closet?memberId=1&category=${category}`, {
       method: "GET",
     })
       .then((res) => res.json())

@@ -13,6 +13,7 @@ import Setting from "./pages/Setting";
 import RegisterOutfit from "./pages/RegisterOutfit";
 import ChooseOutfit from "./pages/ChooseOutfit";
 import OutfitRead from "./components/OutfitRead";
+import KakaoRedirectPage from "./pages/KakaoRedirectPage";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -28,6 +29,7 @@ root.render(
         <Route path={"/setting"} element={<Setting />} />
         <Route path={"/registeroutfit"} element={<RegisterOutfit/>} />
         <Route path={"/registeroutfit/chooseOutfit"} element={<ChooseOutfit/>} />
+        <Route path="/oauth/redirected/kakao" element={<KakaoRedirectPage />} />
       </Route>
     </Routes>
   </BrowserRouter>
