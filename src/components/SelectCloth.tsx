@@ -44,6 +44,9 @@ const SelectCloth = ({ category,outfitId }: Props) => {
   useEffect(() => {
     fetch(`https://api.ootw.store/closet?memberId=1&category=${category}`, {
       method: "GET",
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem("AccessToken"),
+      },
     })
       .then((res) => res.json())
       .then((res) => {

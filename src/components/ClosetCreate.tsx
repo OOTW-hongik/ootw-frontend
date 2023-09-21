@@ -66,6 +66,9 @@ function ClosetCreate({ category, closeFromChild }: Props) {
 
       fetch(`https://ai.ootw.store/remove_background`, {
         method: "POST",
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem("AccessToken"),
+        },
         body: formData,
       })
         .then((res) => res.formData())
@@ -116,6 +119,9 @@ function ClosetCreate({ category, closeFromChild }: Props) {
       console.log(formData);
       fetch(`https://api.ootw.store/clothes`, {
         method: "POST",
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem("AccessToken"),
+        },
         body: formData,
       });
       closeFromChild("c");

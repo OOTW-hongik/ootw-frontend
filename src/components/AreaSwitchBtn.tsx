@@ -9,7 +9,7 @@ import NoServerAlert from "../components/NoServerAlert";
 
 type Props = {
   changeLocationInfo: (value: string) => void;
-  whereUsed:string;
+  whereUsed: string;
 };
 function AreaSwitchBtn({ changeLocationInfo, whereUsed }: Props) {
   const areaList = [
@@ -39,14 +39,19 @@ function AreaSwitchBtn({ changeLocationInfo, whereUsed }: Props) {
   const [selectedArea, setSelectedArea] = useState("");
   const [isDropdownOpened, setIsDropdownOpened] = useState(false);
   const [errorMsg, setErrorMsg] = useState();
-  
-  useEffect(() => {
-    fetch('https://api.ootw.store/home?memberId=1', {
-        method: "GET"
-      }).then(res => res.json()).then(res => {
-        const userLocation=res.location;
 
-        if (whereUsed==="home"){
+  useEffect(() => {
+    fetch("https://api.ootw.store/home?memberId=1", {
+      method: "GET",
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem("AccessToken"),
+      },
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        const userLocation = res.location;
+
+        if (whereUsed === "home") {
           setSelectedArea(userLocation);
         } else {
           let fLI = sessionStorage.getItem(`fetchLocationInfo${whereUsed}`);
@@ -58,22 +63,21 @@ function AreaSwitchBtn({ changeLocationInfo, whereUsed }: Props) {
         }
         // console.log("AS UE",userLocation);
       })
-        .catch((error) => setErrorMsg(error.message));
+      .catch((error) => setErrorMsg(error.message));
   }, []);
 
-
-  useEffect(() => {    
+  useEffect(() => {
     changeLocationInfo(selectedArea);
-    if (whereUsed==="home" && selectedArea){
-      
+    if (whereUsed === "home" && selectedArea) {
       fetch(`https://api.ootw.store/home/location`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          Authorization: 'Bearer ' + localStorage.getItem("AccessToken"),
         },
         body: JSON.stringify({
           memberId: 1,
-          location:selectedArea
+          location: selectedArea,
         }),
       });
     }

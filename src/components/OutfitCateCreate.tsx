@@ -28,7 +28,11 @@ function OutfitCateCreate({ title, ratingChange, outfitId }: Props) {
     const ssData = sessionStorage.getItem(`inputted${title}${outfitId}`);
     if (ssData) {
       ssData.split(",").map((element) => {
-        fetch(`https://api.ootw.store/clothes?clothesId=${element}`)
+        fetch(`https://api.ootw.store/clothes?clothesId=${element}`, {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("AccessToken"),
+          },
+        })
           .then((res) => res.json())
           .then((res) => {
             setSelectedClothesPhoto((selectedClothesPhoto) => [
@@ -53,19 +57,21 @@ function OutfitCateCreate({ title, ratingChange, outfitId }: Props) {
         (selectedClothesPhoto) => selectedClothesPhoto !== element
       )
     );
+    sessionStorage.setItem(`inputted${title}${outfitId}`, String(selectedClothesPhoto));
   }
 
-  function changeToMain(index:number){
+  function changeToMain(index: number) {
     let copy = [...selectedClothesPhoto];
     [copy[index], copy[0]] = [copy[0], copy[index]];
     setSelectedClothesPhoto(copy);
 
-    let ssDataArr = sessionStorage.getItem(`inputted${title}${outfitId}`)?.split(",");;
+    let ssDataArr = sessionStorage
+      .getItem(`inputted${title}${outfitId}`)
+      ?.split(",");
     console.log(ssDataArr);
-    if(ssDataArr){
-
+    if (ssDataArr) {
       [ssDataArr[index], ssDataArr[0]] = [ssDataArr[0], ssDataArr[index]];
-      sessionStorage.setItem(`inputted${title}${outfitId}`,String(ssDataArr));
+      sessionStorage.setItem(`inputted${title}${outfitId}`, String(ssDataArr));
     }
   }
 
@@ -105,8 +111,20 @@ function OutfitCateCreate({ title, ratingChange, outfitId }: Props) {
             <img id="clothes" src={element} />
             {selectedClothesPhoto[0] === element ? (
               <button id="mainImgBtn">대표</button>
-            ):(<button id="notMainBtn" className="pointer" onClick={()=>changeToMain(selectedClothesPhoto.indexOf(element))} />)}
-            <button id="xBtn" className="pointer" onClick={() => cancelSelect(element)}>
+            ) : (
+              <button
+                id="notMainBtn"
+                className="pointer"
+                onClick={() =>
+                  changeToMain(selectedClothesPhoto.indexOf(element))
+                }
+              />
+            )}
+            <button
+              id="xBtn"
+              className="pointer"
+              onClick={() => cancelSelect(element)}
+            >
               ✖
             </button>
           </div>

@@ -41,6 +41,8 @@ const MyClosetSub = ({ category, showHidden }: Props) => {
             "Cache-Control": "no-cache, no-store, must-revalidate", // 캐시 사용하지 않도록
             Pragma: "no-cache",
             Expires: "0",
+
+            Authorization: "Bearer " + localStorage.getItem("AccessToken"),
           },
         }
       )
@@ -53,17 +55,16 @@ const MyClosetSub = ({ category, showHidden }: Props) => {
         .catch((error) => setErrorMsg(error.message));
     } else {
       // 안숨긴옷 보기
-      fetch(
-        `https://api.ootw.store/closet?memberId=1&category=${category}`,
-        {
-          method: "GET",
-          headers: {
-            "Cache-Control": "no-cache, no-store, must-revalidate", // 캐시 사용하지 않도록
-            Pragma: "no-cache",
-            Expires: "0",
-          },
-        }
-      )
+      fetch(`https://api.ootw.store/closet?memberId=1&category=${category}`, {
+        method: "GET",
+        headers: {
+          "Cache-Control": "no-cache, no-store, must-revalidate", // 캐시 사용하지 않도록
+          Pragma: "no-cache",
+          Expires: "0",
+
+          Authorization: "Bearer " + localStorage.getItem("AccessToken"),
+        },
+      })
         .then((res) => res.json())
         .then((res) => {
           setSubCategoryNameList(res.subCategoryName);

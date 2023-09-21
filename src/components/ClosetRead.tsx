@@ -31,6 +31,7 @@ function ClosetRead({ category, id, closeFromChild, openFromChild }: Props) {
         "Cache-Control": "no-cache, no-store, must-revalidate", // 캐시 사용하지 않도록
         Pragma: "no-cache",
         Expires: "0",
+        Authorization: 'Bearer ' + localStorage.getItem("AccessToken"),
       },
     })
       .then((res) => res.json())
@@ -45,6 +46,9 @@ function ClosetRead({ category, id, closeFromChild, openFromChild }: Props) {
       `https://api.ootw.store/clothes?clothesId=${fetchInfo.clothesId}`,
       {
         method: "DELETE",
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem("AccessToken"),
+        },
       }
     ).catch((error) => setErrorMsg(error.message));
     window.location.reload();

@@ -40,9 +40,13 @@ const Home = () => {
   const isPc = useMediaQuery({
     query: "(min-device-width:768px)",
   });
+
   useLayoutEffect(() => {
     fetch("https://api.ootw.store/home?memberId=1", {
       method: "GET",
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem("AccessToken"),
+      },
     })
       .then((res) => res.json())
       .then((res) => {
@@ -88,6 +92,7 @@ const Home = () => {
 
 export default Home;
 
+
 type WBProps = {
   fetchLocationInfo: string;
 };
@@ -105,9 +110,13 @@ function WeatherBox({ fetchLocationInfo }: WBProps) {
       skyCondition: 0,
     },
   ]);
+  
   useEffect(() => {
     fetch("https://api.ootw.store/home?memberId=1", {
       method: "GET",
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem("AccessToken"),
+      },
     })
       .then((res) => res.json())
       .then((res) => {

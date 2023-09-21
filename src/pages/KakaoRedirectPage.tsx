@@ -9,15 +9,19 @@ const KakaoRedirectPage = () => {
     // 카카오로부터 받아온 code를 서버에 전달하여 카카오로 회원가입 & 로그인한다
     fetch(`https://api.ootw.store/oauth/login/kakao?code=${code}`, {
       method: "GET",
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem("AccessToken"),
+      },
     })
       .then((res) => res.json())
       .then((res) => {
-        alert("로그인 성공. JWT = " + res);        
-        localStorage.setItem("AccessToken", "res");
+        // alert("로그인 성공. JWT: " + res.jwt); 
+
+        localStorage.setItem("AccessToken", res.jwt);
         navigate("/home");
       })
       .catch((error) => {
-        alert("로그인 실패" + error);
+        alert("로그인 실패. Error: " + error);
         navigate("/login");
       });
   };

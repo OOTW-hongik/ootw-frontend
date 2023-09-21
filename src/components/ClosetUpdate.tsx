@@ -45,7 +45,8 @@ function ClosetUpdate({ category, id, closeFromChild }: Props) {
       headers: {
         "Cache-Control": "no-cache, no-store, must-revalidate", // 캐시 사용하지 않도록
         Pragma: "no-cache",
-        Expires: '0',
+        Expires: "0",
+        Authorization: "Bearer " + localStorage.getItem("AccessToken"),
       },
     })
       .then((res) => res.json())
@@ -91,6 +92,9 @@ function ClosetUpdate({ category, id, closeFromChild }: Props) {
 
       fetch(`https://ai.ootw.store/remove_background`, {
         method: "POST",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("AccessToken"),
+        },
         body: formData,
       })
         .then((res) => res.formData())
@@ -140,6 +144,9 @@ function ClosetUpdate({ category, id, closeFromChild }: Props) {
       console.log(inputtedPhoto);
       fetch(`https://api.ootw.store/clothes`, {
         method: "PUT",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("AccessToken"),
+        },
         body: formData,
       });
       window.location.reload();
@@ -148,7 +155,10 @@ function ClosetUpdate({ category, id, closeFromChild }: Props) {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
+
+          Authorization: "Bearer " + localStorage.getItem("AccessToken"),
         },
+
         body: JSON.stringify({
           clothesId: id,
           category: category,
@@ -223,10 +233,7 @@ function ClosetUpdate({ category, id, closeFromChild }: Props) {
         />
       )}
 
-      <div
-        className="inputTitle"
-        id="commentTitle"
-      >
+      <div className="inputTitle" id="commentTitle">
         한줄평
       </div>
       <input

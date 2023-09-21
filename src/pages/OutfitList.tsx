@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from "react";
 import "../css/OutfitList.css";
+import React, { useState, useEffect, useLayoutEffect } from "react";
+import { useMediaQuery } from "react-responsive";
 import { BiFilterAlt, BiSort } from "react-icons/bi";
 import { HiFilter } from "react-icons/hi";
-import BottomNav from "../components/BottomNav";
-import Outfit from "../components/Outfit";
-import Dropdown from "../components/Dropdown";
-import NoServerAlert from "../components/NoServerAlert";
 import { Link } from "react-router-dom";
-import { useMediaQuery } from "react-responsive";
+
+import NoServerAlert from "../components/NoServerAlert";
+import BottomNav from "../components/BottomNav";
+import Dropdown from "../components/Dropdown";
+import Outfit from "../components/Outfit";
 
 const OutfitList = () => {
   const [errorMsg, setErrorMsg] = useState();
@@ -37,7 +38,6 @@ const OutfitList = () => {
   const sortList = ["체감비슷순", "최근날짜순"];
   const filterList = ["아우터", "상의", "하의"];
   const [selectedSort, setSelectedSort] = useState<string>(sortList[0]);
-  const [selectedFilter, setSelectedFilter] = useState<string>("");
   const [isFilterChecked, setIsFilterChecked] = useState<boolean>(false);
   const [checkedFilterList, setCheckedFilterList] = useState([
     false,
@@ -50,33 +50,75 @@ const OutfitList = () => {
   const isPc = useMediaQuery({
     query: "(min-device-width:768px)",
   });
+  const filterHandler = (value: string) => {
+    // spread 사용하여 리스트 state 변경
+    let copy = [...checkedFilterList];
+    copy[filterList.indexOf(value)] =
+      !checkedFilterList[filterList.indexOf(value)];
+    setCheckedFilterList(copy);
+
+    // 세션에 임시 저장
+    sessionStorage.setItem("filter", String(copy));
+  }; // 필터 변경 함수
+
   useEffect(() => {
     fetch("https://api.ootw.store/outfit/list?memberId=1", {
       method: "GET",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("AccessToken"),
+      },
     })
       .then((res) => res.json())
       .then((res) => {
         setFetchNameInfo(res.name);
-        setFetchOutfitList(res.outfitSummary);
       })
       .catch((error) => setErrorMsg(error.message));
   }, []);
-  useEffect(()=>{ // 정렬 변경 
-    if (selectedSort === "최근날짜순") {
-      // fetchOutfitList을 복사해서 시간순으로 정렬 후 set
-      let sortedByDate = [...fetchOutfitList];
-      sortedByDate=sortedByDate.sort((a,b) => {
-        if(a.outfitDate > b.outfitDate) return -1;
-        if(a.outfitDate < b.outfitDate) return 1;
-        return 0;
-      });
-      // 정렬된 내용 저장 
-      setFetchOutfitList(sortedByDate);
-      console.log(sortedByDate);
+  useEffect(() => {
+    window.scrollTo(0, Number(sessionStorage.listScroll));
+
+    let ssSort = sessionStorage.getItem("sort");
+    if (ssSort && ssSort != selectedSort) {
+      setSelectedSort(ssSort);
     }
-    else { // 체감비슷순 선택 
+
+    let ssFilter = sessionStorage.getItem("filter")?.split(",");
+    if (ssFilter) {
+      setCheckedFilterList([
+        ssFilter[0] == "true",
+        ssFilter[1] == "true",
+        ssFilter[2] == "true",
+      ]);
+    }
+  }, [fetchNameInfo]); // 임시 저장 불러오기
+
+  useEffect(() => {
+    if (selectedSort === "최근날짜순") {
       fetch("https://api.ootw.store/outfit/list?memberId=1", {
         method: "GET",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("AccessToken"),
+        },
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          // res.outfitSummary을 복사해서 시간순으로 정렬 후 set
+          let sortedByDate = [...res.outfitSummary];
+          sortedByDate = sortedByDate.sort((a, b) => {
+            if (a.outfitDate > b.outfitDate) return -1;
+            if (a.outfitDate < b.outfitDate) return 1;
+            return 0;
+          });
+          setFetchOutfitList(sortedByDate);
+        })
+        .catch((error) => setErrorMsg(error.message));
+    } else {
+      // 체감비슷순 선택
+      fetch("https://api.ootw.store/outfit/list?memberId=1", {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("AccessToken"),
+        },
       })
         .then((res) => res.json())
         .then((res) => {
@@ -84,26 +126,25 @@ const OutfitList = () => {
         })
         .catch((error) => setErrorMsg(error.message));
     }
-  },[selectedSort]);
+    // 세션에 임시 저장
+    sessionStorage.setItem("sort", selectedSort);
+  }, [selectedSort]); // 정렬 변경
 
-  useEffect(() => { // 필터 변경 
-    // spread 사용하여 리스트 state 변경
-    let copy = [...checkedFilterList];
-    copy[filterList.indexOf(selectedFilter)] =
-      !checkedFilterList[filterList.indexOf(selectedFilter)];
-    setCheckedFilterList(copy);
-
-    // 불 들어올까 말까 결정
+  useEffect(() => {
     if (checkedFilterList[0] || checkedFilterList[1] || checkedFilterList[2]) {
       setIsFilterChecked(true);
     } else {
       setIsFilterChecked(false);
     }
+  }, [checkedFilterList]); // 필터버튼에 불 들어올까 말까 결정
 
-    setSelectedFilter("");
-  }, [selectedFilter]);
   return (
-    <div className="OutfitList mobileWeb">
+    <div
+      className="OutfitList mobileWeb"
+      onClick={() =>
+        sessionStorage.setItem("listScroll", String(window.scrollY))
+      }
+    >
       {errorMsg && <NoServerAlert errorMsg={errorMsg} />}
       <div id="titleWrapper">
         <h3 className="pageTitle">{fetchNameInfo} 님의 기록</h3>
@@ -147,7 +188,7 @@ const OutfitList = () => {
             {isFilterOpened && (
               <Dropdown
                 closeDropdown={() => setIsFilterOpened(false)}
-                selectResult={(value: string) => setSelectedFilter(value)}
+                selectResult={(value: string) => filterHandler(value)}
                 dropList={filterList}
                 selectedList={checkedFilterList}
               />
@@ -162,13 +203,15 @@ const OutfitList = () => {
             (checkedFilterList[0] ? element.outerRating === 3 : true) &&
             (checkedFilterList[1] ? element.topRating === 3 : true) &&
             (checkedFilterList[2] ? element.bottomRating === 3 : true) && (
-              <Link to={`/outfitlist/${element.outfitId}`} ><Outfit element={element} /></Link>
+              <Link to={`/outfitlist/${element.outfitId}`}>
+                <Outfit element={element} />
+              </Link>
             )
         )
       ) : (
         <div id="noRecordText">기록이 없어요</div>
       )}
-      {isMobile && <div style={{ paddingTop: "200px" }}/>}
+      {isMobile && <div style={{ paddingTop: "200px" }} />}
       {isPc && <div style={{ paddingTop: "80px" }} />}
       <BottomNav selectedNav="outfitlist" />
     </div>

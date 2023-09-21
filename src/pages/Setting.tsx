@@ -4,7 +4,7 @@ import { useMediaQuery } from "react-responsive";
 
 const Setting = () => {
   const logout=()=>{
-    localStorage.removeItem("logintoken");
+    localStorage.removeItem("AccessToken");
     window.location.reload();
   }
   const isMobile = useMediaQuery({

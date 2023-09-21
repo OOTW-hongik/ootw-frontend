@@ -6,10 +6,7 @@ const AuthLayout = () => {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    // if (!localStorage.getItem("AccessToken")) {
-    //   navigate("/login", { state: pathname });
-    // }
-    if (!localStorage.getItem("logintoken")) {
+    if (!localStorage.getItem("AccessToken")) {
       navigate("/login", { state: pathname });
     }
   }, []);

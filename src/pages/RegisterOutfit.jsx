@@ -41,7 +41,7 @@ function RegisterOutfit() {
     let ssInputtedDate = sessionStorage.getItem(`inputtedDate${outfitId}`);
     if (ssInputtedDate) {
       // 크로스 브라우징 이슈 방지 : Date(year,month,day)
-      let ssDate = new Date(ssInputtedDate.slice(0,4),ssInputtedDate.slice(5,7)-1,ssInputtedDate.slice(8,10));
+      let ssDate = new Date(ssInputtedDate.slice(0, 4), ssInputtedDate.slice(5, 7) - 1, ssInputtedDate.slice(8, 10));
       setStartDate(ssDate);
       setInputtedDate(ssInputtedDate);
     }
@@ -64,7 +64,7 @@ function RegisterOutfit() {
   }, [])
 
   useEffect(() => { // 날짜,위치,평가,한줄평 세션에 저장
-    console.log(inputtedDate,fetchLocationInfo,ratingInfo);
+    console.log(inputtedDate, fetchLocationInfo, ratingInfo);
     if (inputtedDate && fetchLocationInfo) {
       sessionStorage.setItem(`inputtedDate${outfitId}`, inputtedDate);
       sessionStorage.setItem(`fetchLocationInfo${outfitId}`, fetchLocationInfo);
@@ -87,9 +87,13 @@ function RegisterOutfit() {
     if (inputtedDate && fetchLocationInfo) {
       //console.log("날씨요청", inputtedDate, fetchLocationInfo)
       fetch(`https://api.ootw.store/outfit/register?outfitDate=${inputtedDate}&outfitLocation=${fetchLocationInfo}`
-      ).then(res => res.json()).then(res => {
-        setFetchWeatherInfo(res);
-      })
+        , {
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem("AccessToken"),
+          },
+        }).then(res => res.json()).then(res => {
+          setFetchWeatherInfo(res);
+        })
         .catch((error) => setErrorMsg(error.message));
     }
   }, [inputtedDate, fetchLocationInfo]);
@@ -117,11 +121,14 @@ function RegisterOutfit() {
       console.log(outerIdList, topIdList, bottomIdList, etcIdList);
       if (outfitId) { // update outfit
 
-        console.log("put",outfitId);
+        console.log("put", outfitId);
         fetch(`https://api.ootw.store/outfit/`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
+
+            Authorization: 'Bearer ' + localStorage.getItem("AccessToken"),
+
           },
           body: JSON.stringify({
             outfitId: outfitId,
@@ -144,11 +151,12 @@ function RegisterOutfit() {
           }),
         });
       } else { // create outfit
-        console.log("post",outfitId);
+        console.log("post", outfitId);
         fetch(`https://api.ootw.store/outfit/`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: 'Bearer ' + localStorage.getItem("AccessToken"),
           },
           body: JSON.stringify({
             memberId: 1,

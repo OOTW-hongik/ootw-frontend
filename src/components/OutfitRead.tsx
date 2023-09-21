@@ -94,12 +94,18 @@ function OutfitRead() {
   function outfitDelete() {
     fetch(`https://api.ootw.store/outfit/?outfitId=${outfitId}`, {
       method: "DELETE",
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem("AccessToken"),
+      },
     }).catch((error) => setErrorMsg(error.message));
     window.location.reload();
   }
   useEffect(() => {
     fetch(`https://api.ootw.store/outfit/?outfitId=${outfitId}`, {
       method: "GET",
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem("AccessToken"),
+      },
     })
       .then((res) => res.json())
       .then((res) => {
