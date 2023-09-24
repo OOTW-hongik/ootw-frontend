@@ -41,7 +41,7 @@ function AreaSwitchBtn({ changeLocationInfo, whereUsed }: Props) {
   const [errorMsg, setErrorMsg] = useState();
 
   useEffect(() => {
-    fetch("https://api.ootw.store/home?memberId=1", {
+    fetch("https://api.ootw.store/home", {
       method: "GET",
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem("AccessToken"),
@@ -76,7 +76,6 @@ function AreaSwitchBtn({ changeLocationInfo, whereUsed }: Props) {
           Authorization: 'Bearer ' + localStorage.getItem("AccessToken"),
         },
         body: JSON.stringify({
-          memberId: 1,
           location: selectedArea,
         }),
       });

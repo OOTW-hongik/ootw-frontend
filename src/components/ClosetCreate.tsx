@@ -67,7 +67,7 @@ function ClosetCreate({ category, closeFromChild }: Props) {
       fetch(`https://ai.ootw.store/remove_background`, {
         method: "POST",
         headers: {
-          Authorization: 'Bearer ' + localStorage.getItem("AccessToken"),
+          Authorization: "Bearer " + localStorage.getItem("AccessToken"),
         },
         body: formData,
       })
@@ -105,10 +105,8 @@ function ClosetCreate({ category, closeFromChild }: Props) {
         new Blob(
           [
             JSON.stringify({
-              memberId: 1,
               category: category,
               subCategory: selectedSubCategory,
-              // clothesPhoto: inputtedPhoto,
               clothesComment: inputtedComment,
               hidden: inputtedHidden,
             }),
@@ -120,12 +118,15 @@ function ClosetCreate({ category, closeFromChild }: Props) {
       fetch(`https://api.ootw.store/clothes`, {
         method: "POST",
         headers: {
-          Authorization: 'Bearer ' + localStorage.getItem("AccessToken"),
+          Authorization: "Bearer " + localStorage.getItem("AccessToken"),
         },
         body: formData,
-      });
-      closeFromChild("c");
-      window.location.reload();
+      })
+        .then(() => {
+          closeFromChild("c");
+          window.location.reload();
+        })
+        .catch((error) => window.alert(error.message));
     } else {
       alert("사진 필수!");
     }
@@ -186,10 +187,7 @@ function ClosetCreate({ category, closeFromChild }: Props) {
         />
       )}
 
-      <div
-        className="inputTitle"
-        id="commentTitle"
-      >
+      <div className="inputTitle" id="commentTitle">
         한줄평
       </div>
       <input

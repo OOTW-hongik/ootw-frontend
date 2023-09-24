@@ -25,7 +25,7 @@ function ClosetRead({ category, id, closeFromChild, openFromChild }: Props) {
   const [errorMsg, setErrorMsg] = useState();
   const [isPopupOpened, setIsPopupOpened] = useState(false);
   useEffect(() => {
-    fetch(`https://api.ootw.store/clothes?clothesId=${id}`, {
+    fetch(`https://api.ootw.store/clothes/${id}`, {
       method: "GET",
       headers: {
         "Cache-Control": "no-cache, no-store, must-revalidate", // 캐시 사용하지 않도록
@@ -43,7 +43,7 @@ function ClosetRead({ category, id, closeFromChild, openFromChild }: Props) {
 
   function closetDelete() {
     fetch(
-      `https://api.ootw.store/clothes?clothesId=${fetchInfo.clothesId}`,
+      `https://api.ootw.store/clothes/${fetchInfo.clothesId}`,
       {
         method: "DELETE",
         headers: {

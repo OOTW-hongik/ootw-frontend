@@ -34,7 +34,7 @@ const MyClosetSub = ({ category, showHidden }: Props) => {
     if (showHidden) {
       //숨긴옷보기
       fetch(
-        `https://api.ootw.store/closet/hidden?memberId=1&category=${category}`,
+        `https://api.ootw.store/closet/hidden?category=${category}`,
         {
           method: "GET",
           headers: {
@@ -55,7 +55,7 @@ const MyClosetSub = ({ category, showHidden }: Props) => {
         .catch((error) => setErrorMsg(error.message));
     } else {
       // 안숨긴옷 보기
-      fetch(`https://api.ootw.store/closet?memberId=1&category=${category}`, {
+      fetch(`https://api.ootw.store/closet?category=${category}`, {
         method: "GET",
         headers: {
           "Cache-Control": "no-cache, no-store, must-revalidate", // 캐시 사용하지 않도록
@@ -106,12 +106,12 @@ const MyClosetSub = ({ category, showHidden }: Props) => {
           ))}
       </div>
       <div className="col4GridContainer">
-        <button
+        <div
           className="registerClosetBtn centerLeftRight"
           onClick={() => setIsCreateModalOpened(true)}
         >
           <GoPlusSmall />
-        </button>
+        </div>
         {clothesList &&
           clothesList.map(
             (element) =>

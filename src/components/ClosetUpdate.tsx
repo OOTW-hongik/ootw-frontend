@@ -40,7 +40,7 @@ function ClosetUpdate({ category, id, closeFromChild }: Props) {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    fetch(`https://api.ootw.store/clothes?clothesId=${id}`, {
+    fetch(`https://api.ootw.store/clothes/${id}`, {
       method: "GET",
       headers: {
         "Cache-Control": "no-cache, no-store, must-revalidate", // 캐시 사용하지 않도록
@@ -127,11 +127,10 @@ function ClosetUpdate({ category, id, closeFromChild }: Props) {
       let formData = new FormData();
       formData.append("clothesPhoto", inputtedPhoto);
       formData.append(
-        "clothesUpdateRequest",
+        "clothesRequest",
         new Blob(
           [
             JSON.stringify({
-              clothesId: id,
               category: category,
               subCategory: selectedSubCategory,
               clothesComment: inputtedComment,
@@ -142,16 +141,17 @@ function ClosetUpdate({ category, id, closeFromChild }: Props) {
         )
       );
       console.log(inputtedPhoto);
-      fetch(`https://api.ootw.store/clothes`, {
+      fetch(`https://api.ootw.store/clothes/${id}`, {
         method: "PUT",
         headers: {
           Authorization: "Bearer " + localStorage.getItem("AccessToken"),
         },
         body: formData,
-      });
-      window.location.reload();
+      })
+        .then(() => window.location.reload())
+        .catch((error) => window.alert(error.message));
     } else {
-      fetch(`https://api.ootw.store/clothes`, {
+      fetch(`https://api.ootw.store/clothes/${id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -160,7 +160,6 @@ function ClosetUpdate({ category, id, closeFromChild }: Props) {
         },
 
         body: JSON.stringify({
-          clothesId: id,
           category: category,
           subCategory: selectedSubCategory,
           clothesComment: inputtedComment,

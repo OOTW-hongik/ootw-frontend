@@ -9,6 +9,7 @@ import NoServerAlert from "../components/NoServerAlert";
 import BottomNav from "../components/BottomNav";
 import Dropdown from "../components/Dropdown";
 import Outfit from "../components/Outfit";
+import Loading from "../components/Loading";
 
 const OutfitList = () => {
   const [errorMsg, setErrorMsg] = useState();
@@ -44,6 +45,7 @@ const OutfitList = () => {
     false,
     false,
   ]);
+  const [loading, setLoading] = useState(false);
   const isMobile = useMediaQuery({
     query: "(max-device-width:767px)",
   });
@@ -62,7 +64,8 @@ const OutfitList = () => {
   }; // 필터 변경 함수
 
   useEffect(() => {
-    fetch("https://api.ootw.store/outfit/list?memberId=1", {
+    setLoading(true);
+    fetch("https://api.ootw.store/outfit/list", {
       method: "GET",
       headers: {
         Authorization: "Bearer " + localStorage.getItem("AccessToken"),
@@ -71,6 +74,7 @@ const OutfitList = () => {
       .then((res) => res.json())
       .then((res) => {
         setFetchNameInfo(res.name);
+        setLoading(false);
       })
       .catch((error) => setErrorMsg(error.message));
   }, []);
@@ -93,8 +97,9 @@ const OutfitList = () => {
   }, [fetchNameInfo]); // 임시 저장 불러오기
 
   useEffect(() => {
+    setLoading(true);
     if (selectedSort === "최근날짜순") {
-      fetch("https://api.ootw.store/outfit/list?memberId=1", {
+      fetch("https://api.ootw.store/outfit/list", {
         method: "GET",
         headers: {
           Authorization: "Bearer " + localStorage.getItem("AccessToken"),
@@ -110,11 +115,12 @@ const OutfitList = () => {
             return 0;
           });
           setFetchOutfitList(sortedByDate);
+          setLoading(false);
         })
         .catch((error) => setErrorMsg(error.message));
     } else {
       // 체감비슷순 선택
-      fetch("https://api.ootw.store/outfit/list?memberId=1", {
+      fetch("https://api.ootw.store/outfit/list", {
         method: "GET",
         headers: {
           Authorization: "Bearer " + localStorage.getItem("AccessToken"),
@@ -123,6 +129,7 @@ const OutfitList = () => {
         .then((res) => res.json())
         .then((res) => {
           setFetchOutfitList(res.outfitSummary);
+          setLoading(false);
         })
         .catch((error) => setErrorMsg(error.message));
     }
@@ -145,6 +152,7 @@ const OutfitList = () => {
         sessionStorage.setItem("listScroll", String(window.scrollY))
       }
     >
+      {loading && <Loading/>}
       {errorMsg && <NoServerAlert errorMsg={errorMsg} />}
       <div id="titleWrapper">
         <h3 className="pageTitle">{fetchNameInfo} 님의 기록</h3>

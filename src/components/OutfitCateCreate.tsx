@@ -28,7 +28,7 @@ function OutfitCateCreate({ title, ratingChange, outfitId }: Props) {
     const ssData = sessionStorage.getItem(`inputted${title}${outfitId}`);
     if (ssData) {
       ssData.split(",").map((element) => {
-        fetch(`https://api.ootw.store/clothes?clothesId=${element}`, {
+        fetch(`https://api.ootw.store/clothes/${element}`, {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("AccessToken"),
           },
@@ -57,7 +57,14 @@ function OutfitCateCreate({ title, ratingChange, outfitId }: Props) {
         (selectedClothesPhoto) => selectedClothesPhoto !== element
       )
     );
-    sessionStorage.setItem(`inputted${title}${outfitId}`, String(selectedClothesPhoto));
+
+    let ssId = sessionStorage
+      .getItem(`inputted${title}${outfitId}`)
+      ?.split(",");
+    sessionStorage.setItem(
+      `inputted${title}${outfitId}`,
+      String(ssId?.filter((ssId) => ssId !== element.slice(-2)))
+    );
   }
 
   function changeToMain(index: number) {

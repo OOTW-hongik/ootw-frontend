@@ -8,6 +8,50 @@
     margin-top: 37px;
     font-size: 37px;
   }
+  .react-datepicker {
+    font-size: 2.2em !important;
+    margin: 20px;
+  }
+  .react-datepicker__header {
+    padding-top: 0.5em !important;
+    border-bottom: 2px solid gray !important;
+  }
+  .react-datepicker__month {
+    margin: 0.4em 1em !important;
+  }
+  .react-datepicker__day-name,
+  .react-datepicker__day {
+    width: 1.9em !important;
+    line-height: 1.9em !important;
+    margin: 0.166em !important;
+  }
+  .react-datepicker__triangle::before {
+    top: -10px !important;
+    border-width: 45px !important;
+  }
+  .react-datepicker__triangle::after {
+    top: -9px !important;
+    border-width: 45px !important;
+  }
+  .react-datepicker__current-month {
+    font-size: 1em !important;
+  }
+  .react-datepicker__navigation {
+    top: 1em !important;
+    width: 50px !important;
+    height: 50px !important;
+  }
+  .react-datepicker__navigation-icon::before {
+    width: 20px !important;
+    height: 20px !important;
+    border-width: 4px 4px 0 0 !important;
+  }
+  .react-datepicker__navigation--previous {
+    left: 1.5em !important;
+  }
+  .react-datepicker__navigation--next {
+    right: 1.5em !important;
+  }
 
   .comment {
     width: 92%;
@@ -115,4 +159,8 @@
 
 #registerSaveBtn:hover {
   cursor: pointer;
+}
+.react-datepicker__day--outside-month {
+  cursor: default;
+  visibility: hidden;
 }

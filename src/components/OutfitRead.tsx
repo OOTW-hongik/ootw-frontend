@@ -92,7 +92,7 @@ function OutfitRead() {
     );
   }
   function outfitDelete() {
-    fetch(`https://api.ootw.store/outfit/?outfitId=${outfitId}`, {
+    fetch(`https://api.ootw.store/outfit/${outfitId}`, {
       method: "DELETE",
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem("AccessToken"),
@@ -101,7 +101,7 @@ function OutfitRead() {
     window.location.reload();
   }
   useEffect(() => {
-    fetch(`https://api.ootw.store/outfit/?outfitId=${outfitId}`, {
+    fetch(`https://api.ootw.store/outfit/${outfitId}`, {
       method: "GET",
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem("AccessToken"),

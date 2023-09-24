@@ -11,6 +11,7 @@ import { Chart as ChartJS, registerables } from "chart.js";
 import { weatherIconList } from "../components/reuse";
 import Outfit from "../components/Outfit";
 import NoServerAlert from "../components/NoServerAlert";
+import Loading from "../components/Loading";
 
 ChartJS.register(...registerables);
 
@@ -37,12 +38,14 @@ const Home = () => {
     },
   ]);
   const [errorMsg, setErrorMsg] = useState();
+  const [loading, setLoading] = useState(false);
   const isPc = useMediaQuery({
     query: "(min-device-width:768px)",
   });
 
   useLayoutEffect(() => {
-    fetch("https://api.ootw.store/home?memberId=1", {
+    setLoading(true);
+    fetch("https://api.ootw.store/home", {
       method: "GET",
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem("AccessToken"),
@@ -51,12 +54,15 @@ const Home = () => {
       .then((res) => res.json())
       .then((res) => {
         setFetchOutfitList(res.outfitSummaryList);
+        setLoading(false);
       })
       .catch((error) => setErrorMsg(error.message));
+    
   }, []);
 
   return (
     <div className="Home mobileWeb">
+      {loading && <Loading/>}
       {errorMsg && <NoServerAlert errorMsg={errorMsg} />}
       <AreaSwitchBtn
         changeLocationInfo={(value: string) => {
@@ -112,7 +118,7 @@ function WeatherBox({ fetchLocationInfo }: WBProps) {
   ]);
   
   useEffect(() => {
-    fetch("https://api.ootw.store/home?memberId=1", {
+    fetch("https://api.ootw.store/home", {
       method: "GET",
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem("AccessToken"),

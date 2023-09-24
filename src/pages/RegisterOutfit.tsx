@@ -13,10 +13,10 @@ import OutfitCateCreate from "../components/OutfitCateCreate";
 import MiniWeather from "../components/MiniWeather";
 
 function RegisterOutfit() {
-  const [startDate, setStartDate] = useState(new Date());
+  const [startDate, setStartDate] = useState<Date>(new Date());
   const week = ["일", "월", "화", "수", "목", "금", "토"];
-  const [inputtedDate, setInputtedDate] = useState(dateToStr(startDate));
-  const [fetchLocationInfo, setFetchLocationInfo] = useState();
+  const [inputtedDate, setInputtedDate] = useState<string>(dateToStr(startDate));
+  const [fetchLocationInfo, setFetchLocationInfo] = useState<string>();
   const [fetchWeatherInfo, setFetchWeatherInfo] = useState({
     skyCondition: 0,
     highWc: 0,
@@ -24,14 +24,14 @@ function RegisterOutfit() {
     highTemp: 0,
     lowTemp: 0
   });
-  const [ratingInfo, setRatingInfo] = useState([]);
-  const [inputtedComment, setInputtedComment] = useState("");
+  const [ratingInfo, setRatingInfo] = useState<number[]>([]);
+  const [inputtedComment, setInputtedComment] = useState<string>("");
   const [errorMsg, setErrorMsg] = useState();
   const outfitId = useLocation().state.outfitId;
   // console.log("outfitId", outfitId);
 
-  const ratingChange = (index, value) => {
-    let copy = [...ratingInfo];
+  const ratingChange = (index:number, value:number) => {
+    let copy:number[] = [...ratingInfo];
     copy[index] = value;
     setRatingInfo(copy);
     // console.log("ratingChange", copy);
@@ -41,7 +41,7 @@ function RegisterOutfit() {
     let ssInputtedDate = sessionStorage.getItem(`inputtedDate${outfitId}`);
     if (ssInputtedDate) {
       // 크로스 브라우징 이슈 방지 : Date(year,month,day)
-      let ssDate = new Date(ssInputtedDate.slice(0, 4), ssInputtedDate.slice(5, 7) - 1, ssInputtedDate.slice(8, 10));
+      let ssDate = new Date(Number(ssInputtedDate.slice(0, 4)), Number(ssInputtedDate.slice(5, 7)) - 1, Number(ssInputtedDate.slice(8, 10)));
       setStartDate(ssDate);
       setInputtedDate(ssInputtedDate);
     }
@@ -76,7 +76,7 @@ function RegisterOutfit() {
       arr[1] = ratingInfo[1]
       arr[2] = ratingInfo[2]
       arr[3] = ratingInfo[3]
-      sessionStorage.setItem(`ratingInfo${outfitId}`, arr);
+      sessionStorage.setItem(`ratingInfo${outfitId}`, String(arr));
       // console.log(ratingInfo);
     }
 
@@ -98,7 +98,7 @@ function RegisterOutfit() {
     }
   }, [inputtedDate, fetchLocationInfo]);
 
-  function dateToStr(date) {
+  function dateToStr(date :Date) {
     let dD = date.getDate();
     let dM = date.getMonth() + 1;
     return (`${date.getFullYear()}-${dM < 10 ? 0 + "" + dM : dM}-${dD < 10 ? 0 + "" + dD : dD}(${week[date.getDay()]})`);
@@ -110,11 +110,11 @@ function RegisterOutfit() {
     const ssTop = sessionStorage.getItem(`inputted상의${outfitId}`);
     const ssBottom = sessionStorage.getItem(`inputted하의${outfitId}`);
     const ssEtc = sessionStorage.getItem(`inputted기타${outfitId}`);
-    if (ssOuter && ssTop && ssBottom) {
+    if (ssRating && ssOuter && ssTop && ssBottom) {
       const outerIdList = ssOuter.split(",").map(Number);
       const topIdList = ssTop.split(",").map(Number);
       const bottomIdList = ssBottom.split(",").map(Number);
-      let etcIdList;
+      let etcIdList:number[];
       if (ssEtc) {
         etcIdList = ssEtc.split(",").map(Number);
       } else { etcIdList = [] }
@@ -122,7 +122,7 @@ function RegisterOutfit() {
       if (outfitId) { // update outfit
 
         console.log("put", outfitId);
-        fetch(`https://api.ootw.store/outfit/`, {
+        fetch(`https://api.ootw.store/outfit/${outfitId}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -131,7 +131,6 @@ function RegisterOutfit() {
 
           },
           body: JSON.stringify({
-            outfitId: outfitId,
             outfitDate: inputtedDate,
             outfitLocation: fetchLocationInfo,
             skyCondition: fetchWeatherInfo.skyCondition,
@@ -149,17 +148,20 @@ function RegisterOutfit() {
             bottomIdList: bottomIdList,
             etcIdList: etcIdList
           }),
-        });
-      } else { // create outfit
+        }).then(() => {
+          sessionStorage.clear();
+          window.location.replace("/outfitList");
+        })
+          .catch((error) => window.alert(error.message));
+      } else { // create outfit -> outfitid=0
         console.log("post", outfitId);
-        fetch(`https://api.ootw.store/outfit/`, {
+        fetch(`https://api.ootw.store/outfit`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
             Authorization: 'Bearer ' + localStorage.getItem("AccessToken"),
           },
           body: JSON.stringify({
-            memberId: 1,
             outfitDate: inputtedDate,
             outfitLocation: fetchLocationInfo,
             skyCondition: fetchWeatherInfo.skyCondition,
@@ -176,12 +178,16 @@ function RegisterOutfit() {
             topIdList: topIdList,
             bottomIdList: bottomIdList,
             etcIdList: etcIdList
-          }),
-        });
+          })
+          ,
+        }).then(() => {
+          sessionStorage.clear();
+          window.location.replace("/outfitList");
+        })
+          .catch((error) => window.alert(error.message));
       }
 
-      sessionStorage.clear();
-      window.location.replace("/outfitList");
+
     } else {
       alert("아우터, 상의, 하의 선택 필수!");
     }
@@ -197,8 +203,9 @@ function RegisterOutfit() {
             dateFormat="yyyy-MM-dd (eee)"
             closeOnScroll={true}
             selected={startDate}
+            maxDate={new Date()}
             locale={ko}
-            onChange={(date) => {
+            onChange={(date:Date) => {
               setStartDate(date);
               setInputtedDate(dateToStr(date));
             }}
