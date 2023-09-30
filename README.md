@@ -33,5 +33,5 @@
 - RESTful API와 상호작용
 - 미디어 쿼리를 활용한 반응형 웹 구현
 - AWS S3 이용한 배포
-- ootw.store로 접속 시 www.ootw.store으로 리디렉션 구현 
+- ootw.store 에 접속 시 www.ootw.store 으로 리디렉션
 - AWS CloudFront 이용한 https 적용
