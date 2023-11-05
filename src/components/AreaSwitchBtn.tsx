@@ -66,8 +66,7 @@ function AreaSwitchBtn({ changeLocationInfo, whereUsed }: Props) {
       .catch((error) => setErrorMsg(error.message));
   }, []);
 
-  useEffect(() => {
-    changeLocationInfo(selectedArea);
+  useEffect(() => {    
     if (whereUsed === "home" && selectedArea) {
       fetch(`https://api.ootw.store/home/location`, {
         method: "PUT",
@@ -80,6 +79,7 @@ function AreaSwitchBtn({ changeLocationInfo, whereUsed }: Props) {
         }),
       });
     }
+    changeLocationInfo(selectedArea);
   }, [selectedArea]);
 
   return (

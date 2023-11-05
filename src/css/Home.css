@@ -5,23 +5,23 @@
   /* 모바일 */
   #registerOutfitBtn {
     width: 92%;
-    height: 162px;
+    height: 125px;
 
-    background-color: white;
+    background-color: #477EFF;
     border: none;
-    color: #7db8e4;
+    color: white;
     font-weight: 600;
     border-radius: 125px;
-    box-shadow: 0 5px 10px 0 rgb(0, 0, 0, 0.2);
+    box-shadow: 0 2px 5px 0 rgb(0, 0, 0, 0.2);
 
-    font-size: 50px;
+    font-size: 40px;
     margin-top: 40px;
     margin-bottom: 40px;
   }
   #WeatherBox {
     width: 87%;
     height: auto;
-    background-color: #dcedfa;
+    background-color: #d6e8ff;
     border-radius: 50px;
     padding: 25px;
   }
@@ -80,34 +80,34 @@
   }
   #guideText {
     margin-bottom: 25px;
-    font-size: 40px;
+    font-size: 30px;
   }
   #noRecordText {
     margin-top: 50px;
-    font-size: 50px;
+    font-size: 30px;
   }
 }
 @media screen and (min-device-width: 768px) {
   /* 태블릿 ~ 데스크탑 */
   #registerOutfitBtn {
     width: 360px;
-    height: 65px;
+    height: 50px;
 
-    background-color: white;
+    background-color: #477EFF;
     border: none;
-    color: #7db8e4;
+    color: white;
     font-weight: 600;
     border-radius: 50px;
-    box-shadow: 0 2px 4px 0 rgb(0, 0, 0, 0.2);
+    box-shadow: 0 1px 2px 0 rgb(0, 0, 0, 0.2);
 
-    font-size: 20px;
+    font-size: 16px;
     margin-top: 10px;
     margin-bottom: 10px;
   }
   #WeatherBox {
     width: 340px;
     height: auto;
-    background-color: #dcedfa;
+    background-color: #d6e8ff;
     border-radius: 20px;
     padding: 10px;
   }
@@ -165,15 +165,16 @@
   }
   #guideText {
     margin-bottom: 10px;
+    font-size: 12px;
   }
   #noRecordText {
     margin-top: 20px;
-    font-size: 20px;
+    font-size: 12px;
   }
 }
 
 #registerOutfitBtn:active {
-  background-color: #dcedfa;
+  background-color: #83baff;
   color: white;
 }
 #weatherUpperWrapper {

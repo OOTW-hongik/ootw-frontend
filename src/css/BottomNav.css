@@ -15,14 +15,14 @@
         text-align: center; /* 좌우 중앙정렬 */
         align-items: center; /* 상하 중앙정렬 */
     
-        height: 175px;
+        height: 150px;
         border-top: 2px solid gray;
         background-color: white;
         z-index: 10;
     }
     .navIcon {
-        width: 75px;
-        height: 75px;
+        width: 63px;
+        height: 63px;
         text-decoration: none; 
         color: #444444; 
     }
@@ -44,14 +44,14 @@
             text-align: center; /* 좌우 중앙정렬 */
             align-items: center; /* 상하 중앙정렬 */
         
-            height: 70px;
+            height: 60px;
             border-top: 1px solid gray;
             background-color: white;
             z-index: 10;
         }
         .navIcon {
-            width: 30px;
-            height: 30px;
+            width: 25px;
+            height: 25px;
             text-decoration: none; 
             color: #444444; 
         }

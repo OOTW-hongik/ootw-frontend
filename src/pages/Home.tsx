@@ -64,6 +64,13 @@ const Home = () => {
     <div className="Home mobileWeb">
       {loading && <Loading/>}
       {errorMsg && <NoServerAlert errorMsg={errorMsg} />}
+      <img
+        className="centerLeftRight"
+        id="loginBtn"
+        style={{ width: "200px" }}
+        src="img/ootwlogo.png"
+        alt="OOTW"
+      />
       <AreaSwitchBtn
         changeLocationInfo={(value: string) => {
           setFetchLocationInfo(value);
@@ -184,7 +191,7 @@ function WeatherGraph({ weatherGraphInfoList }: Props) {
     labels: ["06시", "09시", "12시", "15시", "18시", "21시", "24시"],
     datasets: [
       {
-        borderColor: "rgb(54, 162, 235)",
+        borderColor: "rgb(71, 126, 255)",
         borderWidth: 5,
         data: tempList,
         pointRadius: 7,
@@ -195,7 +202,7 @@ function WeatherGraph({ weatherGraphInfoList }: Props) {
     labels: ["06시", "09시", "12시", "15시", "18시", "21시", "24시"],
     datasets: [
       {
-        borderColor: "rgb(54, 162, 235)",
+        borderColor: "rgb(71, 126, 255)",
         borderWidth: 2,
         data: tempList,
       },

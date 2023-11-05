@@ -16,6 +16,7 @@
   }
   #outfitDate {
     font-size: 40px;
+    padding-bottom: 10px;
   }
   #outfitRightWrapper {
     margin-right: 37px;
@@ -54,6 +55,9 @@
   }
   #outfitLeftWrapper {
     margin-left: 15px;
+  }
+  #outfitDate {
+    padding-bottom: 4px;
   }
   #outfitRightWrapper {
     margin-right: 15px;

@@ -2,13 +2,17 @@ import React from "react";
 
 const BeforeLogin = () => {
   const loginHandler = () => {
-    window.location.href = 'https://api.ootw.store/oauth/kakao';
+    window.location.href = "https://api.ootw.store/oauth/kakao";
   };
 
   return (
-    <div >
-      <h1 id="OOTW">OOTW</h1>
-
+    <div>
+      <img
+        className="centerLeftRight"
+        id="loginBtn"
+        src="img/ootwlogo.png"
+        alt="OOTW"
+      />
       <img
         className="centerLeftRight"
         id="loginBtn"
@@ -16,8 +20,7 @@ const BeforeLogin = () => {
         alt="카카오로그인"
         onClick={() => {
           loginHandler();
-        }
-        }
+        }}
       />
     </div>
   );

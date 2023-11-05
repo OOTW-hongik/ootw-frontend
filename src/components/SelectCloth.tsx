@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../css/MyCloset.css";
 import Modal from "./Modal";
+import { GoPlusSmall } from "react-icons/go";
 import ClosetCreate from "./ClosetCreate";
 import NoServerAlert from "./NoServerAlert";
 import { Link } from "react-router-dom";
@@ -92,7 +93,7 @@ const SelectCloth = ({ category,outfitId }: Props) => {
           className="registerClosetBtn centerLeftRight"
           onClick={() => setIsModalOpened(true)}
         >
-          +
+          <GoPlusSmall />
         </button>
 
         {clothesList &&
