@@ -45,10 +45,11 @@
     display: flex;
     width: 76%;
   }
-  #OOTW {
+  #biglogo {
     padding-top: 670px;
     padding-bottom: 50px;
-    font-size: 80px;
+    display: flex;
+    width: 500px;
     text-align: center; /* 좌우 중앙정렬 */
     align-items: center; /* 상하 중앙정렬 */
   }
@@ -96,15 +97,24 @@
   #loginBtn {
     display: flex;
   }
-  #OOTW {
+  #biglogo {
     padding-top: 220px;
+    padding-bottom: 20px;
+    display: flex;
+    width: 200px;
     text-align: center; /* 좌우 중앙정렬 */
     align-items: center; /* 상하 중앙정렬 */
   }
 }
+@font-face {
+  font-family: 'Pretendard-Regular';
+  src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
 
 body {
-  font-family: "Noto Sans KR", "Apple SD Gothic Neo", "Sans-serif";
+  font-family: "Pretendard-Regular","Noto Sans KR", "Apple SD Gothic Neo", "Sans-serif";
   margin: 0; /* 여백없애기 */
 }
 

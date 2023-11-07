@@ -3,6 +3,11 @@
 }
 @media screen and (max-device-width: 767px) {
   /* 모바일 */
+  #minilogo {
+    width: 200px;
+    padding-top: 25px;
+    display: flex;
+  }
   #registerOutfitBtn {
     width: 92%;
     height: 125px;
@@ -15,8 +20,8 @@
     box-shadow: 0 2px 5px 0 rgb(0, 0, 0, 0.2);
 
     font-size: 40px;
-    margin-top: 40px;
-    margin-bottom: 40px;
+    margin-top: 25px;
+    margin-bottom: 25px;
   }
   #WeatherBox {
     width: 87%;
@@ -89,6 +94,11 @@
 }
 @media screen and (min-device-width: 768px) {
   /* 태블릿 ~ 데스크탑 */
+  #minilogo {
+    width: 80px;
+    padding-top: 10px;
+    display: flex;
+  }
   #registerOutfitBtn {
     width: 360px;
     height: 50px;

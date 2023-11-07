@@ -66,13 +66,13 @@ const Home = () => {
       {errorMsg && <NoServerAlert errorMsg={errorMsg} />}
       <img
         className="centerLeftRight"
-        id="loginBtn"
-        style={{ width: "200px" }}
+        id="minilogo"
         src="img/ootwlogo.png"
         alt="OOTW"
       />
       <AreaSwitchBtn
         changeLocationInfo={(value: string) => {
+          // window.location.reload();
           setFetchLocationInfo(value);
         }}
         whereUsed="home"
@@ -119,8 +119,7 @@ function WeatherBox({ fetchLocationInfo }: WBProps) {
   const [weatherGraphInfoList, setWeatherGraphInfoList] = useState([
     {
       time: 0,
-      temp: 0,
-      skyCondition: 0,
+      temp: 0
     },
   ]);
   
@@ -166,7 +165,6 @@ function WeatherBox({ fetchLocationInfo }: WBProps) {
             key={weatherGraphInfoList.indexOf(element)}
           >
             <div id="weatherGraphIndexTime">{element.time}시</div>
-            {/* <div>{weatherIconList[element.icon].tag}</div> */}
             <div id="weatherGraphIndexTemp">{element.temp}°</div>
           </div>
         ))}
@@ -179,7 +177,6 @@ function WeatherBox({ fetchLocationInfo }: WBProps) {
 type weatherGraphInfoList = {
   temp: number;
   time: number;
-  skyCondition: number;
 };
 type Props = {
   weatherGraphInfoList: weatherGraphInfoList[];

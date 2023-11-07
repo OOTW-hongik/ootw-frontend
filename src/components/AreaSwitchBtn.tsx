@@ -12,6 +12,7 @@ type Props = {
   whereUsed: string;
 };
 function AreaSwitchBtn({ changeLocationInfo, whereUsed }: Props) {
+  const [userLocationBeforeModi, setUserLocationBeforeModi] = useState("");
   const areaList = [
     "서울경기",
     "강원영서",
@@ -44,7 +45,7 @@ function AreaSwitchBtn({ changeLocationInfo, whereUsed }: Props) {
     fetch("https://api.ootw.store/home", {
       method: "GET",
       headers: {
-        Authorization: 'Bearer ' + localStorage.getItem("AccessToken"),
+        Authorization: "Bearer " + localStorage.getItem("AccessToken"),
       },
     })
       .then((res) => res.json())
@@ -53,6 +54,8 @@ function AreaSwitchBtn({ changeLocationInfo, whereUsed }: Props) {
 
         if (whereUsed === "home") {
           setSelectedArea(userLocation);
+          setUserLocationBeforeModi(userLocation);
+          // console.log(userLocationBeforeModi, userLocation);
         } else {
           let fLI = sessionStorage.getItem(`fetchLocationInfo${whereUsed}`);
           if (fLI) {
@@ -66,17 +69,22 @@ function AreaSwitchBtn({ changeLocationInfo, whereUsed }: Props) {
       .catch((error) => setErrorMsg(error.message));
   }, []);
 
-  useEffect(() => {    
+  useEffect(() => {
     if (whereUsed === "home" && selectedArea) {
       fetch(`https://api.ootw.store/home/location`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          Authorization: 'Bearer ' + localStorage.getItem("AccessToken"),
+          Authorization: "Bearer " + localStorage.getItem("AccessToken"),
         },
         body: JSON.stringify({
           location: selectedArea,
         }),
+      }).then(() => {
+        if (userLocationBeforeModi !== selectedArea) {
+          // console.log(userLocationBeforeModi, selectedArea);
+          window.location.reload();
+        }
       });
     }
     changeLocationInfo(selectedArea);

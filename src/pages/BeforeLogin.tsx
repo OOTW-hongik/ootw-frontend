@@ -9,7 +9,7 @@ const BeforeLogin = () => {
     <div>
       <img
         className="centerLeftRight"
-        id="loginBtn"
+        id="biglogo"
         src="img/ootwlogo.png"
         alt="OOTW"
       />
