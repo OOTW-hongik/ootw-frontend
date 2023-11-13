@@ -51,7 +51,7 @@ function OutfitCateCreate({ title, ratingChange, outfitId }: Props) {
   }, [rating]);
 
   function cancelSelect(element: string) {
-    // element와 일치하지 않는 원소만 추출해서 새로운 배열을 만듦
+    // element(이미지주소)와 일치하지 않는 원소만 추출해서 새로운 배열을 만듦
     setSelectedClothesPhoto(
       selectedClothesPhoto.filter(
         (selectedClothesPhoto) => selectedClothesPhoto !== element
@@ -61,9 +61,16 @@ function OutfitCateCreate({ title, ratingChange, outfitId }: Props) {
     let ssId = sessionStorage
       .getItem(`inputted${title}${outfitId}`)
       ?.split(",");
+      const elementID = element.match(/\d+$/);
+    console.log(
+      ssId,
+      element,
+      String(elementID),
+      ssId?.filter((e) => e !== String(elementID))
+    );
     sessionStorage.setItem(
       `inputted${title}${outfitId}`,
-      String(ssId?.filter((ssId) => ssId !== element.slice(-2)))
+      String(ssId?.filter((e) => e !== String(elementID)))
     );
   }
 
