@@ -219,8 +219,7 @@ const OutfitList = () => {
       ) : (
         <div id="noRecordText">기록이 없어요</div>
       )}
-      {isMobile && <div style={{ paddingTop: "200px" }} />}
-      {isPc && <div style={{ paddingTop: "80px" }} />}
+      <div id="bottomPadding" />
       <BottomNav selectedNav="outfitlist" />
     </div>
   );

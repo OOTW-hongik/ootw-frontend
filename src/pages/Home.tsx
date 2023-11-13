@@ -97,7 +97,7 @@ const Home = () => {
       ) : (
         <div id="noRecordText">기록이 없어요</div>
       )}
-      {isPc && <div style={{ paddingTop: "80px" }} />}
+      <div id="bottomPadding" />
       <BottomNav selectedNav="home" />
     </div>
   );

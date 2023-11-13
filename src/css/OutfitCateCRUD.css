@@ -187,7 +187,8 @@
     border: none;
     background-color: rgba(0, 0, 0, 0.2);
     border-radius: 20px;
-    font-size: 5px;
+    font-size: 10px;
+    padding: 1px 6px;
   }
   #notMainBtn {
     position: absolute;

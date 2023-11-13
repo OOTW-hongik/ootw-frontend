@@ -61,13 +61,7 @@ function OutfitCateCreate({ title, ratingChange, outfitId }: Props) {
     let ssId = sessionStorage
       .getItem(`inputted${title}${outfitId}`)
       ?.split(",");
-      const elementID = element.match(/\d+$/);
-    console.log(
-      ssId,
-      element,
-      String(elementID),
-      ssId?.filter((e) => e !== String(elementID))
-    );
+    const elementID = element.match(/\d+$/);
     sessionStorage.setItem(
       `inputted${title}${outfitId}`,
       String(ssId?.filter((e) => e !== String(elementID)))
