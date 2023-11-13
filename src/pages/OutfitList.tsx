@@ -36,7 +36,7 @@ const OutfitList = () => {
   ]);
   const [isSortOpened, setIsSortOpened] = useState<boolean>(false);
   const [isFilterOpened, setIsFilterOpened] = useState<boolean>(false);
-  const sortList = ["체감비슷순", "최근날짜순"];
+  const sortList = ["추천순", "최근날짜순"];
   const filterList = ["아우터", "상의", "하의"];
   const [selectedSort, setSelectedSort] = useState<string>(sortList[0]);
   const [isFilterChecked, setIsFilterChecked] = useState<boolean>(false);
@@ -119,7 +119,7 @@ const OutfitList = () => {
         })
         .catch((error) => setErrorMsg(error.message));
     } else {
-      // 체감비슷순 선택
+      // 추천순 선택
       fetch("https://api.ootw.store/outfit/list", {
         method: "GET",
         headers: {
