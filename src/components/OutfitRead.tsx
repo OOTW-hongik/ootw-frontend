@@ -3,8 +3,9 @@ import "react-datepicker/dist/react-datepicker.css";
 
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { TfiTrash, TfiPencilAlt } from "react-icons/tfi";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+
 
 import NoServerAlert from "../components/NoServerAlert";
 import MiniWeather from "../components/MiniWeather";
@@ -12,6 +13,7 @@ import { ratingList } from "./reuse";
 import DeleteConfirmPopup from "./DeleteConfirmPopup";
 
 function OutfitRead() {
+  const navigate = useNavigate();
   const [fetchInfo, setFetchInfo] = useState({
     outfitId: 0,
     outfitDate: "string",
@@ -98,7 +100,7 @@ function OutfitRead() {
         Authorization: 'Bearer ' + localStorage.getItem("AccessToken"),
       },
     }).catch((error) => setErrorMsg(error.message));
-    window.location.reload();
+    navigate("/outfitlist");
   }
   useEffect(() => {
     fetch(`https://api.ootw.store/outfit/${outfitId}`, {
