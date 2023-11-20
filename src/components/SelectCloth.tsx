@@ -89,12 +89,12 @@ const SelectCloth = ({ category,outfitId }: Props) => {
           ))}
       </div>
       <div className="col4GridContainer">
-        <button
+        <div
           className="registerClosetBtn centerLeftRight"
           onClick={() => setIsModalOpened(true)}
         >
           <GoPlusSmall />
-        </button>
+        </div>
 
         {clothesList &&
           clothesList.map((element) =>
