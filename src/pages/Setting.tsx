@@ -56,6 +56,9 @@ const Setting = () => {
 
       <p>유채연(FE)</p>
       <p>u_chaen@naver.com</p>
+      <br />
+
+      <p>날씨 데이터 제공: 웨더아이, 기상청 허브 API</p>
 
       <BottomNav selectedNav="setting"/>
     </div>

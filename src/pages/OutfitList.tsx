@@ -34,6 +34,8 @@ const OutfitList = () => {
       manyBottom: false,
     },
   ]);
+  const [quantity, setQuantity] = useState<number>(10);
+  const [isEnd, setIsEnd] = useState<boolean>(false);
   const [isSortOpened, setIsSortOpened] = useState<boolean>(false);
   const [isFilterOpened, setIsFilterOpened] = useState<boolean>(false);
   const sortList = ["추천순", "최근날짜순"];
@@ -62,6 +64,10 @@ const OutfitList = () => {
     // 세션에 임시 저장
     sessionStorage.setItem("filter", String(copy));
   }; // 필터 변경 함수
+  const seeMore=()=>{
+    // 10개 더보기
+    setQuantity(quantity+10);
+  }
 
   useEffect(() => {
     setLoading(true);
@@ -219,6 +225,7 @@ const OutfitList = () => {
       ) : (
         <div id="noRecordText">기록이 없어요</div>
       )}
+      {!isEnd && <button id="seeMoreBtn" className="centerLeftRight" onClick={seeMore}>10개 더보기</button>}
       <div id="bottomPadding" />
       <BottomNav selectedNav="outfitlist" />
     </div>
