@@ -48,12 +48,7 @@ const OutfitList = () => {
     false,
   ]);
   const [loading, setLoading] = useState(false);
-  const isMobile = useMediaQuery({
-    query: "(max-device-width:767px)",
-  });
-  const isPc = useMediaQuery({
-    query: "(min-device-width:768px)",
-  });
+
   const filterHandler = (value: string) => {
     // spread 사용하여 리스트 state 변경
     let copy = [...checkedFilterList];
@@ -64,14 +59,14 @@ const OutfitList = () => {
     // 세션에 임시 저장
     sessionStorage.setItem("filter", String(copy));
   }; // 필터 변경 함수
-  const seeMore=()=>{
+  const seeMore = () => {
     // 10개 더보기
-    setQuantity(quantity+10);
-  }
+    setQuantity(quantity + 10);
+  };
 
   useEffect(() => {
     setLoading(true);
-    fetch("https://api.ootw.store/outfit/list", {
+    fetch(`https://api.ootw.store/outfit/list?quantity=${quantity}`, {
       method: "GET",
       headers: {
         Authorization: "Bearer " + localStorage.getItem("AccessToken"),
@@ -80,10 +75,12 @@ const OutfitList = () => {
       .then((res) => res.json())
       .then((res) => {
         setFetchNameInfo(res.name);
+        setIsEnd(res.end);
         setLoading(false);
       })
       .catch((error) => setErrorMsg(error.message));
   }, []);
+
   useEffect(() => {
     window.scrollTo(0, Number(sessionStorage.listScroll));
 
@@ -105,7 +102,7 @@ const OutfitList = () => {
   useEffect(() => {
     setLoading(true);
     if (selectedSort === "최근날짜순") {
-      fetch("https://api.ootw.store/outfit/list", {
+      fetch(`https://api.ootw.store/outfit/list?quantity=${quantity}`, {
         method: "GET",
         headers: {
           Authorization: "Bearer " + localStorage.getItem("AccessToken"),
@@ -121,12 +118,13 @@ const OutfitList = () => {
             return 0;
           });
           setFetchOutfitList(sortedByDate);
+          setIsEnd(res.end);
           setLoading(false);
         })
         .catch((error) => setErrorMsg(error.message));
     } else {
       // 추천순 선택
-      fetch("https://api.ootw.store/outfit/list", {
+      fetch(`https://api.ootw.store/outfit/list?quantity=${quantity}`, {
         method: "GET",
         headers: {
           Authorization: "Bearer " + localStorage.getItem("AccessToken"),
@@ -135,6 +133,7 @@ const OutfitList = () => {
         .then((res) => res.json())
         .then((res) => {
           setFetchOutfitList(res.outfitSummary);
+          setIsEnd(res.end);
           setLoading(false);
         })
         .catch((error) => setErrorMsg(error.message));
@@ -142,6 +141,30 @@ const OutfitList = () => {
     // 세션에 임시 저장
     sessionStorage.setItem("sort", selectedSort);
   }, [selectedSort]); // 정렬 변경
+
+  useEffect(() => {
+    console.log("quantity",quantity);
+    if (quantity !== 10) {
+      setLoading(true);
+      fetch(`https://api.ootw.store/outfit/list?quantity=${quantity}`, {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("AccessToken"),
+        },
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          setFetchOutfitList(res.outfitSummary);
+          setIsEnd(res.end);
+          setLoading(false);
+        })
+        .catch((error) => setErrorMsg(error.message));
+    }
+  }, [quantity]); // 10개 더보기 클릭
+
+  useEffect(() => {
+    console.log("isEnd",isEnd);
+  }, [isEnd]); // 10개 더보기 클릭
 
   useEffect(() => {
     if (checkedFilterList[0] || checkedFilterList[1] || checkedFilterList[2]) {
@@ -158,7 +181,7 @@ const OutfitList = () => {
         sessionStorage.setItem("listScroll", String(window.scrollY))
       }
     >
-      {loading && <Loading/>}
+      {loading && <Loading />}
       {errorMsg && <NoServerAlert errorMsg={errorMsg} />}
       <div id="titleWrapper">
         <h3 className="pageTitle">{fetchNameInfo} 님의 기록</h3>
@@ -225,7 +248,11 @@ const OutfitList = () => {
       ) : (
         <div id="noRecordText">기록이 없어요</div>
       )}
-      {!isEnd && <button id="seeMoreBtn" className="centerLeftRight" onClick={seeMore}>10개 더보기</button>}
+      {!isEnd && (
+        <button id="seeMoreBtn" className="centerLeftRight" onClick={seeMore}>
+          10개 더보기
+        </button>
+      )}
       <div id="bottomPadding" />
       <BottomNav selectedNav="outfitlist" />
     </div>

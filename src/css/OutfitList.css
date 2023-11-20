@@ -1,15 +1,15 @@
 @media screen and (max-device-width: 767px) {
   /* 모바일 */
   #seeMoreBtn {
-    width: 600px;
-    height: 150px;
-    margin-top: 375px;
-    margin-bottom: 625px;
-    background-color: white;
+    background-color: #fff;
     border: none;
-    border-radius: 50px;
-    font-size: 50px;
-    box-shadow: 0 2px 4px 0 rgb(0, 0, 0, 0.2);    
+    border-radius: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,.2);
+    font-size:40px;
+    height: 125px;
+    margin-bottom: 25px;
+    margin-top: 50px;
+    width: 375px;    
   }
   .icon {
     margin-left: 37px;
@@ -28,15 +28,15 @@
 @media screen and (min-device-width: 768px) {
   /* 태블릿 ~ 데스크탑 */
   #seeMoreBtn {
-    width: 240px;
-    height: 60px;
-    margin-top: 150px;
-    margin-bottom: 100px;
-    background-color: white;
+    background-color: #fff;
     border: none;
     border-radius: 20px;
-    font-size: 20px;
-    box-shadow: 0 1px 2px 0 rgb(0, 0, 0, 0.2);    
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.2);
+    font-size: 16px;
+    height: 50px;
+    margin-bottom: 10px;
+    margin-top: 20px;
+    width: 150px;   
   }
   .icon {
     margin-left: 15px;
