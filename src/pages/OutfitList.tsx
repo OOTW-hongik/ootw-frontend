@@ -78,7 +78,13 @@ const OutfitList = () => {
         setIsEnd(res.end);
         setLoading(false);
       })
-      .catch((error) => setErrorMsg(error.message));
+      .catch((error) => {
+        if (error.status === 401) {
+          localStorage.removeItem("AccessToken");
+          window.location.reload();
+        }
+        setErrorMsg(error.message);
+      });
   }, []);
 
   useEffect(() => {
@@ -121,7 +127,13 @@ const OutfitList = () => {
           setIsEnd(res.end);
           setLoading(false);
         })
-        .catch((error) => setErrorMsg(error.message));
+        .catch((error) => {
+        if (error.status === 401) {
+          localStorage.removeItem("AccessToken");
+          window.location.reload();
+        }
+        setErrorMsg(error.message);
+      });
     } else {
       // 추천순 선택
       fetch(`https://api.ootw.store/outfit/list?quantity=${quantity}`, {
@@ -136,7 +148,13 @@ const OutfitList = () => {
           setIsEnd(res.end);
           setLoading(false);
         })
-        .catch((error) => setErrorMsg(error.message));
+        .catch((error) => {
+        if (error.status === 401) {
+          localStorage.removeItem("AccessToken");
+          window.location.reload();
+        }
+        setErrorMsg(error.message);
+      });
     }
     // 세션에 임시 저장
     sessionStorage.setItem("sort", selectedSort);
@@ -158,7 +176,13 @@ const OutfitList = () => {
           setIsEnd(res.end);
           setLoading(false);
         })
-        .catch((error) => setErrorMsg(error.message));
+        .catch((error) => {
+        if (error.status === 401) {
+          localStorage.removeItem("AccessToken");
+          window.location.reload();
+        }
+        setErrorMsg(error.message);
+      });
     }
   }, [quantity]); // 10개 더보기 클릭
 

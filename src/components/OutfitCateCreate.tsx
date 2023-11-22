@@ -40,7 +40,13 @@ function OutfitCateCreate({ title, ratingChange, outfitId }: Props) {
               res.clothesUrl,
             ]);
           })
-          .catch((error) => setErrorMsg(error.message));
+          .catch((error) => {
+        if (error.status === 401) {
+          localStorage.removeItem("AccessToken");
+          window.location.reload();
+        }
+        setErrorMsg(error.message);
+      });
       });
     }
     // setSelectedClothesPhoto(fetchPhotos);

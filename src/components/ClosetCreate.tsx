@@ -91,7 +91,13 @@ function ClosetCreate({ category, closeFromChild }: Props) {
           }
           setLoading(false);
         })
-        .catch((error) => setErrorMsg(error.message));
+        .catch((error) => {
+          if (error.status === 401) {
+            localStorage.removeItem("AccessToken");
+            window.location.reload();
+          }
+          setErrorMsg(error.message);
+        });
     }
   };
 
@@ -126,7 +132,13 @@ function ClosetCreate({ category, closeFromChild }: Props) {
           closeFromChild("c");
           window.location.reload();
         })
-        .catch((error) => window.alert(error.message));
+        .catch((error) => {
+          if (error.status === 401) {
+            localStorage.removeItem("AccessToken");
+            window.location.reload();
+          }
+          window.alert(error.message);
+        });
     } else {
       alert("사진 필수!");
     }

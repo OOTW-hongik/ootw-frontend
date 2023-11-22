@@ -52,7 +52,13 @@ const MyClosetSub = ({ category, showHidden }: Props) => {
           setClothesList(res.clothesList);
           setSelectedSubCate("전체");
         })
-        .catch((error) => setErrorMsg(error.message));
+        .catch((error) => {
+        if (error.status === 401) {
+          localStorage.removeItem("AccessToken");
+          window.location.reload();
+        }
+        setErrorMsg(error.message);
+      });
     } else {
       // 안숨긴옷 보기
       fetch(`https://api.ootw.store/closet?category=${category}`, {
@@ -71,7 +77,13 @@ const MyClosetSub = ({ category, showHidden }: Props) => {
           setClothesList(res.clothesList);
           setSelectedSubCate("전체");
         })
-        .catch((error) => setErrorMsg(error.message));
+        .catch((error) => {
+        if (error.status === 401) {
+          localStorage.removeItem("AccessToken");
+          window.location.reload();
+        }
+        setErrorMsg(error.message);
+      });
     }
   }, [category, showHidden]);
 

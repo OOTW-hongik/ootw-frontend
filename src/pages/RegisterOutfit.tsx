@@ -94,7 +94,13 @@ function RegisterOutfit() {
         }).then(res => res.json()).then(res => {
           setFetchWeatherInfo(res);
         })
-        .catch((error) => setErrorMsg(error.message));
+        .catch((error) => {
+        if (error.status === 401) {
+          localStorage.removeItem("AccessToken");
+          window.location.reload();
+        }
+        setErrorMsg(error.message);
+      });
     }
   }, [inputtedDate, fetchLocationInfo]);
 
@@ -152,7 +158,13 @@ function RegisterOutfit() {
           sessionStorage.clear();
           window.location.replace("/outfitList");
         })
-          .catch((error) => window.alert(error.message));
+          .catch((error) => {
+          if (error.status === 401) {
+            localStorage.removeItem("AccessToken");
+            window.location.reload();
+          }
+          window.alert(error.message);
+        });
       } else { // create outfit -> outfitid=0
         console.log("post", outfitId);
         fetch(`https://api.ootw.store/outfit`, {
@@ -184,7 +196,13 @@ function RegisterOutfit() {
           sessionStorage.clear();
           window.location.replace("/outfitList");
         })
-          .catch((error) => window.alert(error.message));
+          .catch((error) => {
+          if (error.status === 401) {
+            localStorage.removeItem("AccessToken");
+            window.location.reload();
+          }
+          window.alert(error.message);
+        });
       }
 
 

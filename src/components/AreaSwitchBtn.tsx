@@ -66,7 +66,13 @@ function AreaSwitchBtn({ changeLocationInfo, whereUsed }: Props) {
         }
         // console.log("AS UE",userLocation);
       })
-      .catch((error) => setErrorMsg(error.message));
+      .catch((error) => {
+        if (error.status === 401) {
+          localStorage.removeItem("AccessToken");
+          window.location.reload();
+        }
+        setErrorMsg(error.message);
+      });
   }, []);
 
   useEffect(() => {
@@ -92,6 +98,7 @@ function AreaSwitchBtn({ changeLocationInfo, whereUsed }: Props) {
 
   return (
     <div>
+      {errorMsg && <NoServerAlert errorMsg={errorMsg} />}
       <div
         id="areaSwitchBtn"
         className="pointer"

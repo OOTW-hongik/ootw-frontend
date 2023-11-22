@@ -56,7 +56,13 @@ const Home = () => {
         setFetchOutfitList(res.outfitSummaryList);
         setLoading(false);
       })
-      .catch((error) => setErrorMsg(error.message));
+      .catch((error) => {
+        if (error.status === 401) {
+          localStorage.removeItem("AccessToken");
+          window.location.reload();
+        }
+        setErrorMsg(error.message);
+      });
     
   }, []);
 
@@ -139,7 +145,13 @@ function WeatherBox({ fetchLocationInfo }: WBProps) {
         setHighWc(res.highWc);
         setLowWc(res.lowWc);
       })
-      .catch((error) => setErrorMsg(error.message));
+      .catch((error) => {
+        if (error.status === 401) {
+          localStorage.removeItem("AccessToken");
+          window.location.reload();
+        }
+        setErrorMsg(error.message);
+      });
   }, [fetchLocationInfo]);
   return (
     <div id="WeatherBox" className="centerLeftRight">

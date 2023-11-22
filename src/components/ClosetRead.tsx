@@ -38,7 +38,13 @@ function ClosetRead({ category, id, closeFromChild, openFromChild }: Props) {
       .then((res) => {
         setFetchInfo(res);
       })
-      .catch((error) => setErrorMsg(error.message));
+      .catch((error) => {
+        if (error.status === 401) {
+          localStorage.removeItem("AccessToken");
+          window.location.reload();
+        }
+        setErrorMsg(error.message);
+      });
   }, []);
 
   function closetDelete() {
@@ -50,7 +56,13 @@ function ClosetRead({ category, id, closeFromChild, openFromChild }: Props) {
           Authorization: 'Bearer ' + localStorage.getItem("AccessToken"),
         },
       }
-    ).catch((error) => setErrorMsg(error.message));
+    ).catch((error) => {
+        if (error.status === 401) {
+          localStorage.removeItem("AccessToken");
+          window.location.reload();
+        }
+        setErrorMsg(error.message);
+      });
     window.location.reload();
   }
 

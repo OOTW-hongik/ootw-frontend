@@ -99,7 +99,13 @@ function OutfitRead() {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem("AccessToken"),
       },
-    }).catch((error) => setErrorMsg(error.message));
+    }).catch((error) => {
+        if (error.status === 401) {
+          localStorage.removeItem("AccessToken");
+          window.location.reload();
+        }
+        setErrorMsg(error.message);
+      });
     navigate("/outfitlist");
   }
   useEffect(() => {
@@ -113,7 +119,13 @@ function OutfitRead() {
       .then((res) => {
         setFetchInfo(res);
       })
-      .catch((error) => setErrorMsg(error.message));
+      .catch((error) => {
+        if (error.status === 401) {
+          localStorage.removeItem("AccessToken");
+          window.location.reload();
+        }
+        setErrorMsg(error.message);
+      });
   }, []);
 
   return (

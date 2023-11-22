@@ -55,7 +55,13 @@ const SelectCloth = ({ category,outfitId }: Props) => {
         setClothesList(res.clothesList);
         setSelectedSubCate("전체");
       })
-      .catch((error) => setErrorMsg(error.message));
+      .catch((error) => {
+        if (error.status === 401) {
+          localStorage.removeItem("AccessToken");
+          window.location.reload();
+        }
+        setErrorMsg(error.message);
+      });
   }, [category]);
 
   return (
